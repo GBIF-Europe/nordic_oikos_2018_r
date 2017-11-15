@@ -2,11 +2,12 @@
 title: "Asyncronous download using the rgibf package"
 author: "AGF"
 date: "November 15, 2017"
-output: html_document
+output: rmarkdown::github_document
 ---
 
 # Asyncronous download using the rgibf package
-Procedures and examples on downloading using registred downloads (as opposite to the download without registration through e.g. rgbif). This has several adwantages. The most prominent are: 
+Procedures and examples on downloading us
+ing registred downloads (as opposite to the download without registration through e.g. rgbif). This has several adwantages. The most prominent are: 
 
 * You are not restricted to a hard limit of 200 000 records
 * You get a citation of your downloaded data that can/must be used when citing your data usage in e.g. a scientific publication or thesis. 
