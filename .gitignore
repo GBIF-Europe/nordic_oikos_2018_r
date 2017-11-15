@@ -29,6 +29,9 @@ vignettes/*.pdf
 /*_cache/
 /cache/
 
+# zip files (e.g. occurrence downloads)
+*.zip
+
 # Temporary files created by R markdown
 *.utf8.md
 *.knit.md
