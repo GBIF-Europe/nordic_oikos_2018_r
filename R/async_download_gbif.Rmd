@@ -1,11 +1,11 @@
 ---
-title: "Asyncronous download using the rgibf package"
+title: "Asyncronous download using the rgbif package"
 author: "AGF"
 date: "November 15, 2017"
 output: rmarkdown::github_document
 ---
 
-# Asyncronous download using the rgibf package
+# Asyncronous download using the rgbif package
 Procedures and examples on downloading us
 ing registred downloads (as opposite to the download without registration through e.g. rgbif). This has several adwantages. The most prominent are: 
 
@@ -56,7 +56,7 @@ options(gbif_pwd=rstudioapi::askForPassword("my gbif password"))
 download_key <- occ_download('taxonKey = 2346633,2366645','hasCoordinate = TRUE',
                              'hasGeospatialIssue = FALSE',
                              'country = NO',
-                             #'geometry = POLYGON((9.33 62.80,9.33 64.20,12.13,64.20,12.13,62.80,9.33 62.80))',
+                             #'geometry = POLYGON((9.33 62.80,9.33 64.20,12.13 64.20,12.13 62.80,9.33 62.80))',
                              type="and") %>% 
   occ_download_meta
 
