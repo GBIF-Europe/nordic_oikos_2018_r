@@ -1,4 +1,4 @@
-# Nordic Oikos 2017 -- R training
+# Nordic Oikos 2018 -- R training
 
 Scientific reuse of openly published biodiversity information: Programmatic access to and analysis of primary biodiversity information using R. Nordic Oikos 2018, pre-conference R workshop. 
 
