@@ -1,0 +1,101 @@
+---
+title: "GBIF rgbif demo"
+author: "Dag Endresen, GBIF.no, http://orcid.org/0000-0002-2352-5497"
+date: "February 2, 2018"
+output: html_document
+---
+
+# Clear workspace (be careful)
+#rm(list = ls())
+
+# Set working directory, here: to the same directory as the RMD-script
+setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
+#getwd() ## will display the working directory
+#dir.create(file.path("./demo_files")) ## create a folder for demo files
+
+# Some useful R-packages to install, that we will use
+#install.packages("rmarkdown")
+#install.packages("rgbif")
+#install.packages("maps")
+#install.packages("mapproj")
+#install.packages("raster")
+
+# Load R-packages
+#Use library(_pk-name_) or require(_pk-name_) to load packages
+require(rgbif) # r-package for accessing GBIF
+require(maps)
+require(mapproj)
+require(mapdata)
+require(maptools) # mapping tools for spatial objects
+require(rgdal) # provides the Geospatial Data Abstraction Library
+require(raster) # spatial raster data management, works well with dismo
+
+# Example taxon liverleaf (blaaveis:no)
+```{r message=FALSE}
+sp_name <- "Hepatica nobilis" ## Choose your own species
+#sp_name <- "Hordeum vulgare" ## Choose your own species
+key <- name_backbone(name=sp_name, kingdom="Plantae")$speciesKey
+```
+
+# `r sp_name`
+
+# Example GBIF data from Norway
+```{r echo=FALSE, message=FALSE}
+sp <- occ_search(taxonKey=key, return="data", hasCoordinate=TRUE, country="NO", limit=500) 
+gbifmap(sp, region = "norway")
+```
+
+# Example global species occurrence data from GBIF
+```{r message=FALSE}
+require(rgbif) # r-package for accessing GBIF
+sp <- occ_search(taxonKey=key, return="data", hasCoordinate=TRUE, limit=1000) 
+gbifmap(sp)
+```
+
+## Extract coordinates for smaller array
+```{r}
+xy <- sp[c("decimalLongitude","decimalLatitude")] ## Extract only the coordinates
+sp_xy <- sp[c("species", "decimalLongitude","decimalLatitude")] ## Input format for Maxent
+```
+
+## Write dataframe to file (useful for Maxent etc)
+```{r}
+#write.table(sp_xy, file="./sp_xy.txt", sep="\t", row.names=FALSE, qmethod="double") ## Input for Maxent
+```
+
+## Read data file back into R
+```{r}
+#rm(sp_xy) ## remove/delete vector sp_xy from the environment, before re-loading
+#sp_xy <- read.delim("./sp_xy.txt", header=TRUE, dec=".", stringsAsFactors=FALSE)
+```
+
+
+## Read environment layer into R
+```{r include=FALSE}
+require(raster) # spatial raster data management, works well with dismo
+env <- getData('worldclim', var='bio', res=10) # 10 degree resolution (approx 18 km)
+#env <- getData('worldclim', var='bio', res=2.5) # 2 degree 5 minute resolution (approx 5 km)
+```
+
+## Plot environment layers and species occurrences on a map
+```{r fig.cap="Figure: GBIF data plotted on environment layer map", echo = FALSE}
+#plot(env, 1) # plot the first bioclim layer (BIO1 = Annual Mean Temperature)
+plot(env, 12, main=NULL, axes=FALSE) # plot bioclim layer, BIO12 = Annual Precipitation
+#title(main = "BioClim 12, Annual precipitation")
+title(main = bquote(italic(.(sp_name)) ~occurrences~plotted~on~annual~precipitation))
+axis(side=2, tck = -0.04, col.ticks="gray") ## add axis only left
+points(xy, col='blue') # plot species occurrence points to the map
+```
+
+```{r echo = FALSE}
+plot(env, 1, main=NULL, axes=FALSE)
+title(main = bquote(italic(.(sp_name)) ~occurrences~":"~on~annual~mean~temperature))
+points(xy, col='red', pch=20) # plot species occurrence points to the map (smaller dots)
+```
+
+
+```{r}
+```
+
+
+### This script follows R Markdown, http://rmarkdown.rstudio.com/
