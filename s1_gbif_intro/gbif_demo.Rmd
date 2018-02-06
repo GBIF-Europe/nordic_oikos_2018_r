@@ -40,7 +40,7 @@ gbifmap(sp)
 
 ## Example - GBIF data from Trondheim
 Species is *`r sp_name`* with taxonKey **`r key`**
-```{r message=FALSE}
+```{r message=FALSE, eval=FALSE}
 require(rgbif) # r-package for GBIF data
 require("mapr") # rOpenSci r-package for mapping (occurrence data)
 bbox <- c(10.2,63.3,10.6,63.5) # Trondheim
@@ -51,12 +51,7 @@ sp_bb <- occ_search(taxonKey=key, return="data", hasCoordinate=TRUE, country="NO
 map_leaflet(sp_bb, "decimalLongitude", "decimalLatitude", size=3, color="blue")
 ```
 
-## Example - mapping with leaflet
-```{r message=FALSE}
-#require("mapr") # rOpenSci r-package for mapping (occurrence data)
-#library("spocc") # rOpenSci r-package with more biodiversity data sources than GBIF
-#map_leaflet(sp_bb, "decimalLongitude", "decimalLatitude", size=3, color="blue")
-```
+![Leaflet map](gbif_demo_files/s1_leaflet_map.png "Leaflet map")
 
 ## Extract coordinates suitable for e.g. Maxent
 ```{r}
