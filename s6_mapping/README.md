@@ -5,3 +5,8 @@ Scientific reuse of openly published biodiversity information: Programmatic acce
 ## Session 6: Mapping GBIF data in R
 
 
+
+
+# Links
+https://github.com/ropensci/mapr
+
