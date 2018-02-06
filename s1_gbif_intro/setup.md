@@ -6,12 +6,9 @@ February 3, 2018
 Nordic Oikos 2018 - R workshop
 ==============================
 
-Scientific reuse of openly published biodiversity information: Programmatic access to and analysis of primary biodiversity information using R. Nordic Oikos 2018, pre-conference R workshop. Further information [here](http://www.gbif.no/events/2018/Nordic-Oikos-2018-R-workshop.html).
+Scientific reuse of openly published biodiversity information: Programmatic access to and analysis of primary biodiversity information using R. Nordic Oikos 2018, pre-conference R workshop, 18 and 19 February 2018. Further information [here](http://www.gbif.no/events/2018/Nordic-Oikos-2018-R-workshop.html).
 
--   Sunday 18 Feb 2018, 10:00 - 17:00
--   Monday 19 Feb 2018, 09:00 - 16:00
-
-**Venue**: Auditorium [DU2-150](https://use.mazemap.com/#v=1&zlevel=-2&left=10.4044354&right=10.4080592&top=63.4160961&bottom=63.4145612&campusid=1&campuses=ntnu&sharepoitype=identifier&sharepoi=360-DU2-150), NTNU Gloshaugen campus, Norwegian University of Science and Technology, Hogskoleringen 5, NO-7491 Trondheim, Norway (latitude 63.415275, longitude 10.406295).
+Notice that most of the R-commands below are commented out (with a hash \#). To execute selected lines on your computer, you need to uncomment (remove the hash \#) first.
 
 ### Set working directory, here: to the same directory as the RMD-script
 
@@ -21,21 +18,19 @@ Scientific reuse of openly published biodiversity information: Programmatic acce
 getwd() ## will display the working directory
 ```
 
-    ## [1] "/Users/dag/workspace/gitHub/nordic_oikos_2018_r/R/s1_gbif_intro"
-
 ### Create a folder for demo data
 
 ``` r
+## Note however, that RMarkdown with knitr works best with all files in the same directory
 #dir.create(file.path("./demo_data")) ## create a folder for demo files (inside working directory)
 #dir.create(file.path("../demo_data")) ## create a folder for demo files (next to working directory)
-#dir.create(file.path("..", "demo_data")) # ?? will work accross OS?
+#dir.create(file.path("..", "demo_data")) # will work better accross OS? on Windows?
 ```
 
 ### Some useful R-packages to install, that we will use during the workshop
 
 ``` r
-# It is possible to install R-packages from the script
-
+## It is possible to install R-packages from the script
 #install.packages("rmarkdown")
 #install.packages("rgbif")
 #install.packages("maps")
@@ -56,6 +51,8 @@ getwd() ## will display the working directory
 #require(maptools) # mapping tools for spatial objects
 #require(rgdal) # provides the Geospatial Data Abstraction Library
 #require(raster) # spatial raster data management
+#library(gapminder)
+#library(tidyverse) ## includes dplyr etc for handling data, select(), filter()
 ```
 
 ### Clear workspace (be careful)
@@ -69,3 +66,6 @@ getwd() ## will display the working directory
 ```
 
 This script uses [R Markdown](http://rmarkdown.rstudio.com/)
+------------------------------------------------------------
+
+[R Markdown](http://rmarkdown.rstudio.com/) is a convinient format (R Notebooks) for writing R-scripts, introduced in 2014. R Markdown integrates very well in RStudio (and can also be used form the command line). Session 2 will provide an introduction to R-scripting including R Markdown.
