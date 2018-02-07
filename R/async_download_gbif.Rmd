@@ -47,24 +47,36 @@ key <- name_suggest(q='Esox lucius', rank='species')$key[1]
 # Get callback key from GBIF API and construct download url. 
 # set user_name, e-mail, and pswd as global options first
 # NB: This is set up to request userdetails interactively, modify if not running through rstudio
+
 options(gbif_user=rstudioapi::askForPassword("my gbif username"))
 options(gbif_email=rstudioapi::askForPassword("my registred gbif e-mail"))
 options(gbif_pwd=rstudioapi::askForPassword("my gbif password"))
 
+my_wkt <- "POLYGON((9.33 62.80, 9.33 64.20, 12.13 64.20, 12.13 62.80, 9.33 62.80))" 
+#wicket::validate_wkt(my_wkt))
+
+geom_param <- paste("geometry", "within", my_wkt)
+
+
 # Get download key. NB! Maximum of 3 download requests handled simultaneously
-download_key <- occ_download('taxonKey = 2346633,2366645','hasCoordinate = TRUE',
-                             'hasGeospatialIssue = FALSE',
-                             'country = NO',
-                             #'geometry = POLYGON((9.33 62.80,9.33 64.20,12.13 64.20,12.13 62.80,9.33 62.80))',
-                             type="and") %>% 
+download_key <- 
+  occ_download(
+    'taxonKey = 2346633,2366645',
+    'hasCoordinate = TRUE',
+    'hasGeospatialIssue = FALSE',
+    'country = NO',
+    geom_param,
+    type = "and"
+  ) %>% 
   occ_download_meta
+
 
 # Automatize the process: Script for calling the download at regular interval
 # - download_key from occ_download, n_try=number of trials before giving up, 
 # Sys.sleep_duration=time in seconds between each trial (adjust after the expected size of the download). This function will download the data as a .zip file to the working directory of R. 
 
 source("https://gist.githubusercontent.com/andersfi/1e7cd54cf4d12e86f0ecc66effd86129/raw/0d40d1971427aecd0c469c062c0693320392435b/download_from_GBIF_key")
-download_GBIF_API(download_key=download_key,n_try=5,Sys.sleep_duration=15)
+download_GBIF_API(download_key=download_key,n_try=5,Sys.sleep_duration=30)
 
 # Alternatively, wait for e-mail or watch on GBIF portal: https://www.gbif.org/user/download
 # The download key will be shown as last part of the url e.g. https://www.gbif.org/occurrence/download/0003580-171002173027117
