@@ -99,3 +99,46 @@ points(xy, col='red', pch=20) # plot species occurrence points to the map (small
 
 
 ### This script follows R Markdown, http://rmarkdown.rstudio.com/
+
+
+***
+
+# NOTES -- copy from gbif_demo.R
+
+require(rgbif) # r-package for accessing GBIF
+require(maps)
+require(mapproj)
+require(mapdata)
+require(maptools) # mapping tools for spatial objects
+require(rgdal) # provides the Geospatial Data Abstraction Library
+require(raster) # spatial raster data management, works well with dismo
+
+## GBIF data
+key <- name_backbone(name="Hepatica nobilis", kingdom="Plantae")$speciesKey
+sp <- occ_search(taxonKey=key, return="data", hasCoordinate=TRUE, limit=1000) 
+
+## Extract coordinates
+xy <- sp[c("decimalLongitude","decimalLatitude")] ## Only the coordnates (if useful)
+sp_xy <- sp[c("species", "decimalLongitude","decimalLatitude")] ## Input for Maxent
+
+## Write dataframe to file (demo)
+write.table(sp_xy, file="./demo/sp_xy.txt", sep="\t", row.names=FALSE, qmethod="double") ## Input for Maxent
+
+## Read data file back into R (demo)
+rm(sp_xy)
+sp_xy <- read.delim("./demo/sp_xy.txt", header=TRUE, dec=".", stringsAsFactors=FALSE)
+
+## Read WorldClim environment data into R
+## NB! finer resolution will cause very large Internet download, and cache large files locally
+env <- getData('worldclim', var='bio', res=10) # 10 degree resolution (approx 18 km)
+#env <- getData('worldclim', var='bio', res=2.5) # 2 degree 5 minute resolution (approx 5 km)
+plot(env, 1) # plot the first bioclim layer (BIO1 = Annual Mean Temperature)
+plot(env, 12) # plot the bioclim layer 12, annual precipitation
+points(xy, col='blue') # plot species occurrence points to the map
+
+plot(env, 1, main="BioClim 1 Annual Mean Temperature")
+points(xy, col='red', pch=20) # plot species occurrence points to the map (smaller dots)
+title(sub="GBIF pecies occurrences and BioClim1") # Sub title at bottom
+dev.copy(png,'./demo/bioclim1_occurrences.png') # save what is in the plot window
+dev.off() # close with dev.off, to write image to file
+

@@ -1,5 +1,5 @@
 ---
-title:  "GBIF rgbif demo (Nordic Oikos 2018)"
+title:  "GBIF demo (Nordic Oikos 2018)"
 author: "Dag Endresen, http://orcid.org/0000-0002-2352-5497"
 date:   "February 18, 2018"
 output:
@@ -12,52 +12,44 @@ output:
 
 Scientific reuse of openly published biodiversity information: Programmatic access to and analysis of primary biodiversity information using R. Nordic Oikos 2018, pre-conference R workshop, 18 and 19 February 2018. Further information [here](http://www.gbif.no/events/2018/Nordic-Oikos-2018-R-workshop.html).
 
-Here are some basic examples of accessing GBIF data from R using the [rgbif](https://www.gbif.org/tool/81747/rgbif) [package](https://cran.r-project.org/web/packages/rgbif/index.html) from [rOpenSci](https://ropensci.org/).
+Session 1 includes basic examples of accessing GBIF data from R using the [rgbif](https://www.gbif.org/tool/81747/rgbif) [package](https://cran.r-project.org/web/packages/rgbif/index.html) from [rOpenSci](https://ropensci.org/). See session 3 for more examples.
 
 
 
-```r
-# Setting the working directory, here: to the same directory as the RMD-script
-# Notice that eval=FALSE will exclude execution of this chunk in knitr, but enable manual execution in RStudio
-setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
-getwd() ## will display the working directory
-```
 
 ## Choose a species name
 
 ```r
 require(rgbif) # r-package for GBIF data
-kingdom <- "Plantae"
 sp_name <- "Hepatica nobilis" # liverleaf (blaaveis:no)
 #sp_name <- "Hordeum vulgare" # barley (bygg:no)
 key <- name_backbone(name=sp_name, kingdom="Plantae")$speciesKey
 ```
 
-## Retrieve species occurrence data from GBIF
+## Retrieve GBIF species occurrence data
 
 ```r
 require(rgbif) # r-package for GBIF data
-sp <- occ_search(taxonKey=key, return="data", hasCoordinate=TRUE, limit=300) 
+sp <- occ_search(taxonKey=key, return="data", hasCoordinate=TRUE, limit=200) 
 gbifmap(sp)
 ```
 
 ![](gbif_demo_files/figure-html/unnamed-chunk-3-1.png)<!-- -->
 
-## Example - GBIF data from Trondheim
+
+## Retrieve GBIF species occurrence data from Trondheim
 Species is *Hepatica nobilis* with taxonKey **5371699**
 
 ```r
-require(rgbif) # r-package for GBIF data
-require("mapr") # rOpenSci r-package for mapping (occurrence data)
+require('rgbif') # r-package for GBIF data
+require('mapr') # rOpenSci r-package for mapping (occurrence data)
 bbox <- c(10.2,63.3,10.6,63.5) # Trondheim
-#bbox <- c(5.25, 60.3, 5.4, 60.4) # Bergen
-#bbox <- c(18.7, 69.6, 19.2, 69.8) # Tromsoe
-#bbox <- c(10.6, 59.9, 10.9, 60.0) # Oslo
-sp_bb <- occ_search(taxonKey=key, return="data", hasCoordinate=TRUE, country="NO", geometry=bbox, limit=300) 
+sp_bb <- occ_search(taxonKey=key, return="data", hasCoordinate=TRUE, country="NO", geometry=bbox, limit=200) 
 map_leaflet(sp_bb, "decimalLongitude", "decimalLatitude", size=3, color="blue")
 ```
 
-![Leaflet map](gbif_demo_files/s1_leaflet_map.png "Leaflet map")
+![Leaflet map](demo_data/s1_leaflet_map.png "Leaflet map")
+
 
 ## Extract coordinates suitable for e.g. Maxent
 
@@ -82,15 +74,11 @@ head(sp_xy, n=5) ## preview first 5 records
 ## Write dataframe to file (useful for Maxent etc)
 
 ```r
-write.table(sp_xy, file="../demo_data/sp_xy.txt", sep="\t", row.names=FALSE, qmethod="double") ## for Maxent
+write.table(sp_xy, file="./demo_data/sp_xy.txt", sep="\t", row.names=FALSE, qmethod="double") ## for Maxent
 ```
 
-## Read data file back into R
 
-```r
-#rm(sp_xy) ## remove vector sp_xy from the R workspace environment, before re-loading
-#sp_xy <- read.delim("./sp_xy.txt", header=TRUE, dec=".", stringsAsFactors=FALSE)
-```
+***
 
 GBIF demo examples for species: *Hepatica nobilis* (taxonKey:5371699).
 
