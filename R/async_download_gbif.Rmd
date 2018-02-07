@@ -52,7 +52,7 @@ options(gbif_user=rstudioapi::askForPassword("my gbif username"))
 options(gbif_email=rstudioapi::askForPassword("my registred gbif e-mail"))
 options(gbif_pwd=rstudioapi::askForPassword("my gbif password"))
 
-my_wkt <- "POLYGON((9.33 62.80, 9.33 64.20, 12.13 64.20, 12.13 62.80, 9.33 62.80))" 
+my_wkt <- "POLYGON((10.32989501953125 63.26787016946243, 10.32989501953125 63.455051146616825, 10.8819580078125 63.455051146616825, 10.8819580078125 63.26787016946243, 10.32989501953125 63.26787016946243))" 
 #wicket::validate_wkt(my_wkt))
 
 geom_param <- paste("geometry", "within", my_wkt)
