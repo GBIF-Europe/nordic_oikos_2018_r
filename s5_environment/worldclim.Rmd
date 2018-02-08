@@ -1,5 +1,6 @@
 ---
-title: "Linking GBIF and environment layers (Nordic Oikos 2018)"
+title: "Linking GBIF and environment layers"
+subtitle: "R workshop by GBIF.no and ForBio.no"
 author: "Dag Endresen, http://orcid.org/0000-0002-2352-5497"
 date: "February 18, 2018"
 output:
@@ -9,7 +10,7 @@ output:
 
 # Nordic Oikos 2018 - R workshop
 
-Scientific reuse of openly published biodiversity information: Programmatic access to and analysis of primary biodiversity information using R. Nordic Oikos 2018, pre-conference R workshop, 18 and 19 February 2018. Further information [here](http://www.gbif.no/events/2018/Nordic-Oikos-2018-R-workshop.html).
+Scientific reuse of openly published biodiversity information: Programmatic access to and analysis of primary biodiversity information using R. Nordic Oikos 2018, pre-conference R workshop, 18 and 19 February 2018 in Trondheim. Further information [here](http://www.gbif.no/events/2018/Nordic-Oikos-2018-R-workshop.html).
 
 Session 5 focus on linking GBIF data with environment layers, using the [Raster R-package](https://cran.r-project.org/web/packages/raster/index.html) and other tools.
 
@@ -37,7 +38,7 @@ require(raster) # spatial raster data management, works well with dismo
 
 
 ### GBIF data for taxon liverleaf (blaaveis:no) - from Trondheim
-```{r message=FALSE, eval=FALSE}
+```{r messages=FALSE, eval=FALSE}
 require(rgbif) # r-package for GBIF data
 sp_name <- "Hepatica nobilis"; kingdom <- "Plantae" # liverleaf (blaaveis:no), taxonKey=5371699
 key <- name_backbone(name=sp_name, kingdom=kingdom)$speciesKey
@@ -80,13 +81,14 @@ write.table(sp_xy, file="./demo_data/sp_xy.txt", sep="\t", row.names=FALSE, qmet
 ***
 
 Get administrative borders for Norway
-```{r messages=FA, eval=FALSE}
+```{r messages=FALSE, eval=FALSE}
 library(raster)
 gadm_norway <- getData('GADM', country='NOR', level=1, path="./demo_data") ## level 0,1,2,...
 plot(gadm_norway, main="Adm. Boundaries Norway Level 1")
-points(xy, col='blue', pch=20) # plot species occurrence points to the map (smaller dots)
+points(xy, col='blue', pch=20) ## plot species occurrence points to the map (smaller dots)
 ```
-![GADM Norway](demo_data/gadm_norway.png "GADM admin borders for Norway")
+![GADM Norway](demo_data/gadm_norway_sp.png "GADM admin borders for Norway")
+
 ***
 
 # Read environment layer from WorldClim into R
@@ -94,10 +96,11 @@ points(xy, col='blue', pch=20) # plot species occurrence points to the map (smal
 Citation: Fick, S.E. and R.J. Hijmans, 2017. Worldclim 2: New 1-km spatial resolution climate surfaces for global land areas. *International Journal of Climatology* 37: 4302–4315. DOI:10.1002/joc.5086
 
 ### Download and load bioclim layers from WorldClim
-Data source worldclim requires variables "var", "res", and if res=0.5 also "lon" and "lat"
-* var = bio, tmin, tmax, tavg, prec, srad, wind, or vapr. [More information](http://worldclim.org/version2).
-* res = "10" minutes (ca 18.5km), "5" min (ca 9.3km), "2.5" min (ca 4.5km), "0.5" 30 arc-seconds (ca 1km)
-* lon = [longitude], lat = [latitude], as integer coordinate-values somewhere inside the tile that you want
+Data source worldclim requires variables "var", "res", and if res=0.5 also "lon" and "lat":
+
+ * var = bio, tmin, tmax, tavg, prec, srad, wind, or vapr. [More information](http://worldclim.org/version2).
+ * res = "10" minutes (ca 18.5km), "5" min (ca 9.3km), "2.5" min (ca 4.5km), "0.5" 30 arc-seconds (ca 1km)
+ * lon = [longitude], lat = [latitude], as integer coordinate-values somewhere inside the tile that you want
 
 **NB! finer resolution will cause very large Internet download, and cache large files locally!**
 
@@ -118,6 +121,7 @@ title(main = bquote(italic(.(sp_name)) ~occurrences~on~Annual~mean~temperature~'
 #plot(gadm_norway, add=TRUE) ## add admin county borders
 points(xy, col='blue', pch=20) # plot species occurrence points to the map (smaller dots)
 ```
+![Bioclim 1, Annual mean temperature](demo_data/bioclim_1_sp.png "Bioclim 01")
 
 ```{r fig.cap="Figure: GBIF data plotted on environment layer map", eval=FALSE}
 #plot(env, 1) # plot the first bioclim layer (BIO1 = Annual Mean Temperature)
@@ -127,6 +131,7 @@ title(main = bquote(italic(.(sp_name)) ~occurrences~plotted~on~Annual~precipitat
 axis(side=2, tck = -0.04, col.ticks="gray") ## add axis only left
 points(xy, col='blue') # plot species occurrence points to the map
 ```
+![Bioclim 12, Annual precepitation](demo_data/bioclim_12_sp.png "Bioclim 12")
 
 ```{r messages=FALSE, eval=FALSE}
 # Save plot -- IF plotting in the right side plot window, and not inline in the R Markup notebook
@@ -148,8 +153,8 @@ write.table(xy_bio, file="./demo_data/xy_bio.txt", sep="\t", row.names=FALSE, co
 ```{r eval=FALSE}
 sp_m_bio <- cbind(sp_m, xy_bio) # generating output file
 head(sp_m_bio, n=5) ## preview first 5 records
-write.table(sp_m_bio, file="./demo_data/sp_m_bio.txt", sep="\t", row.names=FALSE, col.names=TRUE, qmethod="double")
-#sp_m_bio <- read.delim("./demo_data/sp_m_bio.txt", header=TRUE, dec=".", stringsAsFactors=FALSE) ## dataframe
+write.table(sp_m_bio, file="./demo_data/sp_bio.txt", sep="\t", row.names=FALSE, col.names=TRUE, qmethod="double")
+#sp_m_bio <- read.delim("./demo_data/sp_bio.txt", header=TRUE, dec=".", stringsAsFactors=FALSE) ## dataframe
 ```
 
 ***
@@ -159,9 +164,11 @@ write.table(sp_m_bio, file="./demo_data/sp_m_bio.txt", sep="\t", row.names=FALSE
 #object.size(env) ## read the space allocated in memory for an environment variable
 #format(object.size(library), units = "auto") ## Auto reports multiples of 1024
 #format(object.size(library), units = "auto", standard = "SI") ## SI use multiples of 1000
-cat("Size of env", format(object.size(library), units = "auto")) ## Auto reports multiples of 1024
+cat("Size of env =", format(object.size(library), units = "auto")) ## Auto reports multiples of 1024
 #rm(env) ## save memory - especially useful if using finer resolutions
 ```
+
+Size of env = 1.5 Mb
 
 ***
 
