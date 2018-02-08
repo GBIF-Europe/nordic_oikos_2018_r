@@ -16,29 +16,14 @@ Session 5 focus on linking GBIF data with environment layers, using the [Raster 
 
 ***
 
-```{r include=FALSE, eval=FALSE}
-# Setting the working directory, here: to the same directory as the RMD-script
-# Notice that eval=FALSE will exclude execution of this chunk in knitr, but enable manual execution in RStudio
-#require(rstudioapi)
-setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
-getwd() ## will display the working directory
-```
 
-```{r include=FALSE, eval=FALSE}
-# Load R-packages
-# Use library(_pk-name_) or require(_pk-name_) to load packages
-require(rgbif) # r-package for accessing GBIF
-require(maps)
-require(mapproj)
-require(mapdata)
-require(maptools) # mapping tools for spatial objects
-require(rgdal) # provides the Geospatial Data Abstraction Library
-require(raster) # spatial raster data management, works well with dismo
-```
+
+
 
 
 ### GBIF data for taxon liverleaf (blaaveis:no) - from Trondheim
-```{r messages=FALSE, eval=FALSE}
+
+```r
 require(rgbif) # r-package for GBIF data
 sp_name <- "Hepatica nobilis"; kingdom <- "Plantae" # liverleaf (blaaveis:no), taxonKey=5371699
 key <- name_backbone(name=sp_name, kingdom=kingdom)$speciesKey
@@ -55,7 +40,8 @@ sp_m <- sp[c("name", "catalogNumber", "decimalLongitude","decimalLatitude", "bas
 ***
 
 ## Extract coordinates suitable for e.g. Maxent
-```{r eval=FALSE}
+
+```r
 xy <- sp[c("decimalLongitude","decimalLatitude")] ## Extract only the coordinates
 sp_xy <- sp[c("species", "decimalLongitude","decimalLatitude")] ## Input format for Maxent
 # structure(sp_xy) ## preview the list of coordinates
@@ -63,7 +49,8 @@ head(sp_xy, n=5) ## preview first 5 records
 ```
 
 ### Write dataframe to file (useful for Maxent etc.)
-```{r messages=FALSE, eval=FALSE}
+
+```r
 #head(sp, n=5) ## preview first 5 records
 write.table(sp_xy, file="./demo_data/sp_xy.txt", sep="\t", row.names=FALSE, qmethod="double") ## for Maxent
 #readLines("./demo_data/sp_xy.txt", n=10)
@@ -71,7 +58,8 @@ write.table(sp_xy, file="./demo_data/sp_xy.txt", sep="\t", row.names=FALSE, qmet
 ```
 
 ### Read data file back into R
-```{r messages=FALSE, eval=FALSE}
+
+```r
 #rm(sp_xy) ## remove vector sp_xy from the R workspace environment, before re-loading
 #sp_xy <- read.delim("./demo_data/sp_xy.txt", header=TRUE, dec=".", stringsAsFactors=FALSE)
 #head(sp_xy, n=5) ## preview first 5 records
@@ -81,7 +69,8 @@ write.table(sp_xy, file="./demo_data/sp_xy.txt", sep="\t", row.names=FALSE, qmet
 ***
 
 Get administrative borders for Norway
-```{r messages=FALSE, eval=FALSE}
+
+```r
 library(raster)
 gadm_norway <- getData('GADM', country='NOR', level=1, path="./demo_data") ## level 0,1,2,...
 plot(gadm_norway, main="Adm. Boundaries Norway Level 1")
@@ -104,7 +93,8 @@ Data source worldclim requires variables "var", "res", and if res=0.5 also "lon"
 
 **NB! finer resolution will cause very large Internet download, and cache large files locally!**
 
-```{r eval=FALSE}
+
+```r
 require(raster) # spatial raster data management, works well with dismo
 env <- getData('worldclim', var='bio', res=10) # 10 degree grid (approx 18.5 km, 342 km2 at equator) 85 MByte
 #env <- getData('worldclim', var='bio', res=5) # 5 degree grid (approx 9.3 km, 86 km2) 296 MByte
@@ -114,7 +104,8 @@ env <- getData('worldclim', var='bio', res=10) # 10 degree grid (approx 18.5 km,
 
 ### Plot environment layers and species occurrences on a map
 
-```{r fig.cap="Figure: GBIF data plotted on environment layer map", eval=FALSE}
+
+```r
 #plot(env, 1, main="Worldclim (BIO 01) Annual mean temperature", axes=FALSE)
 plot(env, 1, main=NULL, axes=FALSE)
 title(main = bquote(italic(.(sp_name)) ~occurrences~on~Annual~mean~temperature~'(dCx10)'))
@@ -123,7 +114,8 @@ points(xy, col='blue', pch=20) # plot species occurrence points to the map (smal
 ```
 ![Bioclim 1, Annual mean temperature](demo_data/bioclim_1_sp.png "Bioclim 01")
 
-```{r fig.cap="Figure: GBIF data plotted on environment layer map", eval=FALSE}
+
+```r
 #plot(env, 1) # plot the first bioclim layer (BIO1 = Annual Mean Temperature)
 plot(env, 12, main=NULL, axes=FALSE) # plot bioclim layer, BIO12 = Annual Precipitation
 #title(main = "WorldClim, BioClim 12, Annual precipitation")
@@ -133,7 +125,8 @@ points(xy, col='blue') # plot species occurrence points to the map
 ```
 ![Bioclim 12, Annual precepitation](demo_data/bioclim_12_sp.png "Bioclim 12")
 
-```{r messages=FALSE, eval=FALSE}
+
+```r
 # Save plot -- IF plotting in the right side plot window, and not inline in the R Markup notebook
 #dev.copy(png,'./demo_data/bioclim1_occurrences.png') # save what is in the plot window
 #dev.off() # close with dev.off, to write image to file
@@ -143,14 +136,16 @@ points(xy, col='blue') # plot species occurrence points to the map
 ***
 
 ## Extract climate data for species occurrence points
-```{r eval=FALSE}
+
+```r
 xy_bio <- extract(env, xy); # extract environment to points (pkg raster)
 head(xy_bio, n=5) ## preview first 5 records
 write.table(xy_bio, file="./demo_data/xy_bio.txt", sep="\t", row.names=FALSE, col.names=TRUE, qmethod="double")
 #xy_bio <- read.delim("./demo_data/xy_bio.txt", header=TRUE, dec=".", stringsAsFactors=FALSE) ## dataframe
 ```
 
-```{r eval=FALSE}
+
+```r
 sp_m_bio <- cbind(sp_m, xy_bio) # generating output file
 head(sp_m_bio, n=5) ## preview first 5 records
 write.table(sp_m_bio, file="./demo_data/sp_bio.txt", sep="\t", row.names=FALSE, col.names=TRUE, qmethod="double")
@@ -160,7 +155,8 @@ write.table(sp_m_bio, file="./demo_data/sp_bio.txt", sep="\t", row.names=FALSE, 
 ***
 ### Size of environment layer can be LARGE if using the finer resolutions
 
-```{r eval=FALSE}
+
+```r
 #object.size(env) ## read the space allocated in memory for an environment variable
 #format(object.size(library), units = "auto") ## Auto reports multiples of 1024
 #format(object.size(library), units = "auto", standard = "SI") ## SI use multiples of 1000
@@ -172,15 +168,5 @@ Size of env = 1.5 Mb
 
 ***
 
-```{r include=FALSE, eval=FALSE}
-#---------------------------------------------------
-#**NOTES -- Read WorldClim environment data into R**
-#env <- getData('worldclim', var='bio', res=10) # 10 degree resolution (approx 18 km)
-#plot(env, 1, main="BioClim 1 Annual Mean Temperature")
-#points(xy, col='red', pch=20) # plot species occurrence points to the map (smaller dots)
-#title(sub="GBIF pecies occurrences and BioClim1") # Sub title at bottom
-#dev.copy(png,'./demo_data/bioclim1_occurrences.png') # save what is in the plot window
-#dev.off() # close with dev.off, to write image to file
-#---------------------------------------------------
-```
+
 
