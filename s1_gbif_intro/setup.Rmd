@@ -1,7 +1,7 @@
 ---
-title: "Workshop intro and some R setup examples/notes"
+title: "Intro and some R setup examples (Nordic Oikos 2018)"
 author: "Dag Endresen, https://orcid.org/0000-0002-2352-5497"
-date: "February 3, 2018"
+date: "February 18, 2018"
 output: github_document
 ---
 
@@ -91,4 +91,6 @@ bb <- c(5.25, 60.3, 5.4, 60.4) # Bergen
 bb <- c(18.7, 69.6, 19.2, 69.8) # Tromsoe
 bb <- c(10.6, 59.9, 10.9, 60.0) # Oslo
 
+message(sprintf("Current working dir: %s\n", getwd()))
+paste("Today is", date())
 

@@ -13,7 +13,7 @@ Scientific reuse of openly published biodiversity information: Programmatic acce
 
 Session 3 includes examples of accessing GBIF data from R using the [rgbif](https://www.gbif.org/tool/81747/rgbif) [package](https://cran.r-project.org/web/packages/rgbif/index.html) from [rOpenSci](https://ropensci.org/).
 
-
+***
 
 ```{r messages=FALSE, eval=FALSE}
 # Setting the working directory, here: to the same directory as the RMD-script
@@ -65,6 +65,17 @@ head(sp, n=5) ## preview first 5 records
 ```
 ![Preview of dataframe for *Hepatica nobilis*](demo_data/head_sp.png 'head(sp, n=5)')
 
+***
+
+### Extract coordinates suitable for e.g. Maxent
+```{r eval=FALSE}
+xy <- sp[c("decimalLongitude","decimalLatitude")] ## Extract only the coordinates
+sp_xy <- sp[c("species", "decimalLongitude","decimalLatitude")] ## Input format for Maxent
+# structure(sp_xy) ## preview the list of coordinates
+head(sp_xy, n=5) ## preview first 5 records
+```
+![Preview of *sp-x-y* data extracted for use with Maxent etc.](demo_data/head_sp_xy.png "head sp_xy")
+
 ### Write dataframe to file (useful for Maxent etc.)
 ```{r messages=FALSE, eval=FALSE}
 #write.table(sp_xy, file="./demo_data/sp_xy.txt", sep="\t", row.names=FALSE, qmethod="double") ## for Maxent
@@ -100,7 +111,7 @@ bb <- c(10.2,63.3,10.6,63.5) # Trondheim
 #bb <- c(18.7, 69.6, 19.2, 69.8) # Tromsoe
 #bb <- c(10.6, 59.9, 10.9, 60.0) # Oslo
 sp_bb <- occ_search(taxonKey=key, return="data", hasCoordinate=TRUE, country="NO", geometry=bb, limit=200)
-sp_bb_m <- sp_bb[c("name", "decimalLongitude","decimalLatitude", "basisOfRecord", "year", "municipality", "taxonKey")] ## Subset columns
+sp_bb_m <- sp_bb[c("name", "catalogNumber", "decimalLongitude","decimalLatitude", "basisOfRecord", "year", "municipality", "taxonKey", "occurrenceID")] ## Subset columns
 ```
 
 ### Preview data frame
@@ -117,18 +128,6 @@ library("spocc") # rOpenSci r-package with more biodiversity data sources than G
 map_leaflet(sp_bb_m, "decimalLongitude", "decimalLatitude", size=3)
 ```
 ![Map GBIF data with bounding box for Trondheim](demo_data/map_trondheim.png "Leaflet map, Trondheim")
-
-***
-
-
-## Extract coordinates suitable for e.g. Maxent
-```{r eval=FALSE}
-xy <- sp[c("decimalLongitude","decimalLatitude")] ## Extract only the coordinates
-sp_xy <- sp[c("species", "decimalLongitude","decimalLatitude")] ## Input format for Maxent
-# structure(sp_xy) ## preview the list of coordinates
-head(sp_xy, n=5) ## preview first 5 records
-```
-![Preview of *sp-x-y* data extracted for use with Maxent etc.](demo_data/head_sp_xy.png "head sp_xy")
 
 ***
 
@@ -150,7 +149,6 @@ map_leaflet(spp_m, "decimalLongitude", "decimalLatitude", size=3, color=cols)
 
 
 ***
-
 
 ### Expand color-ramp when mapping many species
 Notice that colors will not be easy to distinguish when number of species is high. Standard color-ramps include 9-12 colors.
