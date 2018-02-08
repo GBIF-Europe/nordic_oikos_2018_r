@@ -61,10 +61,8 @@ geom_param <- paste("geometry", "within", my_wkt)
 # Get download key. NB! Maximum of 3 download requests handled simultaneously
 download_key <- 
   occ_download(
-    'taxonKey = 2346633,2366645',
+    'taxonKey = 2346633',
     'hasCoordinate = TRUE',
-    'hasGeospatialIssue = FALSE',
-    'country = NO',
     geom_param,
     type = "and"
   ) %>% 
