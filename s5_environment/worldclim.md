@@ -72,11 +72,13 @@ Get administrative borders for Norway
 
 ```r
 library(raster)
-gadm_norway <- getData('GADM', country='NOR', level=1, path="./demo_data") ## level 0,1,2,...
-plot(gadm_norway, main="Adm. Boundaries Norway Level 1")
+gadm_norway_1 <- getData('GADM', country='NOR', level=1, path="./demo_data") ## level 0,1,2,...
+plot(gadm_norway_1, main="Adm. Boundaries Norway Level 1")
 points(xy, col='blue', pch=20) ## plot species occurrence points to the map (smaller dots)
 ```
 ![GADM Norway](demo_data/gadm_norway_sp.png "GADM admin borders for Norway")
+
+
 
 ***
 
@@ -158,15 +160,43 @@ write.table(sp_m_bio, file="./demo_data/sp_bio.txt", sep="\t", row.names=FALSE, 
 
 ```r
 #object.size(env) ## read the space allocated in memory for an environment variable
-#format(object.size(library), units = "auto") ## Auto reports multiples of 1024
-#format(object.size(library), units = "auto", standard = "SI") ## SI use multiples of 1000
-cat("Size of env =", format(object.size(library), units = "auto")) ## Auto reports multiples of 1024
+#format(object.size(env), units = "auto") ## Auto reports multiples of 1024
+#format(object.size(env), units = "auto", standard = "SI") ## SI use multiples of 1000
+cat("Size of env =", format(object.size(env), units = "auto")) ## Auto reports multiples of 1024
 #rm(env) ## save memory - especially useful if using finer resolutions
+cat("Size of gadm_norway_1 =", format(object.size(gadm_norway_1), units = "auto"))
 ```
 
-Size of env = 1.5 Mb
+Size of env = 235.5 Kb
 
 ***
 
+### Plot with extent Scandinavia (using zoom)
 
+![Bioclim 12, Annual precepitation](demo_data/map_scandinavia.png "Bioclim 12")
 
+***
+
+### The BioClim layers:
+
+ * BIO1 = Annual Mean Temperature
+ * BIO2 = Mean Diurnal Range (Mean of monthly (max temp – min temp)) 
+ * BIO3 = Isothermality (BIO2/BIO7) (* 100)
+ * BIO4 = Temperature Seasonality (standard deviation *100)
+ * BIO5 = Max Temperature of Warmest Month
+ * BIO6 = Min Temperature of Coldest Month
+ * BIO7 = Temperature Annual Range (BIO5-BIO6)
+ * BIO8 = Mean Temperature of Wettest Quarter
+ * BIO9 = Mean Temperature of Driest Quarter
+ * BIO10 = Mean Temperature of Warmest Quarter 
+ * BIO11 = Mean Temperature of Coldest Quarter 
+ * BIO12 = Annual Precipitation
+ * BIO13 = Precipitation of Wettest Month
+ * BIO14 = Precipitation of Driest Month
+ * BIO15 = Precipitation Seasonality (Coe cient of Variation) 
+ * BIO16 = Precipitation of Wettest Quarter
+ * BIO17 = Precipitation of Driest Quarter
+ * BIO18 = Precipitation of Warmest Quarter
+ * BIO19 = Precipitation of Coldest Quarter
+
+***

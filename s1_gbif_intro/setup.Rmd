@@ -40,6 +40,7 @@ getwd() ## will display the working directory
 #install.packages("spocc", dependencies = TRUE) # species occurrence data
 #install.packages("maps") # mapping tools
 #install.packages("mapproj") # map projection tools
+#install.packages("rgdal") # r gdal tools
 #install.packages(mapdata) # map data
 #install.packages("raster") # raster data tools
 #install.packages("plotly")
