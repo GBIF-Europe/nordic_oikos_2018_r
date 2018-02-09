@@ -37,59 +37,34 @@ require(raster) # spatial raster data management, works well with dismo
 ```
 
 
-### GBIF data for taxon liverleaf (blaaveis:no) - from Trondheim
+### GBIF data for taxon liverleaf (blaaveis:no)
 ```{r messages=FALSE, eval=FALSE}
 require(rgbif) # r-package for GBIF data
 sp_name <- "Hepatica nobilis"; kingdom <- "Plantae" # liverleaf (blaaveis:no), taxonKey=5371699
 key <- name_backbone(name=sp_name, kingdom=kingdom)$speciesKey
-#bb <- c(10.2,63.3,10.6,63.5) # Trondheim
-#sp_bb <- occ_search(taxonKey=key, return="data", hasCoordinate=TRUE, country="NO", geometry=bb, limit=100)
-#sp_bb_m <- sp_bb[c("name", "decimalLongitude","decimalLatitude", "basisOfRecord", "year", "municipality", "taxonKey")] ## Subset columns
 sp <- occ_search(taxonKey=key, return="data", hasCoordinate=TRUE, country="NO", limit=100)
 sp_m <- sp[c("name", "catalogNumber", "decimalLongitude","decimalLatitude", "basisOfRecord", "year", "municipality", "taxonKey", "occurrenceID")] ## Subset columns
 #gbifmap(sp, region = "norway")
 #map_leaflet(sp_m, "decimalLongitude", "decimalLatitude", size=2, color="blue")
 ```
-![Map GBIF data with bounding box for Trondheim](demo_data/map_trondheim.png "Leaflet map, Trondheim")
 
 ***
 
-## Extract coordinates suitable for e.g. Maxent
+### Extract coordinates suitable for e.g. Maxent
 ```{r eval=FALSE}
 xy <- sp[c("decimalLongitude","decimalLatitude")] ## Extract only the coordinates
 sp_xy <- sp[c("species", "decimalLongitude","decimalLatitude")] ## Input format for Maxent
-# structure(sp_xy) ## preview the list of coordinates
-head(sp_xy, n=5) ## preview first 5 records
-```
-
-### Write dataframe to file (useful for Maxent etc.)
-```{r messages=FALSE, eval=FALSE}
-#head(sp, n=5) ## preview first 5 records
-write.table(sp_xy, file="./demo_data/sp_xy.txt", sep="\t", row.names=FALSE, qmethod="double") ## for Maxent
-#readLines("./demo_data/sp_xy.txt", n=10)
+#write.table(sp_xy, file="./demo_data/sp_xy.txt", sep="\t", row.names=FALSE, qmethod="double") ## for Maxent
 #write.table(sp, file="./demo_data/sp.txt", sep="\t", row.names=FALSE, qmethod="double") ## dataframe
+#readLines("./demo_data/sp_xy.txt", n=10)
 ```
 
 ### Read data file back into R
 ```{r messages=FALSE, eval=FALSE}
-#rm(sp_xy) ## remove vector sp_xy from the R workspace environment, before re-loading
-#sp_xy <- read.delim("./demo_data/sp_xy.txt", header=TRUE, dec=".", stringsAsFactors=FALSE)
+sp_xy <- read.delim("./demo_data/sp_xy.txt", header=TRUE, dec=".", stringsAsFactors=FALSE)
+sp <- read.delim("./demo_data/sp.txt", header=TRUE, dec=".", stringsAsFactors=FALSE) ## dataframe
 #head(sp_xy, n=5) ## preview first 5 records
-#sp <- read.delim("./demo_data/sp.txt", header=TRUE, dec=".", stringsAsFactors=FALSE) ## dataframe
 ```
-
-***
-
-Get administrative borders for Norway
-```{r messages=FALSE, eval=FALSE}
-library(raster)
-gadm_norway_1 <- getData('GADM', country='NOR', level=1, path="./demo_data") ## level 0,1,2,...
-plot(gadm_norway_1, main="Adm. Boundaries Norway Level 1")
-points(xy, col='blue', pch=20) ## plot species occurrence points to the map (smaller dots)
-```
-![GADM Norway](demo_data/gadm_norway_sp.png "GADM admin borders for Norway")
-
-
 
 ***
 
@@ -117,40 +92,22 @@ env <- getData('worldclim', var='bio', res=10) # 10 degree grid (approx 18.5 km,
 ### Plot environment layers and species occurrences on a map
 
 ```{r fig.cap="Figure: GBIF data plotted on environment layer map", eval=FALSE}
-#plot(env, 1, main="Worldclim (BIO 01) Annual mean temperature", axes=FALSE)
-plot(env, 1, main=NULL, axes=FALSE)
+plot(env, 1, main=NULL, axes=FALSE) ## could add title here with main="Title"
 title(main = bquote(italic(.(sp_name)) ~occurrences~on~Annual~mean~temperature~'(dCx10)'))
-#plot(gadm_norway, add=TRUE) ## add admin county borders
-points(xy, col='blue', pch=20) # plot species occurrence points to the map (smaller dots)
+points(xy, col='blue', pch=20) # plot species occurrence points to the map
 ```
 ![Bioclim 1, Annual mean temperature](demo_data/bioclim_1_sp.png "Bioclim 01")
 
-```{r fig.cap="Figure: GBIF data plotted on environment layer map", eval=FALSE}
-#plot(env, 1) # plot the first bioclim layer (BIO1 = Annual Mean Temperature)
-plot(env, 12, main=NULL, axes=FALSE) # plot bioclim layer, BIO12 = Annual Precipitation
-#title(main = "WorldClim, BioClim 12, Annual precipitation")
-title(main = bquote(italic(.(sp_name)) ~occurrences~plotted~on~Annual~precipitation~'(mm)'))
-axis(side=2, tck = -0.04, col.ticks="gray") ## add axis only left
-points(xy, col='blue') # plot species occurrence points to the map
-```
-![Bioclim 12, Annual precepitation](demo_data/bioclim_12_sp.png "Bioclim 12")
-
-```{r messages=FALSE, eval=FALSE}
-# Save plot -- IF plotting in the right side plot window, and not inline in the R Markup notebook
-#dev.copy(png,'./demo_data/bioclim1_occurrences.png') # save what is in the plot window
-#dev.off() # close with dev.off, to write image to file
-```
-
-
 ***
 
-## Extract climate data for species occurrence points
+### Extract climate data for species occurrence points
 ```{r eval=FALSE}
 xy_bio <- extract(env, xy); # extract environment to points (pkg raster)
 head(xy_bio, n=5) ## preview first 5 records
 write.table(xy_bio, file="./demo_data/xy_bio.txt", sep="\t", row.names=FALSE, col.names=TRUE, qmethod="double")
 #xy_bio <- read.delim("./demo_data/xy_bio.txt", header=TRUE, dec=".", stringsAsFactors=FALSE) ## dataframe
 ```
+![Environment data extracted from Bioclim](./demo_data/xy_bio.png "Bioclim")
 
 ```{r eval=FALSE}
 sp_m_bio <- cbind(sp_m, xy_bio) # generating output file
@@ -158,8 +115,10 @@ head(sp_m_bio, n=5) ## preview first 5 records
 write.table(sp_m_bio, file="./demo_data/sp_bio.txt", sep="\t", row.names=FALSE, col.names=TRUE, qmethod="double")
 #sp_m_bio <- read.delim("./demo_data/sp_bio.txt", header=TRUE, dec=".", stringsAsFactors=FALSE) ## dataframe
 ```
+![Species occurrences with environment data extracted from Bioclim](./demo_data/sp_m_bio.png "Bioclim")
 
 ***
+
 ### Size of environment layer can be LARGE if using the finer resolutions
 
 ```{r eval=FALSE}
@@ -168,26 +127,9 @@ write.table(sp_m_bio, file="./demo_data/sp_bio.txt", sep="\t", row.names=FALSE, 
 #format(object.size(env), units = "auto", standard = "SI") ## SI use multiples of 1000
 cat("Size of env =", format(object.size(env), units = "auto")) ## Auto reports multiples of 1024
 #rm(env) ## save memory - especially useful if using finer resolutions
-cat("Size of gadm_norway_1 =", format(object.size(gadm_norway_1), units = "auto"))
 ```
 
 Size of env = 235.5 Kb
-
-***
-
-### Plot with extent Scandinavia (using zoom)
-```{r messages=FALSE, echo=FALSE, eval=FALSE}
-library(raster)
-## If running plots line by line, it seems that dev.off() is called ## Error msg: plot.new not called yet
-## ext <- extent(-180,180,-90,90) # minLon, maxLon, minLat, maxLat -- for world map
-ext <- extent(3,35,54,72) ## minLon=3, maxLon=35, minLat=54, MaxLat=72 for Scandinavia
-#plot.new()
-#plot(zoom(env$bio1, ext), add = TRUE); title(main="Bio1, Annual annual temperature")
-plot(zoom(env$bio12, ext), add = TRUE); title(main="Bio12, Annual precipitation") 
-##
-points(xy, col='blue', pch=20) ## plot species occurrence points # Error msg: plot.new not called yet
-```
-![Bioclim 12, Annual precepitation](demo_data/map_scandinavia.png "Bioclim 12")
 
 ***
 

@@ -80,7 +80,7 @@ write.table(sp_xy, file="./demo_data/sp_xy.txt", sep="\t", row.names=FALSE, qmet
 
 ***
 
-Get administrative borders for Norway
+### Get administrative borders for Norway
 ```{r messages=FALSE, eval=FALSE}
 library(raster)
 gadm_norway_1 <- getData('GADM', country='NOR', level=1, path="./demo_data") ## level 0,1,2,...
@@ -117,23 +117,20 @@ env <- getData('worldclim', var='bio', res=10) # 10 degree grid (approx 18.5 km,
 ### Plot environment layers and species occurrences on a map
 
 ```{r fig.cap="Figure: GBIF data plotted on environment layer map", eval=FALSE}
-#plot(env, 1, main="Worldclim (BIO 01) Annual mean temperature", axes=FALSE)
-plot(env, 1, main=NULL, axes=FALSE)
+plot(env, 1, main=NULL, axes=FALSE) ## could add title here with main="Title"
 title(main = bquote(italic(.(sp_name)) ~occurrences~on~Annual~mean~temperature~'(dCx10)'))
 #plot(gadm_norway, add=TRUE) ## add admin county borders
 points(xy, col='blue', pch=20) # plot species occurrence points to the map (smaller dots)
 ```
-![Bioclim 1, Annual mean temperature](demo_data/bioclim_1_sp.png "Bioclim 01")
+![Bioclim 1, Annual mean temperature](./demo_data/bioclim_1_sp.png "Bioclim 01")
 
 ```{r fig.cap="Figure: GBIF data plotted on environment layer map", eval=FALSE}
-#plot(env, 1) # plot the first bioclim layer (BIO1 = Annual Mean Temperature)
 plot(env, 12, main=NULL, axes=FALSE) # plot bioclim layer, BIO12 = Annual Precipitation
-#title(main = "WorldClim, BioClim 12, Annual precipitation")
 title(main = bquote(italic(.(sp_name)) ~occurrences~plotted~on~Annual~precipitation~'(mm)'))
 axis(side=2, tck = -0.04, col.ticks="gray") ## add axis only left
 points(xy, col='blue') # plot species occurrence points to the map
 ```
-![Bioclim 12, Annual precepitation](demo_data/bioclim_12_sp.png "Bioclim 12")
+![Bioclim 12, Annual precepitation](./demo_data/bioclim_12_sp.png "Bioclim 12")
 
 ```{r messages=FALSE, eval=FALSE}
 # Save plot -- IF plotting in the right side plot window, and not inline in the R Markup notebook
@@ -206,15 +203,12 @@ plot(norway_mask, add=TRUE, lwd=2)
 ```{r messages=FALSE, echo=FALSE, eval=FALSE}
 library(raster)
 ## If running plots line by line, it seems that dev.off() is called ## Error msg: plot.new not called yet
-## ext <- extent(-180,180,-90,90) # minLon, maxLon, minLat, maxLat -- for world map
 ext <- extent(3,35,54,72) ## minLon=3, maxLon=35, minLat=54, MaxLat=72 for Scandinavia
-#plot.new()
 #plot(zoom(env$bio1, ext), add = TRUE); title(main="Bio1, Annual annual temperature")
 plot(zoom(env$bio12, ext), add = TRUE); title(main="Bio12, Annual precipitation") 
-##
 points(xy, col='blue', pch=20) ## plot species occurrence points # Error msg: plot.new not called yet
 ```
-
+![Bioclim 12, Annual precepitation](./demo_data/map_scandinavia.png "Bioclim 12")
 
 ***
 
