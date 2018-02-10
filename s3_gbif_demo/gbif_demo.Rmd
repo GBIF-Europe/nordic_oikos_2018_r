@@ -150,6 +150,12 @@ map_leaflet(spp_m, "decimalLongitude", "decimalLatitude", size=3, color=cols)
 
 ***
 
+
+(Dag: I might want to move color ramp into separate Rmd script...)
+
+
+***
+
 ### Expand color-ramp when mapping many species
 Notice that colors will not be easy to distinguish when number of species is high. Standard color-ramps include 9-12 colors.
 ```{r eval=FALSE}
@@ -174,7 +180,7 @@ map_leaflet(spp_t_m, "decimalLongitude", "decimalLatitude", size=5, color=myColo
 ![Map with multiple species, expanded color-ramp](demo_data/map_trd_spp.png "Leaflet map")
 
 
-## Diverse color palettes
+### Diverse color palettes
 
 ```{r eval=FALSE}
 library(RColorBrewer)
