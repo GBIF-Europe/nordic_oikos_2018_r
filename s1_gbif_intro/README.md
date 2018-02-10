@@ -12,3 +12,8 @@ This session gives an introduction to the Global Biodiversity Information Facili
  * [GBIF Integrated Publishing Toolkit](https://www.gbif.org/ipt) ([IPT](https://github.com/gbif/ipt/wiki/IPT2ManualNotes.wiki) data exchange document format ([Robertson et al. 2014](https://doi.org/10.1371/journal.pone.0102623))
  * Core data types supported in GBIF: [Taxon](http://rs.gbif.org/core/dwc_taxon_2015-04-24.xml), [Occurrence](http://rs.gbif.org/core/dwc_occurrence_2015-07-02.xml), and [Sampling-event](http://rs.gbif.org/core/dwc_event_2016_06_21.xml)
  * [GBIF Taxon backbone](https://doi.org/10.15468/39omei), [taxize](https://github.com/ropensci/taxize), [taxize tutorial](https://ropensci.org/tutorials/taxize_tutorial/) ([more information](http://gbif.blogspot.no/search?q=backbone))
+
+## Workshop training materials for session 1
+ * Slides (to be added here)
+ * [Brief on R settings and hints](settings.Rmd) (more in [session 2](../s2_r_intro))
+ * [Brief intro to rgbif](gbif_demo.Rmd) (more in [session 3](../s3_gbif_demo))
