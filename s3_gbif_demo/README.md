@@ -11,7 +11,7 @@ This session presents programmatic access to GBIF data using R with focus on the
 * Taxon names / resolving (using taxize). What is "nubkey”?
 * Asynchron download
 
-## Workshop training materials for session 1
+## Workshop training materials for session 3
 
  * [Programmatic access to GBIF data in R with rgbif](gbif_demo.Rmd)
  * Asynchron download (to be added)
