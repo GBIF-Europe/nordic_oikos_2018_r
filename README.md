@@ -1,6 +1,6 @@
 # Nordic Oikos 2018 -- workshop on GBIF data and R
 
-Scientific reuse of openly published biodiversity information: Programmatic access to and analysis of primary biodiversity information using R. Nordic Oikos 2018, pre-conference R workshop, 18th and 19th February 2018 in Trondheim, Norway.
+Scientific reuse of openly published biodiversity information: Programmatic access to and analysis of primary biodiversity information using R. Nordic Oikos 2018, pre-conference R workshop, 18<sup>th</sup> and 19<sup>th</sup> February 2018 in Trondheim, Norway.
 
  * Sunday 18 Feb 2018, 10:00 - 17:00
  * Monday 19 Feb 2018, 09:00 - 16:00
