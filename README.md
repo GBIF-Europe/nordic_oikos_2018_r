@@ -12,7 +12,7 @@ Scientific reuse of openly published biodiversity information: Programmatic acce
 * Session 4: [Download event data et al. from GBIF / IPT and retrieve associated information](s4_event_core)
 * Session 5: [Linking species occurrence data with environmental layers](s5_environment)
 
-**Venue**: Auditorium [DU2-150](https://use.mazemap.com/#v=1&zlevel=-2&left=10.4044354&right=10.4080592&top=63.4160961&bottom=63.4145612&campusid=1&campuses=ntnu&sharepoitype=identifier&sharepoi=360-DU2-150), NTNU Gloshaugen campus, Norwegian University of Science and Technology, Hogskoleringen 5, NO-7491 Trondheim, Norway (latitude 63.415275, longitude 10.406295).
+**Venue**: Auditorium [DU2-150](https://use.mazemap.com/#v=1&zlevel=-2&left=10.4044354&right=10.4080592&top=63.4160961&bottom=63.4145612&campusid=1&campuses=ntnu&sharepoitype=identifier&sharepoi=360-DU2-150), NTNU Gl&oslash;shaugen campus, Norwegian University of Science and Technology, H&oslash;gskoleringen 5, NO-7491 Trondheim, Norway (latitude 63.415275, longitude 10.406295).
 
 ### More information is available at:
 * http://www.gbif.no/events/2018/Nordic-Oikos-2018-R-workshop.html
