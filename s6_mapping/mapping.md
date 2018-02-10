@@ -16,29 +16,14 @@ Session 6 focuses on working with environment layers, mapping, cropping and mask
 
 ***
 
-```{r include=FALSE, eval=FALSE}
-# Setting the working directory, here: to the same directory as the RMD-script
-# Notice that eval=FALSE will exclude execution of this chunk in knitr, but enable manual execution in RStudio
-#require(rstudioapi)
-setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
-getwd() ## will display the working directory
-```
 
-```{r include=FALSE, eval=FALSE}
-# Load R-packages
-# Use library(_pk-name_) or require(_pk-name_) to load packages
-require(rgbif) # r-package for accessing GBIF
-require(maps)
-require(mapproj)
-require(mapdata)
-require(maptools) # mapping tools for spatial objects
-require(rgdal) # provides the Geospatial Data Abstraction Library
-require(raster) # spatial raster data management, works well with dismo
-```
+
+
 
 
 ### GBIF data for taxon liverleaf (blaaveis:no) - from Trondheim
-```{r messages=FALSE, eval=FALSE}
+
+```r
 library('rgbif') # rOpenSci r-package for GBIF data
 library('mapr') # rOpenSci r-package for mapping (occurrence data)
 sp_name <- "Hepatica nobilis"; kingdom <- "Plantae" # liverleaf (blaaveis:no), taxonKey=5371699
@@ -56,7 +41,8 @@ map_leaflet(sp_bb_m, "decimalLongitude", "decimalLatitude", size=2, color="blue"
 ***
 
 ### GBIF data for taxon liverleaf (blaaveis:no) - from Norway
-```{r messages=FALSE, eval=FALSE}
+
+```r
 library('rgbif') # rOpenSci r-package for GBIF data
 library('mapr') # rOpenSci r-package for mapping (occurrence data)
 sp_name <- "Hepatica nobilis"; kingdom <- "Plantae" # liverleaf (blaaveis:no), taxonKey=5371699
@@ -71,14 +57,16 @@ map_leaflet(sp_m, "decimalLongitude", "decimalLatitude", size=2, color="blue")
 ***
 
 ## Extract coordinates suitable for e.g. Maxent
-```{r eval=FALSE}
+
+```r
 xy <- sp[c("decimalLongitude","decimalLatitude")] ## Extract only the coordinates
 sp_xy <- sp[c("species", "decimalLongitude","decimalLatitude")] ## Input format for Maxent
 #head(sp_xy, n=5) ## preview first 5 records
 ```
 
 ### Write dataframe to file (useful for Maxent etc.)
-```{r messages=FALSE, eval=FALSE}
+
+```r
 write.table(sp_xy, file="./demo_data/sp_xy.txt", sep="\t", row.names=FALSE, qmethod="double") ## for Maxent
 #readLines("./demo_data/sp_xy.txt", n=10)
 write.table(sp, file="./demo_data/sp.txt", sep="\t", row.names=FALSE, qmethod="double") ## dataframe
@@ -86,7 +74,8 @@ write.table(sp, file="./demo_data/sp.txt", sep="\t", row.names=FALSE, qmethod="d
 ```
 
 ### Read data file back into R
-```{r messages=FALSE, eval=FALSE}
+
+```r
 sp_xy <- read.delim("./demo_data/sp_xy.txt", header=TRUE, dec=".", stringsAsFactors=FALSE)
 sp <- read.delim("./demo_data/sp.txt", header=TRUE, dec=".", stringsAsFactors=FALSE) ## dataframe
 ```
@@ -94,7 +83,8 @@ sp <- read.delim("./demo_data/sp.txt", header=TRUE, dec=".", stringsAsFactors=FA
 ***
 
 ### Get administrative borders for Norway
-```{r messages=FALSE, eval=FALSE}
+
+```r
 library(raster)
 gadm_norway_1 <- getData('GADM', country='NOR', level=1, path="./demo_data") ## level 0,1,2,...
 plot(gadm_norway_1, main="Adm. Boundaries Norway Level 1")
@@ -108,14 +98,16 @@ points(xy, col='blue', pch=20) ## plot species occurrence points to the map (sma
 ### Read environment layer from WorldClim into R
 For more information about WorldClim see [session 5](../s5_environment).
 
-```{r eval=FALSE}
+
+```r
 require(raster) # spatial raster data management, works well with dismo
 env <- getData('worldclim', var='bio', res=10) # 10 degree grid (approx 18.5 km, 342 km2 at equator) 85 MByte
 ```
 
 ### Plot environment layers and species occurrences on a map
 
-```{r fig.cap="Figure: GBIF data plotted on environment layer map", eval=FALSE}
+
+```r
 plot(env, 1, main=NULL, axes=FALSE) ## could add title here with main="Title"
 title(main = bquote(italic(.(sp_name)) ~occurrences~on~Annual~mean~temperature~'(dCx10)'))
 #plot(gadm_norway, add=TRUE) ## add admin county borders
@@ -123,7 +115,8 @@ points(xy, col='blue', pch=20) # plot species occurrence points to the map (smal
 ```
 ![Bioclim 1, Annual mean temperature](./demo_data/bioclim_1_sp.png "Bioclim 01")
 
-```{r fig.cap="Figure: GBIF data plotted on environment layer map", eval=FALSE}
+
+```r
 plot(env, 12, main=NULL, axes=FALSE) # plot bioclim layer, BIO12 = Annual Precipitation
 title(main = bquote(italic(.(sp_name)) ~occurrences~plotted~on~Annual~precipitation~'(mm)'))
 axis(side=2, tck = -0.04, col.ticks="gray") ## add axis only left
@@ -131,7 +124,8 @@ points(xy, col='blue') # plot species occurrence points to the map
 ```
 ![Bioclim 12, Annual precepitation](./demo_data/bioclim_12_sp.png "Bioclim 12")
 
-```{r messages=FALSE, eval=FALSE}
+
+```r
 # Save plot -- IF plotting in the right side plot window, and not inline in the R Markup notebook
 #dev.copy(png,'./demo_data/bioclim1_occurrences.png') # save what is in the plot window
 #dev.off() # close with dev.off, to write image to file
@@ -139,17 +133,7 @@ points(xy, col='blue') # plot species occurrence points to the map
 
 ***
 
-```{r include=FALSE, eval=FALSE}
-#---------------------------------------------------
-#**NOTES -- Read WorldClim environment data into R**
-#env <- getData('worldclim', var='bio', res=10) # 10 degree resolution (approx 18 km)
-#plot(env, 1, main="BioClim 1 Annual Mean Temperature")
-#points(xy, col='red', pch=20) # plot species occurrence points to the map (smaller dots)
-#title(sub="GBIF pecies occurrences and BioClim1") # Sub title at bottom
-#dev.copy(png,'./demo_data/bioclim1_occurrences.png') # save what is in the plot window
-#dev.off() # close with dev.off, to write image to file
-#---------------------------------------------------
-```
+
 
 ***
 
@@ -157,7 +141,8 @@ points(xy, col='blue') # plot species occurrence points to the map
 Cutting large (global) environment layers to a smaller extent can save significant memory. If your species occurrence data are limited to a region (e.g. Norway, Scandinavia or similar) you might reduce computation time significantly by cropping your environment layers appropriatly.
 
 ### Cut environment layer(s) to extent (result is always a square)
-```{r eval=FALSE}
+
+```r
 library(raster)
 library(rgdal)
 ext <- extent(3,35,54,72) ## minLon=3, maxLon=35, minLat=54, MaxLat=72 for Scandinavia
@@ -168,7 +153,8 @@ plot(env_cut)
 ![Bioclim layers cropped to Scandinavia](./demo_data/env_cut.png "Bioclim cropped")
 
 ### Cut environment layer(s) to a mask (from a shapefile or other vector data)
-```{r eval=FALSE}
+
+```r
 data(wrld_simpl) ## here you can also read in your OWN vector data (e.g. study area)
 norway_mask <- subset(wrld_simpl, NAME=="Norway")
 env_crop <- crop(env, extent(norway_mask)) ## crop gives a square (cut to the extent of the mask)
@@ -182,14 +168,7 @@ plot(norway_mask, add=TRUE, lwd=2)
 
 ### Plot with extent Scandinavia (using zoom)
 Using zoom, the raster data in R workspace environment is still the same size. You only zoom into the region of interest for more useful maps.
-```{r messages=FALSE, echo=FALSE, eval=FALSE}
-library(raster)
-ext <- extent(3,35,54,72) ## minLon=3, maxLon=35, minLat=54, MaxLat=72 for Scandinavia
-#plot(zoom(env$bio1, ext), add = TRUE); title(main="Bio1, Annual annual temperature")
-plot(zoom(env$bio12, ext), add = TRUE); title(main="Bio12, Annual precipitation") 
-points(xy, col='blue', pch=20) ## plot species occurrence points # Error msg: plot.new not called yet
-## If running plots line by line, it seems that dev.off() is called ## Error msg: plot.new not called yet
-```
+
 ![Bioclim 12, Annual precepitation](./demo_data/map_bio_scandinavia.png "Bioclim 12")
 
 ***
@@ -198,7 +177,8 @@ points(xy, col='blue', pch=20) ## plot species occurrence points # Error msg: pl
 
 ### Size of environment layer can be LARGE if using the finer resolutions
 
-```{r eval=FALSE}
+
+```r
 ## object.size(env) ## read the space allocated in memory for an environment variable
 ## format(object.size(env), units = "auto") ## Auto reports multiples of 1024
 ## format(object.size(env), units = "auto", standard = "SI") ## SI use multiples of 1000

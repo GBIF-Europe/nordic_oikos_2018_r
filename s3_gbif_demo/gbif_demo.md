@@ -13,7 +13,7 @@ Scientific reuse of openly published biodiversity information: Programmatic acce
 
 Session 3 includes examples of accessing GBIF data from R using the [rgbif](https://www.gbif.org/tool/81747/rgbif) [package](https://cran.r-project.org/web/packages/rgbif/index.html) from [rOpenSci](https://ropensci.org/).
 
-
+***
 
 
 ```r
@@ -70,6 +70,18 @@ head(sp, n=5) ## preview first 5 records
 ```
 ![Preview of dataframe for *Hepatica nobilis*](demo_data/head_sp.png 'head(sp, n=5)')
 
+***
+
+### Extract coordinates suitable for e.g. Maxent
+
+```r
+xy <- sp[c("decimalLongitude","decimalLatitude")] ## Extract only the coordinates
+sp_xy <- sp[c("species", "decimalLongitude","decimalLatitude")] ## Input format for Maxent
+# structure(sp_xy) ## preview the list of coordinates
+head(sp_xy, n=5) ## preview first 5 records
+```
+![Preview of *sp-x-y* data extracted for use with Maxent etc.](demo_data/head_sp_xy.png "head sp_xy")
+
 ### Write dataframe to file (useful for Maxent etc.)
 
 ```r
@@ -117,19 +129,6 @@ map_leaflet(sp_bb_m, "decimalLongitude", "decimalLatitude", size=3)
 
 ***
 
-
-## Extract coordinates suitable for e.g. Maxent
-
-```r
-xy <- sp[c("decimalLongitude","decimalLatitude")] ## Extract only the coordinates
-sp_xy <- sp[c("species", "decimalLongitude","decimalLatitude")] ## Input format for Maxent
-# structure(sp_xy) ## preview the list of coordinates
-head(sp_xy, n=5) ## preview first 5 records
-```
-![Preview of *sp-x-y* data extracted for use with Maxent etc.](demo_data/head_sp_xy.png "head sp_xy")
-
-***
-
 ## Make a simple map of 4 spring flower species (in Norway)
 
 ```r
@@ -150,6 +149,11 @@ map_leaflet(spp_m, "decimalLongitude", "decimalLatitude", size=3, color=cols)
 
 ***
 
+
+(Dag: I might want to move color ramp into separate Rmd script...)
+
+
+***
 
 ### Expand color-ramp when mapping many species
 Notice that colors will not be easy to distinguish when number of species is high. Standard color-ramps include 9-12 colors.
@@ -177,7 +181,7 @@ map_leaflet(spp_t_m, "decimalLongitude", "decimalLatitude", size=5, color=myColo
 ![Map with multiple species, expanded color-ramp](demo_data/map_trd_spp.png "Leaflet map")
 
 
-## Diverse color palettes
+### Diverse color palettes
 
 
 ```r
