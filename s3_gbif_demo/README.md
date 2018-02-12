@@ -17,3 +17,4 @@ This session presents programmatic access to GBIF data using R with focus on the
  * Asynchron download (to be added)
  * Filtering using data terms and spatial geometry (to be added)
  * Taxon names information (to be added)
+ * [Example data quality tests](data_quality.Rmd)
