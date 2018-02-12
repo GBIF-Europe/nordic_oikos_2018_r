@@ -5,25 +5,27 @@ date:   "February 18, 2018"
 output:
   html_document:
     keep_md: true
+    toc: true
+    toc_depth: 3
 ---
-
-# Nordic Oikos 2018 - R workshop
-
-Scientific reuse of openly published biodiversity information: Programmatic access to and analysis of primary biodiversity information using R. Nordic Oikos 2018, pre-conference R workshop, 18 and 19 February 2018. Further information [here](http://www.gbif.no/events/2018/Nordic-Oikos-2018-R-workshop.html).
-
-Session 3 includes examples of accessing GBIF data from R using the [rgbif](https://www.gbif.org/tool/81747/rgbif) [package](https://cran.r-project.org/web/packages/rgbif/index.html) from [rOpenSci](https://ropensci.org/).
 
 ***
 
+You are here: [R workshop](../) >> [Session 3 GBIF data](./) >> **rgbif demo**
 
-```r
-# Setting the working directory, here: to the same directory as the RMD-script
-# Notice that eval=FALSE will exclude execution of this chunk in knitr, but enable manual execution in RStudio
-#require(rstudioapi)
-setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
-getwd() ## will display the working directory
-```
-![Print current directory with `getwd()`](demo_data/getwd.png "getwd()")
+![](../demo_data/NSO_2018_GBIF_NO.png "NSO 2018")
+
+***
+
+# Nordic Oikos 2018 - R workshop - Session 3
+
+Scientific reuse of openly published biodiversity information: Programmatic access to and analysis of primary biodiversity information using R. Nordic Oikos 2018, pre-conference R workshop, 18 and 19 February 2018. Further information [here](http://www.gbif.no/events/2018/Nordic-Oikos-2018-R-workshop.html).
+
+
+**Session 3** includes examples of accessing GBIF data from R using the [rgbif](https://www.gbif.org/tool/81747/rgbif) [package](https://cran.r-project.org/web/packages/rgbif/index.html) from [rOpenSci](https://ropensci.org/).
+
+***
+
 
 ### Choose a species name
 
@@ -59,7 +61,7 @@ require(rgbif) # r-package for GBIF data
 sp <- occ_search(taxonKey=key, return="data", hasCoordinate=TRUE, limit=100) 
 gbifmap(sp)
 ```
-![Map of *Hepatica nobilis* (taxonKey=5371699) using `gbifmap()`](demo_data/gbifmap_Hepatica_nobilis.png "gbifmap Hepatica nobilis")
+![Map of *Hepatica nobilis* (taxonKey=5371699) using `gbifmap()`](./demo_data/gbifmap_Hepatica_nobilis.png "gbifmap")
 
 ***
 
@@ -80,7 +82,7 @@ sp_xy <- sp[c("species", "decimalLongitude","decimalLatitude")] ## Input format 
 # structure(sp_xy) ## preview the list of coordinates
 head(sp_xy, n=5) ## preview first 5 records
 ```
-![Preview of *sp-x-y* data extracted for use with Maxent etc.](demo_data/head_sp_xy.png "head sp_xy")
+![Preview of *sp-x-y* data extracted for use with Maxent etc.](./demo_data/head_sp_xy.png "head sp_xy")
 
 ### Write dataframe to file (useful for Maxent etc.)
 
@@ -89,7 +91,7 @@ head(sp_xy, n=5) ## preview first 5 records
 readLines("./demo_data/sp_xy.txt", n=10)
 #readChar("./demo_data/sp_xy.txt", file.info("./demo_data/sp_xy.txt")$size) ## Alternative preview
 ```
-![Preview the exported data-file, `sp_xy.txt`](demo_data/readLines_sp_xy_txt.png 'readlines(sp_xy.txt, n=10)')
+![Preview the exported data-file, `sp_xy.txt`](./demo_data/readLines_sp_xy_txt.png "readlines")
 
 ### Read data file back into R
 
@@ -103,7 +105,7 @@ readLines("./demo_data/sp_xy.txt", n=10)
 
 ### GBIF data from Norway
 
-![gbifmap for Norway, *Hepatica nobilis*](demo_data/gbifmap_norway.png "gbifmap_NO")
+![gbifmap for Norway, *Hepatica nobilis*](./demo_data/gbifmap_norway.png "gbifmap_NO")
 
 ***
 
@@ -116,42 +118,40 @@ readLines("./demo_data/sp_xy.txt", n=10)
 head(sp_bb, n=5) ## preview first 5 records
 #head(sp_bb_m, n=5) ## preview first 5 records
 ```
-![Preview dataframe of results from GBIF using bounding box](demo_data/head_sp_bb.png "head sp_bb")
+![Preview dataframe of results from GBIF using bounding box](./demo_data/head_sp_bb.png "head sp_bb")
 
 ### Mapping with leaflet
 
 ```r
 library("mapr") # rOpenSci r-package for mapping (occurrence data)
-library("spocc") # rOpenSci r-package with more biodiversity data sources than GBIF
-map_leaflet(sp_bb_m, "decimalLongitude", "decimalLatitude", size=3)
+#library("spocc") # rOpenSci r-package with more biodiversity data sources than GBIF
+map_leaflet(sp_bb_m, "decimalLongitude", "decimalLatitude", size=2, color="blue")
 ```
-![Map GBIF data with bounding box for Trondheim](demo_data/map_trondheim.png "Leaflet map, Trondheim")
+![Map GBIF data with bounding box for Trondheim](./demo_data/map_sp_trondheim.png "Leaflet map, Trondheim")
 
 ***
 
-## Make a simple map of 4 spring flower species (in Norway)
+### Make a simple map of 4 spring flower species (in Norway)
 
 ```r
-# liverleaf, wood anemone, dandelion, red clover
+## liverleaf, wood anemone, dandelion, red clover
 spp_names <- c('Hepatica nobilis', 'Anemone nemorosa', 'Taraxacum officinale', 'Trifolium pratense')  
 keys <- sapply(spp_names, function(x) name_backbone(name=x, kingdom='plants')$speciesKey, USE.NAMES=FALSE)
-spp <- occ_search(taxonKey=keys, limit=100, return='data', country='NO', hasCoordinate=TRUE)
-library('plyr')
-spp_df <- ldply(spp)
+spp <- occ_search(taxonKey=keys, limit=100, return='data', country='NO', hasCoordinate=TRUE) ## return list
+library('plyr') ## r-pkg plyr for splitting, applying and combining data
+spp_df <- ldply(spp) ## ldply - split list, apply function, return dataframe (here list to df)
 #gbifmap(spp_df, region='norway') ## Alternative simpler map
-cols <- c('blue', '#dddddd', 'yellow', 'red')
 spp_m <- spp_df[c("name", "decimalLongitude","decimalLatitude", "basisOfRecord", "year", "municipality")]
+cols <- c('blue', '#dddddd', 'yellow', 'red')
 map_leaflet(spp_m, "decimalLongitude", "decimalLatitude", size=3, color=cols)
 ```
 
-![Spring flowers (*Hepatica nobilis, Anemone nemorosa, Taraxacum officinale, Trifolium pratense*)](demo_data/map_spring_flower.png "Leaflet map of spring flowers")
+![Spring flowers (*Hepatica nobilis, Anemone nemorosa, Taraxacum officinale, Trifolium pratense*)](./demo_data/map_spring_flower.png "Leaflet map of spring flowers")
 
 
 ***
 
-
 (Dag: I might want to move color ramp into separate Rmd script...)
-
 
 ***
 
@@ -159,15 +159,15 @@ map_leaflet(spp_m, "decimalLongitude", "decimalLatitude", size=3, color=cols)
 Notice that colors will not be easy to distinguish when number of species is high. Standard color-ramps include 9-12 colors.
 
 ```r
-# Poaceae has taxonKey=3073 - which gives us multiple species (here 31 unique "names"", 33 unique "taxonKey"")
-bb_t <- c(10.2,63.3,10.6,63.5) # Trondheim
+## Poaceae has taxonKey=3073 - which gives us multiple species (here 31 unique "names", 33 unique "taxonKey")
+bb_t <- c(10.2,63.3,10.6,63.5) ## Trondheim
 spp_t <- occ_search(taxonKey='3073', limit=100, return='data', country='NO', geometry=bb_t, hasCoordinate=TRUE)
 spp_t_m <- spp_t[c("name", "decimalLongitude","decimalLatitude", "basisOfRecord", "year", "municipality", "taxonKey")]
 ```
 
 
 ```r
-# The default color-ramp (Set1) has 9 colors and cause a warning message when more than 9 species are included in the same map.
+## The default color-ramp (Set1) has 9 colors and cause a warning message when more than 9 species are included in the same map.
 library('mapr') # rOpenSci r-package for mapping (occurrence data)
 library('spocc') # rOpenSci r-package with more biodiversity data sources than GBIF
 library('RColorBrewer')
@@ -178,7 +178,7 @@ myColors <- colorRampPalette(brewer.pal(11,"Spectral"))(n_spp) # create color pa
 #myColors <- rainbow(length(unique(spp_t_m$name))) # create color palette with [n_spp] colors
 map_leaflet(spp_t_m, "decimalLongitude", "decimalLatitude", size=5, color=myColors)
 ```
-![Map with multiple species, expanded color-ramp](demo_data/map_trd_spp.png "Leaflet map")
+![Map with multiple species, expanded color-ramp](./demo_data/map_trd_spp.png "Leaflet map")
 
 
 ### Diverse color palettes
@@ -189,9 +189,8 @@ library(RColorBrewer)
 #display.brewer.all()
 display.brewer.pal(n=9, name='Set1')
 ```
-![colorBrewer Set1](demo_data/display-brewer-pal_Set1.png "colorBrewer Set1")
+![colorBrewer Set1](./demo_data/display-brewer-pal_Set1.png "colorBrewer Set1")
 Read more about colors at the [https://www.r-bloggers.com/palettes-in-r/](R-bloggers story about color palettes in R)
 
-
-
+***
 

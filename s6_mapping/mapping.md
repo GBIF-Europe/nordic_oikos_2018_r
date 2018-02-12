@@ -8,35 +8,20 @@ output:
     keep_md: true
 ---
 
-# Nordic Oikos 2018 - R workshop
+***
 
-Scientific reuse of openly published biodiversity information: Programmatic access to and analysis of primary biodiversity information using R. Nordic Oikos 2018, pre-conference R workshop, 18 and 19 February 2018 in Trondheim. Further information [here](http://www.gbif.no/events/2018/Nordic-Oikos-2018-R-workshop.html).
+You are here: [R workshop](../) >> [Session 6 Mapping](./) >> **mapping demo**
 
-Session 6 focuses on working with environment layers, mapping, cropping and masking layers using the [Raster R-package](https://cran.r-project.org/web/packages/raster/index.html) and other tools.
+![](../demo_data/NSO_2018_GBIF_NO.png "NSO 2018")
 
 ***
 
+# Nordic Oikos 2018 - R workshop - Session 6
+
+Scientific reuse of openly published biodiversity information: Programmatic access to and analysis of primary biodiversity information using R. Nordic Oikos 2018, pre-conference R workshop, 18 and 19 February 2018 in Trondheim. Further information [here](http://www.gbif.no/events/2018/Nordic-Oikos-2018-R-workshop.html).
 
 
-
-
-
-### GBIF data for taxon liverleaf (blaaveis:no) - from Trondheim
-
-```r
-library('rgbif') # rOpenSci r-package for GBIF data
-library('mapr') # rOpenSci r-package for mapping (occurrence data)
-sp_name <- "Hepatica nobilis"; kingdom <- "Plantae" # liverleaf (blaaveis:no), taxonKey=5371699
-key <- name_backbone(name=sp_name, kingdom=kingdom)$speciesKey
-bb <- c(10.2,63.3,10.6,63.5) # Trondheim
-#bb <- c(5.25, 60.3, 5.4, 60.4) # Bergen
-#bb <- c(18.7, 69.6, 19.2, 69.8) # Tromsoe
-#bb <- c(10.6, 59.9, 10.9, 60.0) # Oslo
-sp_bb <- occ_search(taxonKey=key, return="data", hasCoordinate=TRUE, country="NO", geometry=bb, limit=100)
-sp_bb_m <- sp_bb[c("name", "catalogNumber", "decimalLongitude","decimalLatitude", "basisOfRecord", "year", "municipality", "taxonKey", "occurrenceID")] ## Subset columns
-map_leaflet(sp_bb_m, "decimalLongitude", "decimalLatitude", size=2, color="blue")
-```
-![Map GBIF data with bounding box for Trondheim](./demo_data/map_sp_trondheim.png "Leaflet map, Trondheim")
+**Session 6** focuses on working with environment layers, mapping, cropping and masking layers using the [Raster R-package](https://cran.r-project.org/web/packages/raster/index.html) and other tools.
 
 ***
 
@@ -82,15 +67,68 @@ sp <- read.delim("./demo_data/sp.txt", header=TRUE, dec=".", stringsAsFactors=FA
 
 ***
 
-### Get administrative borders for Norway
+### Get (detailed) administrative borders for Norway from GADM
+Very slow to plot, many details...
 
 ```r
 library(raster)
 gadm_norway_1 <- getData('GADM', country='NOR', level=1, path="./demo_data") ## level 0,1,2,...
 plot(gadm_norway_1, main="Adm. Boundaries Norway Level 1")
 points(xy, col='blue', pch=20) ## plot species occurrence points to the map (smaller dots)
+#legend("bottomright", title = "Legend", legend = "H. nobilis", pch = 20, pt.bg = "blue", bty = "n")
 ```
 ![GADM Norway](./demo_data/gadm_norway_sp.png "GADM admin borders for Norway")
+
+
+***
+
+### Get (simpler) country borders for Norway from maptools
+
+
+```r
+library(maptools)
+library(rgeos)
+data(wrld_simpl) ## vector/factor of ISO2, ISO2, NAME, REGION, SUBREGION, LON, LAT, ...
+norway_mask <- subset(wrld_simpl, NAME=="Norway") ## extract the (simpler) border for Norway
+plot(norway_mask, axes=FALSE, border="#777777") ## 
+points(xy, col='blue', pch=20, cex=1) # plot species occurrence points to the map
+title("Country mask for Norway from wrld_simpl")
+legend("bottomright", title = "Legend", legend = "Occurrences", pch = 20, col="blue", cex = 0.9)
+```
+![Border for Norway from maptool:wrld_simpl](./demo_data/wrld_simpl_norway_sp.png "maptools wrld_simpl")
+
+***
+
+### Admin borders from DIVA-GIS
+
+DIVA-GIS data by country: [http://www.diva-gis.org/gdata](http://www.diva-gis.org/gdata)
+DIVA-GIS admin borders for Norway: [http://biogeo.ucdavis.edu/data/diva/adm/NOR_adm.zip](http://biogeo.ucdavis.edu/data/diva/adm/NOR_adm.zip)
+
+* Testing links in knitr:
+* http://biogeo.ucdavis.edu/data/diva/adm/NOR_adm.zip
+* (http://biogeo.ucdavis.edu/data/diva/adm/NOR_adm.zip)
+* [http://biogeo.ucdavis.edu/data/diva/adm/NOR_adm.zip]
+* <http://biogeo.ucdavis.edu/data/diva/adm/NOR_adm.zip>
+
+
+```r
+## Download DIVA-GIS admin borders for Norway
+if (!file.exists('./demo_data/NOR_adm.zip')) {
+    download.file('http://biogeo.ucdavis.edu/data/diva/adm/NOR_adm.zip', './demo_data/NOR_adm.zip')
+    dir.create(file.path("./demo_data/NOR_adm")) ## create a folder for shape files
+    unzip('./demo_data/NOR_adm.zip', exdir='./demo_data/NOR_adm')
+}
+NOR_adm1 <- shapefile('./demo_data/NOR_adm/NOR_adm1.shp') ## county borders
+```
+
+
+```r
+library(raster)
+library(sp)
+#NOR_adm1 <- shapefile('./demo_data/NOR_adm/NOR_adm1.shp') ## county borders
+plot(NOR_adm1, axes=FALSE, border="#666666")
+```
+
 
 
 ***
@@ -124,12 +162,6 @@ points(xy, col='blue') # plot species occurrence points to the map
 ```
 ![Bioclim 12, Annual precepitation](./demo_data/bioclim_12_sp.png "Bioclim 12")
 
-
-```r
-# Save plot -- IF plotting in the right side plot window, and not inline in the R Markup notebook
-#dev.copy(png,'./demo_data/bioclim1_occurrences.png') # save what is in the plot window
-#dev.off() # close with dev.off, to write image to file
-```
 
 ***
 
@@ -173,6 +205,46 @@ Using zoom, the raster data in R workspace environment is still the same size. Y
 
 ***
 
+### Map of the cropped and masked raster layers
+
+```r
+par(mfrow=c(1,2)) ## combining two plot with par(n_rows, n_columns)
+##plot(env_cut$bio12); title(main="Bio12 cut to Scandinavia")
+plot(env_crop$bio12); title(main="Bio12 cropped to Norway")
+points(xy, col='blue', pch=20) ## add species occurrence points to cropped map
+plot(env_mask$bio12); title(main="Bio12 masked to Norway")
+points(xy, col='blue', pch=20) ## add species occurrence points to masked map
+```
+![Bioclim 12 (Annual precepitation) respectively cropped and masked to Norway](./demo_data/map_bio_cropped.png "Bioclim 12 crop and mask")
+
+***
+
+***
+
+### Testing remote sensing image for Trondheim downloaded from Landsat
+I used the [USGS](https://landsat.usgs.gov/landsat-data-access) [LandsatLook Viewer](https://landsatlook.usgs.gov/) and [Sentinel2Look Viewer](https://landsatlook.usgs.gov/sentinel2/) to download sattelite data for Trondheim.
+
+
+```r
+rs_l <- brick('./demo_data/landsat_trondheim_web_mercartor_wgs84.tif')
+rs_s <- brick('./demo_data/sentinel_trondheim_web_mercartor_wgs84.tif')
+nlayers(rs_l); nlayers(rs_s) ## 3 layers
+crs(rs_l); crs(rs_s) ## +proj=merc +a=6378137 +b=6378137 ... +units=m ...
+ncell(rs_l); ncell(rs_s) ## rs_l = 100738 ## rs_s = 204530
+dim(rs_l); dim(rs_s) ## rs_l = 241 418   3 ## rs_s = 362 565   3
+res(rs_l);res(rs_s) ## rs_l = 30.09113 30.09113 ## rs_s = 20.03305 20.03305
+#par(mfrow=c(2,1)) ## combining two plot with par(n_rows, n_columns)
+#plotRGB(rs_l, stretch="lin", axes=FALSE, main="Landsat True Color Composite")
+plotRGB(rs_s, stretch="lin", axes=FALSE, main="Sentinel True Color Composite")
+```
+![Remote sensing data, sentinel, Trondheim](./demo_data/sentinel_trondheim.png "Sentinel remote sensing")
+
+***
+
+### Base map from Google
+
+![Base map from Google, with *H. nobilis*, Trondheim, Oslo](./demo_data/map_google_sp.png "Base map")
+
 ***
 
 ### Size of environment layer can be LARGE if using the finer resolutions
@@ -193,6 +265,8 @@ cat("\nSize of gadm_norway_1 =", format(object.size(gadm_norway_1), units = "aut
  * Size of env_cut =         13.7 Kb
  * Size of env_mask =       940.8 Kb
  * Size of gadm_norway_1 =   12.8 Mb
+
+***
 
 ***
 
@@ -217,6 +291,28 @@ cat("\nSize of gadm_norway_1 =", format(object.size(gadm_norway_1), units = "aut
  * BIO17 = Precipitation of Driest Quarter
  * BIO18 = Precipitation of Warmest Quarter
  * BIO19 = Precipitation of Coldest Quarter
+
+***
+
+***
+
+
+### GBIF data for taxon liverleaf (blaaveis:no) - from Trondheim
+
+```r
+library('rgbif') # rOpenSci r-package for GBIF data
+library('mapr') # rOpenSci r-package for mapping (occurrence data)
+sp_name <- "Hepatica nobilis"; kingdom <- "Plantae" # liverleaf (blaaveis:no), taxonKey=5371699
+key <- name_backbone(name=sp_name, kingdom=kingdom)$speciesKey
+bb <- c(10.2,63.3,10.6,63.5) # Trondheim
+#bb <- c(5.25, 60.3, 5.4, 60.4) # Bergen
+#bb <- c(18.7, 69.6, 19.2, 69.8) # Tromsoe
+#bb <- c(10.6, 59.9, 10.9, 60.0) # Oslo
+sp_bb <- occ_search(taxonKey=key, return="data", hasCoordinate=TRUE, country="NO", geometry=bb, limit=100)
+sp_bb_m <- sp_bb[c("name", "catalogNumber", "decimalLongitude","decimalLatitude", "basisOfRecord", "year", "municipality", "taxonKey", "occurrenceID")] ## Subset columns
+map_leaflet(sp_bb_m, "decimalLongitude", "decimalLatitude", size=2, color="blue")
+```
+![Map GBIF data with bounding box for Trondheim](./demo_data/map_sp_trondheim.png "Leaflet map, Trondheim")
 
 ***
 
