@@ -17,5 +17,5 @@ This session gives an introduction to the Global Biodiversity Information Facili
 
 ## Workshop training materials for session 1
  * [Slides](slides) (to be added here)
- * [Brief R settings and hints](settings.html), [Rmd](settings.Rmd) (more in [session 2](../s2_r_intro))
- * [Brief intro to rgbif](gbif_intro.html) [Rmd](gbif_intro.Rmd) (more in [session 3](../s3_gbif_demo))
+ * [Brief R settings and hints](settings.html), ([Rmd-script](settings.Rmd)) (more in [session 2](../s2_r_intro))
+ * [Brief intro to rgbif](gbif_intro.html), ([Rmd-script](gbif_intro.Rmd)) (more in [session 3](../s3_gbif_demo))
