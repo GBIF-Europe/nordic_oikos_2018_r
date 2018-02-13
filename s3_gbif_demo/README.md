@@ -10,7 +10,7 @@ This session presents programmatic access to GBIF data using R with focus on the
 
 * Introduction to [rgbif](https://github.com/ropensci/rgbif) ([tutorial](https://ropensci.org/tutorials/rgbif_tutorial/))
 * Filtering using data terms (and spatial geometry)
-* Taxon names / resolving (using taxize). What is "nubkey”?
+* Taxon names / resolving (using [taxize](https://ropensci.org/tutorials/taxize_tutorial/)). [What is "nubkey”?](http://gbif.blogspot.no/search?q=names&max-results=20&by-date=true)
 * Asynchron download (see also [GBIF API](https://www.gbif.org/developer/summary))
 
 ## Workshop training materials for session 3
