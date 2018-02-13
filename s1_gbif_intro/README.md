@@ -1,8 +1,8 @@
 ![](../demo_data/NSO_2018_GBIF_NO.png "NSO 2018")
 
-# Nordic Oikos 2018 -- GBIF data with R
+# [Nordic Oikos 2018 -- GBIF data with R](..)
 
-Scientific reuse of openly published biodiversity information: Programmatic access to and analysis of primary biodiversity information using R. Nordic Oikos 2018, pre-conference R workshop, 18<sp>th</sup> and 19<sup>th</sup> February 2018 in Trondheim, Norway.
+Scientific reuse of openly published biodiversity information: Programmatic access to and analysis of primary biodiversity information using R. Nordic Oikos 2018, pre-conference [R workshop](..), 18<sp>th</sup> and 19<sup>th</sup> February 2018 in Trondheim, Norway.
 
 ## Session 1: Quick intro to GBIF and biodiversity informatics
 
@@ -16,6 +16,6 @@ This session gives an introduction to the Global Biodiversity Information Facili
  * [GBIF Taxon backbone](https://doi.org/10.15468/39omei), [taxize](https://github.com/ropensci/taxize), [taxize tutorial](https://ropensci.org/tutorials/taxize_tutorial/) ([more information](http://gbif.blogspot.no/search?q=backbone))
 
 ## Workshop training materials for session 1
- * Slides (to be added here)
- * [Brief on R settings and hints](settings.Rmd) (more in [session 2](../s2_r_intro))
- * [Brief intro to rgbif](gbif_intro.Rmd) (more in [session 3](../s3_gbif_demo))
+ * [Slides](slides) (to be added here)
+ * [Brief R settings and hints](settings.html), [Rmd](settings.Rmd) (more in [session 2](../s2_r_intro))
+ * [Brief intro to rgbif](gbif_intro.html) [Rmd](gbif_intro.Rmd) (more in [session 3](../s3_gbif_demo))
