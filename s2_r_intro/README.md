@@ -12,3 +12,8 @@ Scientific reuse of openly published biodiversity information: Programmatic acce
  * Guidelines for R package development: https://r-pkgs.had.co.nz/
  * Guidelines for Advanced R: https://adv-r.had.co.nz/
 
+
+
+***
+
+[Back to GitHub project home](https://github.com/GBIF-Europe/nordic_oikos_2018_r).
