@@ -21,3 +21,8 @@ This session presents programmatic access to GBIF data using R with focus on the
  * [Example data quality tests](data_quality.Rmd)
  * Taxon names information (to be added)
  
+
+
+***
+
+[Back to GitHub project home](https://github.com/GBIF-Europe/nordic_oikos_2018_r).
