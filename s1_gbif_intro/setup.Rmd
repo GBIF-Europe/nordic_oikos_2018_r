@@ -2,8 +2,9 @@
 title: "Intro and some R setup examples"
 author: "Dag Endresen, https://orcid.org/0000-0002-2352-5497"
 date: "February 18, 2018"
-output: 
-  github_document: 
+output:
+  html_document:
+    keep_md: true
     toc: true
     toc_depth: 3
 ---
@@ -111,9 +112,9 @@ install.packages("xlsx")
 
 ***
 
-This script uses [R Markdown](http://rmarkdown.rstudio.com/)
-
 [R Markdown](http://rmarkdown.rstudio.com/) is a convinient format (R Notebooks) for writing R-scripts, introduced in 2014. R Markdown integrates very well in RStudio (and can also be used form the command line). [Session 2](../s2_r_intro) will provide an introduction to R-scripting including R Markdown.
+
+
 
 ***
 ***
@@ -192,7 +193,9 @@ library(RColorBrewer)
 #display.brewer.all()
 display.brewer.pal(n=9, name='Set1')
 ```
+
 ![colorBrewer Set1](./demo_data/display-brewer-pal_Set1.png "colorBrewer Set1")
+
 
 Read more about colors at the [https://www.r-bloggers.com/palettes-in-r/](R-bloggers story about color palettes in R)
 

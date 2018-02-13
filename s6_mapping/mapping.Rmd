@@ -1,6 +1,6 @@
 ---
 title: "Some mapping tools for environment layers"
-subtitle: "R workshop by GBIF.no and ForBio.no"
+subtitle: "R workshop by GBIF.no and ForBio"
 author: "Dag Endresen, http://orcid.org/0000-0002-2352-5497"
 date: "February 18, 2018"
 output:
@@ -20,14 +20,14 @@ You are here: [R workshop](../) >> [Session 6 Mapping](./) >> **mapping demo**
 
 # Nordic Oikos 2018 - R workshop - Session 6
 
-Scientific reuse of openly published biodiversity information: Programmatic access to and analysis of primary biodiversity information using R. Nordic Oikos 2018, pre-conference R workshop, 18 and 19 February 2018 in Trondheim. Further information [here](http://www.gbif.no/events/2018/Nordic-Oikos-2018-R-workshop.html).
+Scientific reuse of openly published biodiversity information: Programmatic access to and analysis of primary biodiversity information using R. Nordic Oikos 2018, pre-conference R workshop, 18<sup>th</sup> and 19<sup>th</sup> February 2018 in Trondheim. Further information [here](http://www.gbif.no/events/2018/Nordic-Oikos-2018-R-workshop.html).
 
 
 **Session 6** focuses on working with environment layers, mapping, cropping and masking layers using the [Raster R-package](https://cran.r-project.org/web/packages/raster/index.html) and other tools.
 
 ***
 
-### GBIF data for taxon liverleaf (blaaveis:no) - from Norway
+### GBIF data for taxon liverleaf (bl&aring;veis:no) - from Norway
 ```{r eval=FALSE}
 library('rgbif') # rOpenSci r-package for GBIF data
 library('mapr') # rOpenSci r-package for mapping (occurrence data)
@@ -326,11 +326,8 @@ cat("\nSize of gadm_norway_1 =", format(object.size(gadm_norway_1), units = "aut
 
 ***
 
-***
-
-
-### GBIF data for taxon liverleaf (blaaveis:no) - from Trondheim
-```{r messages=FALSE, eval=FALSE}
+### GBIF data for taxon liverleaf (bl&aring;veis:no) - from Trondheim
+```{r eval=FALSE}
 library('rgbif') # rOpenSci r-package for GBIF data
 library('mapr') # rOpenSci r-package for mapping (occurrence data)
 sp_name <- "Hepatica nobilis"; kingdom <- "Plantae" # liverleaf (blaaveis:no), taxonKey=5371699

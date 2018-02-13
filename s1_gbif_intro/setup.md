@@ -1,34 +1,35 @@
-Intro and some R setup examples
-================
-Dag Endresen, <https://orcid.org/0000-0002-2352-5497>
-February 18, 2018
+---
+title: "Intro and some R setup examples"
+author: "Dag Endresen, https://orcid.org/0000-0002-2352-5497"
+date: "February 18, 2018"
+output:
+  html_document:
+    keep_md: true
+    toc: true
+    toc_depth: 3
+---
 
--   [Nordic Oikos 2018 - R workshop - Session 1](#nordic-oikos-2018---r-workshop---session-1)
-    -   [Create a folder for demo data](#create-a-folder-for-demo-data)
-    -   [Some useful R-packages to install, that we will use during the workshop](#some-useful-r-packages-to-install-that-we-will-use-during-the-workshop)
-    -   [Load R-packages](#load-r-packages)
-    -   [Clear workspace (be careful)](#clear-workspace-be-careful)
+***
 
-------------------------------------------------------------------------
-
-You are here: [R workshop](../) &gt;&gt; [Session 1 GBIF intro](./) &gt;&gt; **R settings**
+You are here: [R workshop](../) >> [Session 1 GBIF intro](./) >> **R settings**
 
 ![](../demo_data/NSO_2018_GBIF_NO.png "NSO 2018")
 
-------------------------------------------------------------------------
+***
 
-Nordic Oikos 2018 - R workshop - Session 1
-==========================================
+# Nordic Oikos 2018 - R workshop - Session 1
 
 Scientific reuse of openly published biodiversity information: Programmatic access to and analysis of primary biodiversity information using R. Nordic Oikos 2018, pre-conference R workshop, 18<sup>th</sup> and 19<sup>th</sup> February 2018. Further information [here](http://www.gbif.no/events/2018/Nordic-Oikos-2018-R-workshop.html).
 
+
 **Session 1** gives an introduction to [GBIF](https://www.gbif.org/), use of [GBIF data](https://www.gbif.org/resource/search?contentType=dataUse) and the [GBIF API](https://www.gbif.org/developer/summary).
 
-Notice that most of the R-commands below are commented out (with a hash \#). To execute selected lines on your computer, you need to uncomment (remove the hash \#) first.
+Notice that most of the R-commands below are commented out (with a hash #). To execute selected lines on your computer, you need to uncomment (remove the hash #) first.
 
-------------------------------------------------------------------------
+***
 
-``` r
+
+```r
 ## Notice that eval=FALSE will exclude execution of this chunk in knitr, but enable manual execution in RStudio.
 ## Setting the working directory, here: to the same directory as the RMD-script. Primarily useful "outside" of RMarkup chuks.
 ## RMarkup (Rmd) seems to always change current working directory to the same as the Rmd-script.
@@ -37,11 +38,13 @@ setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 getwd() ## will display the working directory
 ```
 
-    [1] "/Users/dag/workspace/gitHub/nordic_oikos_2018_r/s1_gbif_intro"
+```
+[1] "/Users/dag/workspace/gitHub/nordic_oikos_2018_r/s1_gbif_intro"
+```
 
 ### Create a folder for demo data
 
-``` r
+```r
 ## Note however, that RMarkdown with knitr works best with all files in the same directory
 #dir.create(file.path("./demo_data")) ## create a folder for demo files (inside working directory)
 #dir.create(file.path("../demo_data")) ## create a folder for demo files (next to working directory)
@@ -50,7 +53,7 @@ getwd() ## will display the working directory
 
 ### Some useful R-packages to install, that we will use during the workshop
 
-``` r
+```r
 ## It is possible to install R-packages from the script
 install.packages("rmarkdown") # R Markdown
 ## rOpenSci packages
@@ -83,7 +86,7 @@ install.packages("xlsx")
 
 ### Load R-packages
 
-``` r
+```r
 # Use functions library() or require() to load the R-packages you need
 
 #require(rgbif) # r-package for accessing GBIF
@@ -103,7 +106,7 @@ install.packages("xlsx")
 
 ### Clear workspace (be careful)
 
-``` r
+```r
 # Large arrays and dataframes can consume huge parts of your working memory,
 # and you probably want to remove some of them from memory when they are not needed anymore.
 
@@ -111,19 +114,26 @@ install.packages("xlsx")
 #rm(sp) # Probably better to remove large arrays and dataframes individually
 ```
 
-------------------------------------------------------------------------
 
-This script uses [R Markdown](http://rmarkdown.rstudio.com/)
+***
 
 [R Markdown](http://rmarkdown.rstudio.com/) is a convinient format (R Notebooks) for writing R-scripts, introduced in 2014. R Markdown integrates very well in RStudio (and can also be used form the command line). [Session 2](../s2_r_intro) will provide an introduction to R-scripting including R Markdown.
 
-------------------------------------------------------------------------
 
-------------------------------------------------------------------------
 
+***
+***
+***
+***
+***
+***
 **NOTES**
+***
+***
+***
 
-``` r
+
+```r
 ## BOUNDING BOX
 ##bb <- c(lowerLon, lowerLat, higherLon, higherLat) # bounding box
 bb <- c(10.2,63.3,10.6,63.5) # Trondheim
@@ -135,25 +145,72 @@ bb <- c(4.5, 54.9, 31.0, 71.0) # Scandinavia = lon(4.5, 31.0), lon(55, 71)
 bbox(norway_mask) ## use bbox(spatialObj) to find the bounding box of any spatial object
 ```
 
-Norway: min max x 4.6280575 31.078054 y 58.0702763 71.113054
+Norway:
+         min       max
+x  4.6280575 31.078054
+y 58.0702763 71.113054
 
-``` r
+
+```r
 ## Print text and variables
 message(sprintf("Current working dir: %s\n", getwd()))
 paste("Today is", date())
 ```
 
-``` r
+
+```r
 sprintf(5.55555, fmt = '%#.3f') ## 5.556
 sprintf(5.55555, fmt = '%#.3g') ## 5.56
 ```
 
-``` r
+
+```r
 library('plyr') ## r-pkg plyr for data handling
 spp_df <- ldply(spp) ## ldply - split list, apply function, return dataframe (here list to df)
 ```
 
-``` r
+
+```r
 crs(r) <- "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"
 crs(r) <- CRS('+init=EPSG:4326') ## same result, but using EPSG is shorter to write, and easier
 ```
+
+List to dataframe
+
+```r
+#spp <- occ_search(taxonKey=keys, limit=100, return='data', country='NO', hasCoordinate=TRUE)
+library('plyr') ## r-pkg plyr for 
+spp_df <- ldply(spp) ## ldply - split list, apply function, return dataframe (here list to df)
+#spp_m <- spp_df[c("name", "decimalLongitude","decimalLatitude", "basisOfRecord", "year", "municipality")]
+#map_leaflet(spp_m, "decimalLongitude", "decimalLatitude", size=3, color=cols)
+```
+
+Read.xlsx depend on JAVA which might be an obstacle
+
+```r
+##Sys.setenv(JAVA_HOME="PATH-TO-JAVA_HOME")
+#Sys.setenv(JAVA_HOME='/Library/Java/Home') ## or use '/usr/libexec/java_home -d 64'
+#Sys.setenv(JAVA_HOME='/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home')
+library(xlsx) ## first row contains variable names
+spp_dq <- read.xlsx("./demo_data/spp_dq.xlsx", 1) ## manipulated occurrence data, introduced errors
+#spp_da <- read.xlsx("./demo_data/spp_dq.xlsx", sheetName = "spp_dq") ## alt: choose named worksheet
+head(spp_da, n=5)
+```
+
+***
+
+Diverse color palettes
+
+```r
+library(RColorBrewer)
+#display.brewer.all()
+display.brewer.pal(n=9, name='Set1')
+```
+
+![colorBrewer Set1](./demo_data/display-brewer-pal_Set1.png "colorBrewer Set1")
+
+
+Read more about colors at the [https://www.r-bloggers.com/palettes-in-r/](R-bloggers story about color palettes in R)
+
+***
+

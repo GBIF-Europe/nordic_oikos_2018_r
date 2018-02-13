@@ -1,5 +1,5 @@
 ---
-title:  "GBIF rgbif demo (Nordic Oikos 2018)"
+title:  "GBIF rgbif demonstration"
 author: "Dag Endresen, http://orcid.org/0000-0002-2352-5497"
 date:   "February 18, 2018"
 output:
@@ -19,13 +19,12 @@ You are here: [R workshop](../) >> [Session 3 GBIF data](./) >> **rgbif demo**
 
 # Nordic Oikos 2018 - R workshop - Session 3
 
-Scientific reuse of openly published biodiversity information: Programmatic access to and analysis of primary biodiversity information using R. Nordic Oikos 2018, pre-conference R workshop, 18 and 19 February 2018. Further information [here](http://www.gbif.no/events/2018/Nordic-Oikos-2018-R-workshop.html).
+Scientific reuse of openly published biodiversity information: Programmatic access to and analysis of primary biodiversity information using R. Nordic Oikos 2018, pre-conference R workshop, 18<sup>th></sup> and 19<sup>th</sup> February 2018. Further information [here](http://www.gbif.no/events/2018/Nordic-Oikos-2018-R-workshop.html).
 
 
 **Session 3** includes examples of accessing GBIF data from R using the [rgbif](https://www.gbif.org/tool/81747/rgbif) [package](https://cran.r-project.org/web/packages/rgbif/index.html) from [rOpenSci](https://ropensci.org/).
 
 ***
-
 
 ### Choose a species name
 

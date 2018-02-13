@@ -197,19 +197,9 @@ map_leaflet(spp_dq_over_m, "longitude", "latitude", size=5, color=myCol)
 ***
 ***
 ***
-***
-***
 
 For this dummy test set I initially selected Poaceae occurrences from Scandinavia...
 
-```r
-## Poaceae has taxonKey=3073 - which gives us multiple species (here 31 unique "names", 33 unique "taxonKey")
-#bb <- c(10.2,63.3,10.6,63.5) ## Trondheim
-bb <- c(4.5, 54.9, 31.0, 61.0) # Scandinavia
-spp_p <- occ_search(taxonKey='3073', limit=100, return='data', geometry=bb, hasCoordinate=TRUE)
-#spp_p_m <- spp_p[c("name", "decimalLongitude","decimalLatitude", "basisOfRecord", "year", "county", "municipality", "taxonKey", "catalogNumber", "occurrenceID")]
-write.table(spp_p, file="./demo_data/spp_p.txt", sep="\t", row.names=FALSE, qmethod="double") ## for Maxent
-```
 
 ***
 ***
