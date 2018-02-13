@@ -2,7 +2,7 @@
 
 # Nordic Oikos 2018 -- GBIF data with R
 
-Scientific reuse of openly published biodiversity information: Programmatic access to and analysis of primary biodiversity information using R. Nordic Oikos 2018, pre-conference R workshop, 18<sup>th</sup> and 19<sup>th</sup> February 2018 in Trondheim, Norway.
+Scientific reuse of openly published biodiversity information: Programmatic access to and analysis of primary biodiversity information using R. Nordic Oikos 2018, pre-conference [R workshop](https://github.com/GBIF-Europe/nordic_oikos_2018_r), 18<sup>th</sup> and 19<sup>th</sup> February 2018 in Trondheim, Norway.
 
 ## Session 4: Event core / sample-based data from GBIF
 
@@ -20,3 +20,7 @@ Sample based data / Event data is a rather new datatype in GBIF and not all func
 
 * [Discover event data in GBIF and download DwC-archive from IPT](4.2_event_data_download_and_data_wrangling.Rmd)
 
+
+***
+
+[Back to GitHub project home](https://github.com/GBIF-Europe/nordic_oikos_2018_r).
