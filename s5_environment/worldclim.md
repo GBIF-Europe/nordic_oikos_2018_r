@@ -6,25 +6,26 @@ date: "February 18, 2018"
 output:
   html_document:
     keep_md: true
+    toc: true
+    toc_depth: 3
 ---
 
-# Nordic Oikos 2018 - R workshop
+![](../demo_data/NSO_2018_GBIF_NO.png "NSO 2018")
 
-Scientific reuse of openly published biodiversity information: Programmatic access to and analysis of primary biodiversity information using R. Nordic Oikos 2018, pre-conference R workshop, 18 and 19 February 2018 in Trondheim. Further information [here](http://www.gbif.no/events/2018/Nordic-Oikos-2018-R-workshop.html).
+***
+
+# Nordic Oikos 2018 - R workshop - Session 5
+
+Scientific reuse of openly published biodiversity information: Programmatic access to and analysis of primary biodiversity information using R. Nordic Oikos 2018, pre-conference R workshop, 18<sup>th</sup> and 19<sup>th</sup> February 2018 in Trondheim. Further information [here](http://www.gbif.no/events/2018/Nordic-Oikos-2018-R-workshop.html).
 
 Session 5 focus on linking GBIF data with environment layers, using the [Raster R-package](https://cran.r-project.org/web/packages/raster/index.html) and other tools.
 
 ***
 
-
-
-
-
-
-### GBIF data for taxon liverleaf (blaaveis:no)
+### GBIF data for taxon liverleaf (bl&aring;veis:no)
 
 ```r
-require(rgbif) # r-package for GBIF data
+require('rgbif') # r-package for GBIF data
 sp_name <- "Hepatica nobilis"; kingdom <- "Plantae" # liverleaf (blaaveis:no), taxonKey=5371699
 key <- name_backbone(name=sp_name, kingdom=kingdom)$speciesKey
 sp <- occ_search(taxonKey=key, return="data", hasCoordinate=TRUE, country="NO", limit=100)
@@ -35,6 +36,15 @@ sp_m <- sp[c("name", "catalogNumber", "decimalLongitude","decimalLatitude", "bas
 
 ***
 
+### Read example species occurrence data into R
+You may of course choose your own species data or other study areas following the examples provided in [session 3](../s3_gbif_demo).
+
+```r
+sp <- read.delim("./demo_data/sp.txt", header=TRUE, dec=".", stringsAsFactors=FALSE)
+#sp_xy <- read.delim("./demo_data/sp_xy.txt", header=TRUE, dec=".", stringsAsFactors=FALSE)
+#head(sp_xy, n=5) ## preview first 5 records
+```
+
 ### Extract coordinates suitable for e.g. Maxent
 
 ```r
@@ -43,14 +53,6 @@ sp_xy <- sp[c("species", "decimalLongitude","decimalLatitude")] ## Input format 
 #write.table(sp_xy, file="./demo_data/sp_xy.txt", sep="\t", row.names=FALSE, qmethod="double") ## for Maxent
 #write.table(sp, file="./demo_data/sp.txt", sep="\t", row.names=FALSE, qmethod="double") ## dataframe
 #readLines("./demo_data/sp_xy.txt", n=10)
-```
-
-### Read data file back into R
-
-```r
-sp_xy <- read.delim("./demo_data/sp_xy.txt", header=TRUE, dec=".", stringsAsFactors=FALSE)
-sp <- read.delim("./demo_data/sp.txt", header=TRUE, dec=".", stringsAsFactors=FALSE) ## dataframe
-#head(sp_xy, n=5) ## preview first 5 records
 ```
 
 ***
@@ -76,6 +78,8 @@ env <- getData('worldclim', var='bio', res=10) # 10 degree grid (approx 18.5 km,
 #env <- getData('worldclim', var='bio', res=2.5) # 2.5 degree grid (approx 4.5 km, 20 km2) 1.3 GByte
 #env <- getData('worldclim', var='bio', res=0.5, lon=10, lat=63) # 30 arc-second grid (approx 1 km)
 ```
+
+***
 
 ### Plot environment layers and species occurrences on a map
 
