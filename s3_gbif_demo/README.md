@@ -1,6 +1,8 @@
+![](../demo_data/NSO_2018_GBIF_NO.png "NSO 2018")
+
 # Nordic Oikos 2018 -- GBIF data with R
 
-Scientific reuse of openly published biodiversity information: Programmatic access to and analysis of primary biodiversity information using R. Nordic Oikos 2018, pre-conference R workshop, 18<sup>th</sup> and 19<sup>th</sup> February 2018 in Trondheim, Norway.
+Scientific reuse of openly published biodiversity information: Programmatic access to and analysis of primary biodiversity information using R. Nordic Oikos 2018, pre-conference R workshop, 18<sp>th</sup> and 19<sup>th</sup> February 2018 in Trondheim, Norway.
 
 ## Session 3: Download occurrence data from GBIF in R
 
@@ -14,7 +16,7 @@ This session presents programmatic access to GBIF data using R with focus on the
 ## Workshop training materials for session 3
 
  * [Programmatic access to GBIF data in R with rgbif](gbif_demo.Rmd)
- * Asynchron download (to be added)
+ * [Asynchron download](3.x_async_download_gbif.Rmd)
  * Filtering using data terms and spatial geometry (to be added)
  * Taxon names information (to be added)
  * [Example data quality tests](data_quality.Rmd)
