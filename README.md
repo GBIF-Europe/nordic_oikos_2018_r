@@ -22,4 +22,4 @@ Scientific reuse of openly published biodiversity information: Programmatic acce
 * http://www.forbio.uio.no/events/courses/2018/GBIF_R.html
 * https://www.ntnu.edu/web/oikos2018/workshops
 
-**Organized by**: GBIF.no - Global Biodiversity Information Facility Norway (www.GBIF.no) and ForBio Research School in Biosystematics (www.forbio.uio.no).
+**Organized by**: GBIF.no - Global Biodiversity Information Facility Norway (www.GBIF.no) and ForBio Research School in Biosystematics (www.forbio.uio.no). Short description of the workshop [trainers here](./trainers.md).

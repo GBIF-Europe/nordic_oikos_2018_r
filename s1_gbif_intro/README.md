@@ -1,6 +1,8 @@
+![](../demo_data/NSO_2018_GBIF_NO.png "NSO 2018")
+
 # Nordic Oikos 2018 -- GBIF data with R
 
-Scientific reuse of openly published biodiversity information: Programmatic access to and analysis of primary biodiversity information using R. Nordic Oikos 2018, pre-conference R workshop, 18th and 19th February 2018 in Trondheim, Norway.
+Scientific reuse of openly published biodiversity information: Programmatic access to and analysis of primary biodiversity information using R. Nordic Oikos 2018, pre-conference R workshop, 18<sp>th</sup> and 19<sup>th</sup> February 2018 in Trondheim, Norway.
 
 ## Session 1: Quick intro to GBIF and biodiversity informatics
 
