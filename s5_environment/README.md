@@ -27,5 +27,5 @@ Access to and the linking of GBIF data to environmental raster and vector data i
 * Download species occurrences from GBIF and environment layers from WorldClim using R.
 * Extract climate data for the locations of your species occurrences.
 * Plot selected environment layers and species occurrences together on a map.
-
+* **BONUS**: Transform (and re-project) your spatial data (species occurrences and environment layers) to another coordinate reference system (eg. UTM zone 32N WGS84; [EPSG:32632](https://epsg.io/32632) and make a new map.
 * **EXTRA**: Perform a basic species distribution modelling study - [sdm guideline here](https://cran.r-project.org/web/packages/dismo/vignettes/sdm.pdf).
