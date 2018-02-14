@@ -13,7 +13,7 @@ Content of lesson:
 
 Sample based data / Event data is a rather new datatype in GBIF and not all functionality for usage through the API are in place.  The expected learning outcome of this is to understand the consept behind the "event-type" data (a.ka. "sample based data""), how to find these data on GBIF, how to access them and give some basic ideas of de-normalization and data-wrangling needed to get the dataformats usable for analyses. Note: The full specter of information stored in event-core data are currently only retrivable from the data-publisher "end-points" (data publisher [IPT](https://www.gbif.org/ipt)), i.e. not through the GBIF API / portal. We hope that this will change in the near future. Hence, here we will show how to find relevant data, extract datasetIDs and download directly raw data from the IPT.
 
-## Workshop training materials for session 4
+## Workshop training materials
 
 * [Discover event data in GBIF and download DwC-archive from IPT](4.2_event_data_download_and_data_wrangling.Rmd)
 
