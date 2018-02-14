@@ -152,3 +152,7 @@ Size of env = 235.5 Kb
  * BIO19 = Precipitation of Coldest Quarter
 
 ***
+
+Navigate back to [GitHub project home](https://github.com/GBIF-Europe/nordic_oikos_2018_r) or [GitHub.io html](https://gbif-europe.github.io/nordic_oikos_2018_r/) pages.
+
+***

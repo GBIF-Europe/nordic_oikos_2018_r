@@ -201,4 +201,7 @@ write.table(spp_p, file="./demo_data/spp_p.txt", sep="\t", row.names=FALSE, qmet
 ```
 
 ***
+
+Navigate back to [GitHub project home](https://github.com/GBIF-Europe/nordic_oikos_2018_r) or [GitHub.io html](https://gbif-europe.github.io/nordic_oikos_2018_r/) pages.
+
 ***
