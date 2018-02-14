@@ -1,4 +1,4 @@
-![](../demo_data/workshop_banner.png "banner")
+![](../demo_data/NSO_2018_GBIF_NO.png "banner")
 
 
 # Session 1: Quick intro to GBIF and biodiversity informatics
