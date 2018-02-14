@@ -6,7 +6,7 @@
 This session gives some examples of machine learning approaches to data analysis with GBIF data. Including a use case with predictive identification of targeted genetic diversity for crop improvement.
 
 
-## Workshop training materials for session 9
+## Workshop training materials
 
  * [Slides](./slides)
 
