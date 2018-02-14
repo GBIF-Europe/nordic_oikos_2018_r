@@ -1,0 +1,218 @@
+---
+title: "Using R, RStudio, GitHub for Open Science Work"
+author: "Markus Skyttner, Biodiversity Atlas Sweden (https://bioatlas.se)"
+date: "February 18-19, 2018"
+output: 
+  ioslides_presentation: 
+    logo: bioatlas-logo-square.png
+    transition: slower
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Nordic Oikos 2018 -- GBIF data with R
+
+Scientific reuse of openly published biodiversity information: Programmatic access to and analysis of primary biodiversity information using R. Nordic Oikos 2018, pre-conference R workshop, 18th and 19th February 2018 in Trondheim, Norway.
+
+## Acknowledgements
+
+![](layout_set_logo.jpeg "Nordic OIKOS 2018")
+
+![](bioatlas-logo-square.png "Biodiversity Atlas Sweden")
+
+The Swedish Research Council is the funder of Biodiversity Atlas Sweden
+
+Grant No 2017-00688
+
+
+## Session 2: Quick intro to R, RStudio, GitHub
+
+Session will cover getting started - installing recommended software and tools, installation procedures for some relevant packages used in some of the upcoming sessions - for working with _*geospatial data analysis*_ in R. 
+
+The session will also suggest a few _*online learning resources*_ for intermediate and advanced use beyond simple R scripts - including training resources to help when building packages for data and web apps and workflows for international collaboration.
+
+## Topics
+
+- Before work - How can you get it all onto your laptop? 
+- What "stack" for R along with an IDE and other trimmings is normally needed for working with geospatial data?
+- What is git and GitHub and how can you use workflows like [GitFlow](https://guides.github.com) to collaborate with others?
+
+If time permits, also some usage example:
+
+- A function for Automated [Downloads of Event Data from GBIF.org](https://www.gbif.org/dataset/search?type=SAMPLING_EVENT)
+- The path from an R script towards a function in a package?
+- R-based web service serving synthetic geodata
+
+# Installing your stack
+
+There are *different ways to get started* with everything you need onto your laptop:
+
+1. Easiest/ SaaS - Use The Cloud and a Web Browser
+1. Traditional Non-Isolated - Manual Interactive Steps
+1. Traditional Isolated VM - Semi-Automated Steps
+1. Modern / FOSS - Use Docker
+
+## Different ways to get started:
+
+*Easiest / SaaS* - Log in to a [remote server](https://mirroreum.bioatlas.se ) (convenient -  requires only a login/pass) where everything has been set up already.
+
+- Convenient, but ... "Software As A Service" has drawbacks
+- Cloud Server - No Offline Work Possible
+- You Often Cannot Fix Remote Issues
+- Closed data (not yet published) gets shared with service provider
+- How do you connect to local data?
+
+## Different ways to get started:
+
+*"Traditional Non-Isolated"* - Do a tradional manual installation of all software components step-by-step along with various adaptations required depending on the OS used (Windows, Mac, Linux etc). Non-isolated = it is mixed up with other stuff on your laptop.
+
+- Manual Interactive Steps
+- Not Portable - "it works (only?) on my machine"
+- Troubleshooting system library installation issues - read manuals or search the Internets :)
+- How Can You Share or Run Your Work Reproducibly On Another Host?
+
+## Different ways to get started:
+
+*"Traditional Isolated - VM"* - Create a VM - Virtual Machine - for example using VirtualBox - by launching an instance of a FOSS OS and run a script to install all required dependencies.
+
+1. Download a recent [Linux Mint](http://ftp.portlane.com/pub/os/linux/linuxmint/stable/18.3/linuxmint-18.3-xfce-64bit.iso) (Linux Mint uses Debian or Ubuntu package bases) or equivalent OS, see <https://distrowatch.com/> for popularity rankings
+1. Get [VirtualBox](https://www.virtualbox.org/wiki/Downloads) and launch an instance of this [ISO in VirtualBox](http://techooid.com/install-linux-mint-virtual-machine) - configure VirtualBox to use bridged networking
+1. Log in an run an [install script]() to get everything in a hopefully automated, reproducible, non-interactive way, "semi-deterministic" but not "immutable"
+1. Copy the whole unit (.vmdk) [to another server](https://www.techrepublic.com/blog/tr-dojo/clone-and-move-virtual-machines-in-virtualbox/) if you wish
+
+
+## Different ways to get started:
+
+*Modern / FOSS* - Pull image(s) with all required prepackaged software from Docker Hub (requires [Docker](https://docs.docker.com/install/)) and launch it locally. The `docker` command is like `git` but not for code but for software packages (portable binaries, but can also [be used for datasets](https://hub.docker.com/r/bioatlas/backbone/tags/)!) - use `docker push` to publish and `docker pull` to use (versioned) images from the [DockerHub](https://dockerhub.com).
+
+- Fast, Versioned and Up-To-Date
+- Permits Offline Work
+- FOSS software :) - you can use local data and build from source!
+
+## Modern Setup - Steps
+
+This gives an official "stack" with most things needed for geospatial data analysis work:
+
+```bash
+#!/bin/bash
+docker run -d --name mywebide \
+  --user $(id -u):$(id -g) \
+  --publish 8787:8787 \
+  --volume $(pwd):/home/rstudio \
+  rocker/geospatial
+
+firefox http://localhost:8787 &
+```
+
+This 5G image [extends the above stack]() with additional R packages:
+
+```bash
+    docker pull bioatlas/mirroreum
+```
+
+## Traditional Setup - Manual steps
+
+1. Install R (>= v3.0) possibly with Rtools (if on Windows OS) from <https://cran.rstudio.com/>
+1. Install RStudio from <https://www.rstudio.com/products/rstudio/download/#download>
+1. Install various packages - which packages do you need? - including [system libraries](https://github.com/rocker-org/rocker-versioned/blob/master/r-dependencies.md) - and hunt for dependencies, sometimes resolving issues, conflicts etc by [searching the Internets for solutions](https://stackoverflow.com/questions/44973639/trouble-installing-sf-due-to-gdal)
+1. Customize your setup. For example, with RStudio, edit your *.Rprofile* in your home directory to override relevant settings/options, for example with the ALA4R package you could use [these settings](https://gist.github.com/mskyttner/146b8d76013bbf790b3c6957f73e32ee) to override [these default options](https://github.com/AtlasOfLivingAustralia/ALA4R/blob/master/R/onload.R)
+
+## Working with geospatial data
+
+For doing [geospatial data analysis work](https://cran.r-project.org/web/views/Spatial.html) in general and in particular for being able to work with data from [GBIF](https://gbif.org) and [various related data sources](https://living-atlases.gbif.org/), this is a recommended software "stack":
+
+- R + RStudio + [Rtools](https://cran.r-project.org/bin/windows/Rtools/) (if on Windows OS)
+- R packages that supports [geospatial work](https://hub.docker.com/r/rocker/geospatial/)
+- System libraries (depends on OS) such as [GDAL](http://www.gdal.org/) and [TeX](https://tug.org/texlive/) etc
+- R packages that provide access to [GBIF]() and related data sources [such as ALA4R](https://github.com/AtlasOfLivingAustralia/ALA4R) and various [tools to support reproducible research](https://ropensci.org/packages/)
+
+## Which packages do you need?
+
+    # use grep in the repo for strings library and require, ex:
+    # rgrep "library" | grep -oP "library\(.*?\)" | sort -u | uniq
+    
+```r
+    install.packages(c(
+      "rgbif", "rstudioapi", "ALA4R",  # data access
+      "tidyverse", "plyr", "rio", "stringr", # wrangling   
+      "DT", "gapminder", "plotly", "RColorBrewer", # visuals
+      "spocc", "rgeos", "rgdal", "mapproj", "maps", 
+      "maptools", "raster", "mapr",  # geospatial
+      "ape", "phytools"  # phylogenetic tools
+    ))
+```
+
+What packages do you have?
+
+```bash
+    R -e "cat(rownames(installed.packages()))"
+    # use setdiff() to see what you're missing?
+```
+
+## Using git, GitHub, GitFlow
+
+The `git` tool allows decentralized asynchronous collaboration across individuals and teams by managing different versions of sets of files (often code).
+
+This tool supports a workflow, increasingly standardized and [known as "GitFlow"](https://guides.github.com/introduction/flow/), to merge so called "Pull Requests" or "Merge Request" which combine different contributions from various individuals allowing changes or branches to evolve into new master versions.
+
+## Solo work or team work?
+
+The `git` command and GitFlow workflow can be used locally by a single user because it allows to track changes and allows reverting to earlier versions etc. 
+
+It is also really useful at scale - for example when collaborating with several other colleagues. It enables synching changes from remote repositories into your local repos by pulling from [GitHub](https://github.com) - a site where open source code can be stored and citable code can be [published](https://guides.github.com/activities/citable-code/) at no cost.
+
+Resources:
+
+- [Primer on using git with RStudio](http://r-pkgs.had.co.nz/git.html)
+- [Happy Git With R](http://happygitwithr.com/big-picture.html)
+
+##  Publish a web page from CLI with git and the "gh-pages" branch
+
+If you [use the CLI to push](https://help.github.com/articles/adding-an-existing-project-to-github-using-the-command-line/) HTML files to a branch you name ["gh-pages"](https://pages.github.com/), it will [appear on the Internet](https://GBIF-Europe.github.io/nordic_oikos_2018_r/s2_r_intro)
+
+```bash
+    # start a new git repo in a local directory
+    apt install git
+    mkdir -p ~/repos/myrepo && cd ~/repos/myrepo
+    git init
+    
+    # add content and push to remote repo
+    git add index.Rmd
+    git commit -m "initial commit"
+    git remote add origin \
+      git@github.com:GBIF-Europe/nordic_oikos_2018_r.git
+    git push --set-upstream origin master
+```
+## ...continued...
+
+```bash
+    # knit a .Rmd in RStudio and get a .html file
+    git checkout -b gh-pages
+    git add index.html
+    git commit -m "add webpage"
+    
+    # publish by pushing HTML-file to gh-pages branch
+    git push -u origin gh-pages
+    
+    # verify that the web page is there
+    firefox https://gbif-europe.github.io/nordic_oikos_2018_r/s2_r_intro
+    
+```
+
+## Using the RStudio IDE UI toolbar with git and GitHub
+
+There are UIs for example in RStudio for working with local and remote repositories (for example at GitHub) that abstract away some steps that always also can be done using `git` at the CLI. 
+
+Setting up RStudio for using `git` and GitHub requires using the GIT icon from the RStudio toolbar but first you need to do some [initial setup in RStudio](https://support.rstudio.com/hc/en-us/articles/200532077-Version-Control-with-Git-and-SVN) - richly [documented in excellent ways](https://www.rstudio.com/resources/webinars/collaboration-and-time-travel-version-control-with-git-github-and-rstudio/) in many places if you search the Internets. 
+
+## Learning Resources
+
+- [ROpenSci Tutorials](https://ropensci.org/tutorials/)
+- [Tidyverse Tutorials](https://www.tidyverse.org/)
+- [R for Data Science](http://r4ds.had.co.nz/)
+- [R packages](http://r-pkgs.had.co.nz/)
+- [Advanced R](http://adv-r.had.co.nz/)
+- [RStudio Essentials Webinar](https://www.rstudio.com/resources/webinars/rstudio-essentials-webinar-series-part-1/)
+- ["Cheatsheets"](https://www.rstudio.com/resources/cheatsheets/)
