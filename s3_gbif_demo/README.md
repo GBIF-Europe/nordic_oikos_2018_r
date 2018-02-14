@@ -17,6 +17,7 @@ This session presents programmatic access to GBIF data using R with focus on the
  * Filtering using data terms and spatial geometry (to be added)
  * [Example data quality tests](data_quality.Rmd), ([html](data_quality.html))
  * Taxon names information (to be added)
+ * [Slides](./slides)
  
 
 
