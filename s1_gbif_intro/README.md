@@ -12,7 +12,7 @@ This session gives an introduction to the Global Biodiversity Information Facili
  * Core data types supported in GBIF: [Taxon](http://rs.gbif.org/core/dwc_taxon_2015-04-24.xml), [Occurrence](http://rs.gbif.org/core/dwc_occurrence_2015-07-02.xml), and [Sampling-event](http://rs.gbif.org/core/dwc_event_2016_06_21.xml)
  * [GBIF Taxon backbone](https://doi.org/10.15468/39omei), [taxize](https://github.com/ropensci/taxize), [taxize tutorial](https://ropensci.org/tutorials/taxize_tutorial/) ([more information](http://gbif.blogspot.no/search?q=backbone))
 
-## Workshop training materials for session 1
+## Workshop training materials
  * [Slides](slides)
  * [Brief R settings and hints](settings.Rmd), ([html](settings.html)) (more in [session 2](../s2_r_intro))
  * [Brief intro to rgbif](gbif_intro.Rmd), ([html](gbif_intro.html)) (more in [session 3](../s3_gbif_demo))
