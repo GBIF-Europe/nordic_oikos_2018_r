@@ -15,7 +15,14 @@ Sample based data / Event data is a rather new datatype in GBIF and not all func
 
 ## Workshop training materials
 
-* [Discover event data in GBIF and download DwC-archive from IPT](4.2_event_data_download_and_data_wrangling.Rmd)
+* [Discover event data in GBIF and download DwC-archive from IPT](4.2_event_data_download_and_data_wrangling.Rmd) ([html]((4.2_event_data_download_and_data_wrangling.html))
+
+
+## Excercises
+
+* We will prepare some use cases with example data for the exercises.
+* Students will also find example-data to work with from GBIF.org at:
+* [https://www.gbif.org/dataset/search?type=SAMPLING_EVENT](https://www.gbif.org/dataset/search?type=SAMPLING_EVENT)
 
 
 ***
