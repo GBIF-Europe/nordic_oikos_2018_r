@@ -1,0 +1,32 @@
+
+
+##  Publish a web page from CLI with git and the "gh-pages" branch
+
+If you [use the CLI to push](https://help.github.com/articles/adding-an-existing-project-to-github-using-the-command-line/) HTML files to a branch you name ["gh-pages"](https://pages.github.com/), it will [appear on the Internet](https://GBIF-Europe.github.io/s2_r_intro)
+
+```bash
+    # start a new git repo in a local directory
+    apt install git
+    mkdir -p ~/repos/myrepo && cd ~/repos/myrepo
+    git init
+    
+    # add content and push to remote repo
+    git add index.Rmd
+    git commit -m "initial commit"
+    git remote add origin git@github.com:GBIF-Europe/nordic_oikos_2018_r.git
+    git push --set-upstream origin master
+```
+## ...continued...
+
+```bash
+    # knit a .Rmd in RStudio and get a .html file
+    git checkout -b gh-pages
+    git add index.html
+    git commit -m "add webpage"
+    
+    # publish by pushing HTML-file to gh-pages branch
+    git push -u origin gh-pages
+    
+    # verify that the web page is there
+    firefox https://GBIF-Europe.github.io/s2_r_intro 
+```
