@@ -1,11 +1,13 @@
 ---
 title: "Some mapping tools for environment layers"
-subtitle: "R workshop by GBIF.no and ForBio.no"
+subtitle: "R workshop by GBIF.no and ForBio"
 author: "Dag Endresen, http://orcid.org/0000-0002-2352-5497"
 date: "February 18, 2018"
 output:
   html_document:
     keep_md: true
+    toc: true
+    toc_depth: 3
 ---
 
 ***
@@ -18,14 +20,14 @@ You are here: [R workshop](../) >> [Session 6 Mapping](./) >> **mapping demo**
 
 # Nordic Oikos 2018 - R workshop - Session 6
 
-Scientific reuse of openly published biodiversity information: Programmatic access to and analysis of primary biodiversity information using R. Nordic Oikos 2018, pre-conference R workshop, 18 and 19 February 2018 in Trondheim. Further information [here](http://www.gbif.no/events/2018/Nordic-Oikos-2018-R-workshop.html).
+Scientific reuse of openly published biodiversity information: Programmatic access to and analysis of primary biodiversity information using R. Nordic Oikos 2018, pre-conference R workshop, 18<sup>th</sup> and 19<sup>th</sup> February 2018 in Trondheim. Further information [here](http://www.gbif.no/events/2018/Nordic-Oikos-2018-R-workshop.html).
 
 
 **Session 6** focuses on working with environment layers, mapping, cropping and masking layers using the [Raster R-package](https://cran.r-project.org/web/packages/raster/index.html) and other tools.
 
 ***
 
-### GBIF data for taxon liverleaf (blaaveis:no) - from Norway
+### GBIF data for taxon liverleaf (bl&aring;veis:no) - from Norway
 
 ```r
 library('rgbif') # rOpenSci r-package for GBIF data
@@ -97,18 +99,14 @@ legend("bottomright", title = "Legend", legend = "Occurrences", pch = 20, col="b
 ```
 ![Border for Norway from maptool:wrld_simpl](./demo_data/wrld_simpl_norway_sp.png "maptools wrld_simpl")
 
+
 ***
 
 ### Admin borders from DIVA-GIS
 
-DIVA-GIS data by country: [http://www.diva-gis.org/gdata](http://www.diva-gis.org/gdata)
-DIVA-GIS admin borders for Norway: [http://biogeo.ucdavis.edu/data/diva/adm/NOR_adm.zip](http://biogeo.ucdavis.edu/data/diva/adm/NOR_adm.zip)
-
-* Testing links in knitr:
-* http://biogeo.ucdavis.edu/data/diva/adm/NOR_adm.zip
-* (http://biogeo.ucdavis.edu/data/diva/adm/NOR_adm.zip)
-* [http://biogeo.ucdavis.edu/data/diva/adm/NOR_adm.zip]
-* <http://biogeo.ucdavis.edu/data/diva/adm/NOR_adm.zip>
+DIVA-GIS data by country: [http://www.diva-gis.org/gdata].
+DIVA-GIS admin borders for Norway: [http://biogeo.ucdavis.edu/data/diva/adm/NOR_adm.zip].
+Notice that these are the same (detailed) borders as available from GADM.
 
 
 ```r
@@ -118,17 +116,36 @@ if (!file.exists('./demo_data/NOR_adm.zip')) {
     dir.create(file.path("./demo_data/NOR_adm")) ## create a folder for shape files
     unzip('./demo_data/NOR_adm.zip', exdir='./demo_data/NOR_adm')
 }
-NOR_adm1 <- shapefile('./demo_data/NOR_adm/NOR_adm1.shp') ## county borders
+#NOR_adm1 <- shapefile('./demo_data/NOR_adm/NOR_adm1.shp') ## county borders
+#plot(NOR_adm1, axes=FALSE, border="#666666")
 ```
+![DIVA-GIS NOR_adm1 (source: GADM)](./demo_data/gadm_norway_sp.png "NOR_adm1")
+
 
 
 ```r
 library(raster)
 library(sp)
+#NOR_adm0 <- shapefile('./demo_data/NOR_adm/NOR_adm0.shp') ## country border
 #NOR_adm1 <- shapefile('./demo_data/NOR_adm/NOR_adm1.shp') ## county borders
-plot(NOR_adm1, axes=FALSE, border="#666666")
+#NOR_adm2 <- shapefile('./demo_data/NOR_adm/NOR_adm2.shp') ## municipality borders
+par(mfrow=c(1,3)) ## combining plots: nrows, ncols
+##
+plot(NOR_adm0, axes=FALSE, border="#666666")
+points(xy, col='blue', pch=20, cex=1) ## pecies occurrence
+title("NOR_adm0, country")
+##
+plot(NOR_adm1, axes=FALSE, border="#666666") ## may set line width -- lwd=INT, but increases rendering time substatially
+points(xy, col='blue', pch=20, cex=1) ## species occurrence
+title("NOR_adm1, county")
+##
+plot(NOR_adm2, axes=FALSE, border="#666666")
+points(xy, col='blue', pch=20, cex=1) ## species occurrence
+title("NOR_adm2, municipality")
+#legend("bottomright", title = "Legend", legend = "Occurrences", pch = 20, col="blue", cex = 0.9)
+##
 ```
-
+![DIVA-GIS NOR_adm (source: GADM)](./demo_data/map_NOR_adm.png "NOR_adm1")
 
 
 ***
@@ -294,10 +311,7 @@ cat("\nSize of gadm_norway_1 =", format(object.size(gadm_norway_1), units = "aut
 
 ***
 
-***
-
-
-### GBIF data for taxon liverleaf (blaaveis:no) - from Trondheim
+### GBIF data for taxon liverleaf (bl&aring;veis:no) - from Trondheim
 
 ```r
 library('rgbif') # rOpenSci r-package for GBIF data

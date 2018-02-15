@@ -18,7 +18,7 @@ output:
 
 Scientific reuse of openly published biodiversity information: Programmatic access to and analysis of primary biodiversity information using R. Nordic Oikos 2018, pre-conference R workshop, 18<sup>th</sup> and 19<sup>th</sup> February 2018 in Trondheim. Further information [here](http://www.gbif.no/events/2018/Nordic-Oikos-2018-R-workshop.html).
 
-Session 5 focus on linking GBIF data with environment layers, using the [Raster R-package](https://cran.r-project.org/web/packages/raster/index.html) and other tools.
+[Session 5](./) focus on linking GBIF data with environment layers, using the [Raster R-package](https://cran.r-project.org/web/packages/raster/index.html) and other tools.
 
 ***
 
@@ -150,5 +150,9 @@ Size of env = 235.5 Kb
  * BIO17 = Precipitation of Driest Quarter
  * BIO18 = Precipitation of Warmest Quarter
  * BIO19 = Precipitation of Coldest Quarter
+
+***
+
+Navigate back to [GitHub project home](https://github.com/GBIF-Europe/nordic_oikos_2018_r) or [GitHub.io html](https://gbif-europe.github.io/nordic_oikos_2018_r/) pages.
 
 ***

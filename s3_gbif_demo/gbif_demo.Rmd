@@ -19,16 +19,15 @@ You are here: [R workshop](../) >> [Session 3 GBIF data](./) >> **rgbif demo**
 
 # Nordic Oikos 2018 - R workshop - Session 3
 
-Scientific reuse of openly published biodiversity information: Programmatic access to and analysis of primary biodiversity information using R. Nordic Oikos 2018, pre-conference R workshop, 18 and 19 February 2018. Further information [here](http://www.gbif.no/events/2018/Nordic-Oikos-2018-R-workshop.html).
+Scientific reuse of openly published biodiversity information: Programmatic access to and analysis of primary biodiversity information using R. Nordic Oikos 2018, pre-conference R workshop, 18<sup>th></sup> and 19<sup>th</sup> February 2018. Further information [here](http://www.gbif.no/events/2018/Nordic-Oikos-2018-R-workshop.html).
 
 
 **Session 3** includes examples of accessing GBIF data from R using the [rgbif](https://www.gbif.org/tool/81747/rgbif) [package](https://cran.r-project.org/web/packages/rgbif/index.html) from [rOpenSci](https://ropensci.org/).
 
 ***
 
-
 ### Choose a species name
-```{r message=FALSE, eval=FALSE}
+```{r eval=FALSE}
 require(rgbif) # r-package for GBIF data
 sp_name <- "Hepatica nobilis"; kingdom <- "Plantae" # liverleaf (blaaveis:no), taxonKey=5371699
 #sp_name <- "Hordeum vulgare"; kingdom <- "Plantae" # barley (bygg:no)
@@ -53,7 +52,7 @@ key <- name_lookup(query=sp_name, rank=rank, datasetKey=nub, limit=1)$data$key #
 Choose a rank among: CLASS, CULTIVAR, CULTIVAR_GROUP, DOMAIN, FAMILY, FORM, GENUS, INFORMAL, INFRAGENERIC_NAME, INFRAORDER, INFRASPECIFIC_NAME, INFRASUBSPECIFIC_NAME, KINGDOM, ORDER, PHYLUM, SECTION, SERIES, SPECIES, STRAIN, SUBCLASS, SUBFAMILY, SUBFORM, SUBGENUS, SUBKINGDOM, SUBORDER, SUBPHYLUM, SUBSECTION, SUBSERIES, SUBSPECIES, SUBTRIBE, SUBVARIETY, SUPERCLASS, SUPERFAMILY, SUPERORDER, SUPERPHYLUM, SUPRAGENERIC_NAME, TRIBE, UNRANKED, VARIETY
 
 ### Species occurrence data from GBIF
-```{r message=FALSE, eval=FALSE}
+```{r eval=FALSE}
 require(rgbif) # r-package for GBIF data
 sp <- occ_search(taxonKey=key, return="data", hasCoordinate=TRUE, limit=100) 
 gbifmap(sp)
@@ -63,7 +62,7 @@ gbifmap(sp)
 ***
 
 ### Preview of dataframe with search results
-```{r message=FALSE, eval=FALSE}
+```{r eval=FALSE}
 head(sp, n=5) ## preview first 5 records
 ```
 ![Preview of dataframe for *Hepatica nobilis*](demo_data/head_sp.png 'head(sp, n=5)')
@@ -192,4 +191,8 @@ display.brewer.pal(n=9, name='Set1')
 Read more about colors at the [https://www.r-bloggers.com/palettes-in-r/](R-bloggers story about color palettes in R)
 
 ***
+
+***
+
+Navigate back to [GitHub project home](https://github.com/GBIF-Europe/nordic_oikos_2018_r) or [GitHub.io html](https://gbif-europe.github.io/nordic_oikos_2018_r/) pages.
 

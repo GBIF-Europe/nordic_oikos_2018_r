@@ -167,7 +167,7 @@ legend("bottomright", title=NULL, legend=c(paste("with issue: ", length(i1), " o
 
 ### Leaflet map (with zoom) for occurrences WITH overlay issue
 
-```{r message=FALSE, eval=FALSE}
+```{r eval=FALSE}
 library('mapr') # rOpenSci r-package for mapping (occurrence data)
 library('spocc') # rOpenSci r-package with more biodiversity data sources than GBIF
 ### TODO spp_dq_issue
@@ -189,11 +189,9 @@ map_leaflet(spp_dq_over_m, "longitude", "latitude", size=5, color=myCol)
 ***
 ***
 ***
-***
-***
 
 For this dummy test set I initially selected Poaceae occurrences from Scandinavia...
-```{r eval=FALSE}
+```{r eval=FALSE, include=FALSE}
 ## Poaceae has taxonKey=3073 - which gives us multiple species (here 31 unique "names", 33 unique "taxonKey")
 #bb <- c(10.2,63.3,10.6,63.5) ## Trondheim
 bb <- c(4.5, 54.9, 31.0, 61.0) # Scandinavia
@@ -203,4 +201,7 @@ write.table(spp_p, file="./demo_data/spp_p.txt", sep="\t", row.names=FALSE, qmet
 ```
 
 ***
+
+Navigate back to [GitHub project home](https://github.com/GBIF-Europe/nordic_oikos_2018_r) or [GitHub.io html](https://gbif-europe.github.io/nordic_oikos_2018_r/) pages.
+
 ***
