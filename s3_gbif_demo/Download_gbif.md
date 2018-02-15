@@ -7,7 +7,7 @@ Procedures and examples on downloading using registered downloads (as opposite t
 * You are not restricted to a hard limit of 200 000 records
 * You get a citation of your downloaded data that can/must be used when citing your data usage in e.g. a scientific publication or thesis. 
 
-Due to the latter, **you should always use asyncronous downloads when fetching data for use in publications**, at least when your analyses are based upon data from parts of multiple datasets. Your specific download-request will be assigned a DOI which will resolve to the exact same representation of the data as used creating a citable, reproducible workflow for your analyses. GBIF will keep the data for this DOI for a prolonged time, "forever" if this DOI appears in a publication. By using the assigned DOIs included with your citations, you also vastly improve GBIF’s ability to [track the use of data](https://www.gbif.org/literature-tracking). It also provides the mechanism for connecting published uses of the data back to each source record of data. In addition to acknowledging data publishers, the practice of using DOI citations rewards them by reinforcing the value of sharing open data to the publisher’s stakeholders and .
+Due to the latter, **you should always use asyncronous downloads when fetching data for use in publications**, at least when your analyses are based upon data from parts of multiple datasets. See the [rgbif citation guide](https://www.gbif.org/tool/81747/rgbif) for info on how to cite results from the rgbif occ_search function, this will become very aquard if your data are collated from a large number of datasets.  Your specific download-request will be assigned a DOI which will resolve to the exact same representation of the data as used creating a citable, reproducible workflow for your analyses. GBIF will keep the data for this DOI for a prolonged time, "forever" if this DOI appears in a publication. By using the assigned DOIs included with your citations, you also vastly improve GBIF’s ability to [track the use of data](https://www.gbif.org/literature-tracking). It also provides the mechanism for connecting published uses of the data back to each source record of data. In addition to acknowledging data publishers, the practice of using DOI citations rewards them by reinforcing the value of sharing open data to the publisher’s stakeholders and .
 
 In the following we go through the procedure of asynchronous download using the rgbif package step by step: 
 
@@ -79,7 +79,9 @@ The current script is set up to store the downloaded data to a temporary file. I
 
 
 ```r
-# a) Direct download by link: The download key will be shown as last part of the url e.g. https://www.gbif.org/occurrence/download/0003580-171002173027117
+#--------------------------------------------------------------------------
+# Direct download by link: The download key will be shown as last part of the url e.g. https://www.gbif.org/occurrence/download/0003580-171002173027117
+#--------------------------------------------------------------------------
 
 tmp <- tempfile() # create temporary file for download
 download.file(url=paste("http://api.gbif.org/v1/occurrence/download/request/",
@@ -87,7 +89,8 @@ download.file(url=paste("http://api.gbif.org/v1/occurrence/download/request/",
               destfile=tmp,
               quiet=FALSE)
 
-# b) The coffebreak version
+#--------------------------------------------------------------------------
+# Coffebreak version
 #------------------------------------------------------------------------------
 # Asyncronous download from the GBIF API. 
 # The function tries, with given time intervall to download data generated 
