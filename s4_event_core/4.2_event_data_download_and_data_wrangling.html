@@ -140,10 +140,13 @@ $(document).ready(function () {
 <li>Then we extract the DWC-A endpoint URL, and use the <a href="https://cran.r-project.org/web/packages/curl/vignettes/intro.html">curl package</a> to download this to a temporary file</li>
 <li>We extract the event and occurrence table and join the table with the left_join command from the <a href="https://cran.r-project.org/web/packages/dplyr/vignettes/dplyr.html">dplyr package</a>. Note that we here remove id field id “%&gt;% select(-id)” from the occurrence and event table respectively to avoid duplicated column names (the id field represent the eventID and occurrenceID respectively)</li>
 <li>Finally, we may have a <a href="http://rs.tdwg.org/dwc/terms/#MeasurementOrFact">measurmentORFact</a> (MOF) table attached. This is a generic way of attaching no-dwc terms like measurements, traits etc. to the data (<a href="https://tools.gbif.org/dwca-validator/extension.do?id=dwc:MeasurementOrFact">description</a>), and is in a <a href="https://sejdemyr.github.io/r-tutorials/basics/wide-and-long/">long dataformat</a>. When attached to an event-core DwC-A this always has an ID corresponding to the eventID (core file). Likewise, when attached to an occurrence-core DwC-A the ID field corresponds to the occurrence core-table of the DWC-A. There are also a new type in use a type called extendedMeasurmentsOrFact (eMOF) which is able to hold measures linked to both event and occurrence tables (<a href="http://www.iobis.org/manual/dataformat/">description</a>). Usage is otherwise more or less similar. The MOF (or eMOF) table have to be converted to a wide format before joined to the occurrence and event data.</li>
+<li>Citation: suggestive hack of default citation from dwc-a metadata to get the dataset DOI in the citation string.</li>
 </ol>
 <pre class="r"><code>library(RJSONIO)
 library(dplyr)
-require(tidyr)
+library(tidyr)
+library(stringr)
+library(xml2)
 
 # Resolve endpoint URL from datasetID using the GBIF API
 datasetID &lt;- &quot;78360224-5493-45fd-a9a0-c336557f09c3&quot;
@@ -170,7 +173,14 @@ mof_wide &lt;- measurementorfact %&gt;% select(eventID,measurementValue,measurem
   spread(key=measurementType,
                    value=measurementValue)
 
-df &lt;- left_join(df,mof_wide)</code></pre>
+df &lt;- left_join(df,mof_wide)
+
+# Suggested citation: Take the citation as from downloaded from GBIF website, replace &quot;via GBIF.org&quot; by endpoint url. 
+tmp &lt;- tempfile()
+download.file(paste0(&quot;http://api.gbif.org/v1/dataset/&quot;,datasetID,&quot;/document&quot;),tmp) # get medatadata from gbif api
+meta &lt;- read_xml(tmp) %&gt;% as_list() # create list from xml schema
+gbif_citation &lt;- meta$additionalMetadata$metadata$gbif$citation[[1]] # extract citation
+citation &lt;- str_replace(citation, pattern=&quot;GBIF.org&quot;,replacement=endpoint_url) # replace &quot;gbif.org&quot; with endpoint url</code></pre>
 </div>
 
 
