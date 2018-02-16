@@ -1,3 +1,12 @@
+---
+title: "Nordic Oikos 2018 -- workshop on GBIF data and R"
+author: "Dag Endresen, https://orcid.org/0000-0002-2352-5497"
+date: "February 18-19, 2018"
+output:
+  html_document:
+    keep_md: false
+---
+
 ![](../demo_data/NSO_2018_GBIF_NO.png "NSO 2018")
 
 
@@ -14,10 +23,10 @@ This session presents programmatic access to GBIF data using R with focus on the
 
 ## Workshop training materials
 
- * [Programmatic access to GBIF data in R with rgbif](gbif_demo.Rmd), ([html](gbif_demo.html))
- * [Asynchron download](3.x_async_download_gbif.Rmd), ([html]((3.x_async_download_gbif.html)))
+ * [Programmatic access to GBIF data in R with rgbif](gbif_demo.html), ([R-script](gbif_demo.Rmd))
+ * [Asynchron download](3.x_async_download_gbif.html), ([R-script](3.x_async_download_gbif.Rmd))
  * Filtering using data terms and spatial geometry (to be added)
- * [Example data quality tests](data_quality.Rmd), ([html](data_quality.html))
+ * [Example data quality tests](data_quality.html), ([R-script](data_quality.Rmd))
  * Taxon names information (to be added)
  * [Slides](./slides)
  
@@ -25,4 +34,9 @@ This session presents programmatic access to GBIF data using R with focus on the
 
 ***
 
-[Back to GitHub project home](https://github.com/GBIF-Europe/nordic_oikos_2018_r).
+Navigate back to [GitHub.io project home](https://gbif-europe.github.io/nordic_oikos_2018_r/) 
+or [GitHub project source code](https://github.com/GBIF-Europe/nordic_oikos_2018_r)
+pages.
+
+***
+

@@ -1,3 +1,14 @@
+---
+title: "Nordic Oikos 2018 -- workshop on GBIF data and R"
+author: "Anders Finstad, Dag Endresen, Erlend Nilsen, Markus Skyttner"
+date: "February 18-19, 2018"
+output:
+  html_document:
+    keep_md: false
+---
+
+<!-- index.html is generated from index.Rmd. Please edit that file -->
+
 ![](../demo_data/NSO_2018_GBIF_NO.png "NSO 2018")
 
 
@@ -29,6 +40,12 @@ Access to and the linking of GBIF data to environmental raster and vector data i
 * **EXTRA**: Perform a basic species distribution modelling study - [sdm guideline here](https://cran.r-project.org/web/packages/dismo/vignettes/sdm.pdf).
 
 
+
 ***
 
-[Back to GitHub project home](https://github.com/GBIF-Europe/nordic_oikos_2018_r).
+Navigate back to [GitHub.io project home](https://gbif-europe.github.io/nordic_oikos_2018_r/) 
+or [GitHub project source code](https://github.com/GBIF-Europe/nordic_oikos_2018_r)
+pages.
+
+***
+
