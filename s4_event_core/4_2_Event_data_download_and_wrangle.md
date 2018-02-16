@@ -93,19 +93,7 @@ We may have a [measurmentORFact](http://rs.tdwg.org/dwc/terms/#MeasurementOrFact
 ```r
 library(knitr)
 measurementorfact <- read.table("measurementorfact.txt",sep="\t",header = T, stringsAsFactors = FALSE) %>% rename(eventID=id) # NOTE! id field in a measurmentandfact table linked to the event core is an eventID
-kable(measurementorfact[88:95,]) # example extract from table
 ```
-
-     eventID                                                          measurementType    measurementValue   measurementUnit   measurementMethod                                                                                                 
----  ---------------------------------------------------------------  -----------------  -----------------  ----------------  ------------------------------------------------------------------------------------------------------------------
-88   http://purl.org/nhmuio/id/5a067911-37d2-4d9f-aaf8-8bde6cc9c4b2   maxdepth_cm        180                cm                Manual measurments | litterature values: (ZERO annual repports http://zackenberg.dk/publications/annual-reports/) 
-89   http://purl.org/nhmuio/id/47bd37ad-d92f-4ca5-bffb-56ebe72c2ec0   maxdepth_cm        >150               cm                Manual measurments | litterature values: (ZERO annual repports http://zackenberg.dk/publications/annual-reports/) 
-90   http://purl.org/nhmuio/id/a26592eb-ff62-4804-9130-ec4f64b5d868   maxdepth_cm        >150               cm                Manual measurments | litterature values: (ZERO annual repports http://zackenberg.dk/publications/annual-reports/) 
-91   http://purl.org/nhmuio/id/95d868d6-1c6b-4686-a45e-7a57da19459d   presence_of_fish   TRUE               bolean            litterature values  (ZERO annual repports:  http://zackenberg.dk/publications/annual-reports/)                    
-92   http://purl.org/nhmuio/id/d7199c68-1985-494e-8ad4-010d3328e779   presence_of_fish   FALSE              bolean            litterature values  (ZERO annual repports:  http://zackenberg.dk/publications/annual-reports/)                    
-93   http://purl.org/nhmuio/id/d2c7ba64-c1e9-41bc-b2da-cda0e584b697   presence_of_fish   TRUE               bolean            litterature values  (ZERO annual repports:  http://zackenberg.dk/publications/annual-reports/)                    
-94   http://purl.org/nhmuio/id/01421a15-d3a3-40f0-8577-d025a01fb8dc   presence_of_fish   TRUE               bolean            litterature values  (ZERO annual repports:  http://zackenberg.dk/publications/annual-reports/)                    
-95   http://purl.org/nhmuio/id/83888ae2-41dd-4656-91fe-bead0c7474f4   presence_of_fish   FALSE              bolean            litterature values  (ZERO annual repports:  http://zackenberg.dk/publications/annual-reports/)                    
 
 The MOF (or eMOF) table have to be converted to a wide format before joined to the occurrence and event data. 
 
@@ -116,19 +104,7 @@ library(tidyr)
 mof_wide <- measurementorfact %>% 
   select(eventID,measurementValue,measurementType) %>% 
   spread(key=measurementType, value=measurementValue)
-kable(head(mof_wide))
 ```
-
-
-
-eventID                                                          Area    maxdepth_cm   perimeter   pond_or_lake_substrate                                                 presence_of_fish 
----------------------------------------------------------------  ------  ------------  ----------  ---------------------------------------------------------------------  -----------------
-http://purl.org/nhmuio/id/01421a15-d3a3-40f0-8577-d025a01fb8dc   42348   >150          976         60% cobbel and stone / 30% silt or mud / 10% sand (in deepest pool )   TRUE             
-http://purl.org/nhmuio/id/0aa6a907-c6ba-487b-b7dc-936575ab9986   17041   270           613         20% cobbel and stone / 80% sand                                        FALSE            
-http://purl.org/nhmuio/id/12166a74-5471-4e2d-a586-cb950a423f13   17041   270           613         20% cobbel and stone / 80% sand                                        FALSE            
-http://purl.org/nhmuio/id/1b92a0be-d942-45b9-8ae5-a5bef21ce34e   2486    70            182         100% cobbel and stone / pond dries considerably out during study       FALSE            
-http://purl.org/nhmuio/id/22477041-4870-4677-b2c4-6b6bd0d1aa13   22462   460           618         70% cobbel and stone / 30% sand (in deepst pool)                       TRUE             
-http://purl.org/nhmuio/id/2e051d85-a224-45d6-b62d-13ca5df9e40f   31459   >150          773         60%cobbel and stones / 40% sand (in deepest pool)                      FALSE            
 
 Then join to event and occurrence data
 
