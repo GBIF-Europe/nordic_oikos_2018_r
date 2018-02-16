@@ -138,7 +138,7 @@
 
 <ul>
 <li>Before work - How can you get it all onto your laptop?</li>
-<li>What &quot;stack&quot; for R along with an IDE and other trimmings is normally needed for working with geospatial data?</li>
+<li>What &quot;stack&quot; for R along with an Integrated Development Environment (IDE) and other trimmings is normally needed for working with geospatial data?</li>
 <li>What is git and GitHub and how can you use workflows like <a href='https://guides.github.com' title=''>GitFlow</a> to collaborate with others?</li>
 </ul>
 
@@ -146,8 +146,8 @@
 
 <ul>
 <li>A function for Automated <a href='https://www.gbif.org/dataset/search?type=SAMPLING_EVENT' title=''>Downloads of Event Data from GBIF.org</a></li>
-<li>The path from an R script towards a function in a package?</li>
-<li>R-based web service serving synthetic geodata</li>
+<li>The path from an R script towards <a href='http://r-pkgs.had.co.nz/r.html' title=''>a function in a package</a>?</li>
+<li>R-based web service <a href='https://github.com/bioatlas/data-mobilization-pipeline/blob/master/sweref99-to-wgs84/sci_bear_data.R#L54-L57' title=''>serving synthetic geodata</a></li>
 </ul>
 
 </article></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>Installing your stack</h2></hgroup><article  id="installing-your-stack">
@@ -155,7 +155,7 @@
 <p>There are <em>different ways to get started</em> with everything you need onto your laptop:</p>
 
 <ol>
-<li>Easiest/ SaaS - Use The Cloud and a Web Browser</li>
+<li>Easiest / SaaS - Use The Cloud and a Web Browser</li>
 <li>Traditional Non-Isolated - Manual Interactive Steps</li>
 <li>Traditional Isolated VM - Semi-Automated Steps</li>
 <li>Modern / FOSS - Use Docker</li>
@@ -175,24 +175,24 @@
 
 </article></slide><slide class=''><hgroup><h2>Different ways to get started:</h2></hgroup><article  id="different-ways-to-get-started-1">
 
-<p><em>&quot;Traditional Non-Isolated&quot;</em> - Do a tradional manual installation of all software components step-by-step along with various adaptations required depending on the OS used (Windows, Mac, Linux etc). Non-isolated = it is mixed up with other stuff on your laptop.</p>
+<p><em>&quot;Traditional Non-Isolated&quot;</em> - Do a traditional manual installation of all software components step-by-step along with various adaptations required depending on the OS used (Windows, Mac, Linux etc). Non-isolated = it is mixed up with other stuff on your laptop.</p>
 
 <ul>
 <li>Manual Interactive Steps</li>
 <li>Not Portable - &quot;it works (only?) on my machine&quot;</li>
-<li>Troubleshooting system library installation issues - read manuals or search the Internets :)</li>
+<li>Troubleshooting system library installation issues - read manuals or search the Internet :)</li>
 <li>How Can You Share or Run Your Work Reproducibly On Another Host?</li>
 </ul>
 
 </article></slide><slide class=''><hgroup><h2>Different ways to get started:</h2></hgroup><article  id="different-ways-to-get-started-2">
 
-<p><em>&quot;Traditional Isolated - VM&quot;</em> - Create a VM - Virtual Machine - for example using VirtualBox - by launching an instance of a FOSS OS and run a script to install all required dependencies.</p>
+<p><em>&quot;Traditional Isolated - VM&quot;</em> - Create a VM - Virtual Machine - for example using VirtualBox - starting with an instance of a Free and Open-Source Software-based (FOSS) OS.</p>
 
 <ol>
 <li>Download a recent <a href='http://ftp.portlane.com/pub/os/linux/linuxmint/stable/18.3/linuxmint-18.3-xfce-64bit.iso' title=''>Linux Mint</a> (Linux Mint uses Debian or Ubuntu package bases) or equivalent OS, see <a href='https://distrowatch.com/' title=''>https://distrowatch.com/</a> for popularity rankings</li>
 <li>Get <a href='https://www.virtualbox.org/wiki/Downloads' title=''>VirtualBox</a> and launch an instance of this <a href='http://techooid.com/install-linux-mint-virtual-machine' title=''>ISO in VirtualBox</a> - configure VirtualBox to use bridged networking</li>
-<li>Log in an run an <a href='' title=''>install script</a> to get everything in a hopefully automated, reproducible, non-interactive way, &quot;semi-deterministic&quot; but not &quot;immutable&quot;</li>
-<li>Copy the whole unit (.vmdk) <a href='https://www.techrepublic.com/blog/tr-dojo/clone-and-move-virtual-machines-in-virtualbox/' title=''>to another server</a> if you wish</li>
+<li>Log in an run custom install scripts to automate installs in a &quot;semi-deterministic&quot; but not always &quot;immutable&quot; way - or use tools like <a href='https://www.ansible.com/' title=''>Ansible</a></li>
+<li>A unit (.vmdk) can be moved <a href='https://www.techrepublic.com/blog/tr-dojo/clone-and-move-virtual-machines-in-virtualbox/' title=''>to another server</a> - with limited portability</li>
 </ol>
 
 </article></slide><slide class=''><hgroup><h2>Different ways to get started:</h2></hgroup><article  id="different-ways-to-get-started-3">
@@ -203,6 +203,8 @@
 <li>Fast, Versioned and Up-To-Date</li>
 <li>Permits Offline Work</li>
 <li>FOSS software :) - you can use local data and build from source!</li>
+<li>Great for reproducible open research</li>
+<li>Can be used to share both <a href='https://hub.docker.com/r/bioatlas/mirroreum/' title=''>code</a> and <a href='https://hub.docker.com/r/bioatlas/backbone/' title=''>data</a></li>
 </ul>
 
 </article></slide><slide class=''><hgroup><h2>Modern Setup - Steps</h2></hgroup><article  id="modern-setup---steps">
@@ -218,7 +220,7 @@ docker run -d --name mywebide \
 
 firefox http://localhost:8787 &amp;</pre>
 
-<p>This 5G image <a href='' title=''>extends the above stack</a> with additional R packages:</p>
+<p>This 5G image <a href='https://hub.docker.com/r/bioatlas/mirroreum/' title=''>extends the above stack</a> with additional R packages:</p>
 
 <pre class = 'prettyprint lang-bash'>    docker pull bioatlas/mirroreum</pre>
 
@@ -227,17 +229,17 @@ firefox http://localhost:8787 &amp;</pre>
 <ol>
 <li>Install R (&gt;= v3.0) possibly with Rtools (if on Windows OS) from <a href='https://cran.rstudio.com/' title=''>https://cran.rstudio.com/</a></li>
 <li>Install RStudio from <a href='https://www.rstudio.com/products/rstudio/download/#download' title=''>https://www.rstudio.com/products/rstudio/download/#download</a></li>
-<li>Install various packages - which packages do you need? - including <a href='https://github.com/rocker-org/rocker-versioned/blob/master/r-dependencies.md' title=''>system libraries</a> - and hunt for dependencies, sometimes resolving issues, conflicts etc by <a href='https://stackoverflow.com/questions/44973639/trouble-installing-sf-due-to-gdal' title=''>searching the Internets for solutions</a></li>
+<li>Install various packages - which packages do you need? - including <a href='https://github.com/rocker-org/rocker-versioned/blob/master/r-dependencies.md' title=''>system libraries</a> - and hunt for dependencies, sometimes resolving issues, conflicts etc by <a href='https://stackoverflow.com/questions/44973639/trouble-installing-sf-due-to-gdal' title=''>searching the Internet for solutions</a></li>
 <li>Customize your setup. For example, with RStudio, edit your <em>.Rprofile</em> in your home directory to override relevant settings/options, for example with the ALA4R package you could use <a href='https://gist.github.com/mskyttner/146b8d76013bbf790b3c6957f73e32ee' title=''>these settings</a> to override <a href='https://github.com/AtlasOfLivingAustralia/ALA4R/blob/master/R/onload.R' title=''>these default options</a></li>
 </ol>
 
 </article></slide><slide class=''><hgroup><h2>Working with geospatial data</h2></hgroup><article  id="working-with-geospatial-data">
 
-<p>For doing <a href='https://cran.r-project.org/web/views/Spatial.html' title=''>geospatial data analysis work</a> in general and in particular for being able to work with data from <a href='https://gbif.org' title=''>GBIF</a> and <a href='https://living-atlases.gbif.org/' title=''>various related data sources</a>, this is a recommended software &quot;stack&quot;:</p>
+<p>For doing <a href='https://cran.r-project.org/web/views/Spatial.html' title=''>geospatial data analysis work</a> and for working on <a href='https://cran.r-project.org/web/views/SpatioTemporal.html' title=''>spatiotemporal tasks</a>in general and in particular for being able to work with data from <a href='https://gbif.org' title=''>GBIF</a> and <a href='https://living-atlases.gbif.org/' title=''>various related data sources</a>, this is a recommended software &quot;stack&quot;:</p>
 
 <ul>
 <li>R + RStudio + <a href='https://cran.r-project.org/bin/windows/Rtools/' title=''>Rtools</a> (if on Windows OS)</li>
-<li>R packages that supports <a href='https://hub.docker.com/r/rocker/geospatial/' title=''>geospatial work</a></li>
+<li>R packages that support <a href='https://hub.docker.com/r/rocker/geospatial/' title=''>geospatial work</a></li>
 <li>System libraries (depends on OS) such as <a href='http://www.gdal.org/' title=''>GDAL</a> and <a href='https://tug.org/texlive/' title=''>TeX</a> etc</li>
 <li>R packages that provide access to <a href='' title=''>GBIF</a> and related data sources <a href='https://github.com/AtlasOfLivingAustralia/ALA4R' title=''>such as ALA4R</a> and various <a href='https://ropensci.org/packages/' title=''>tools to support reproducible research</a></li>
 </ul>
@@ -314,7 +316,7 @@ firefox http://localhost:8787 &amp;</pre>
 
 <p>There are UIs for example in RStudio for working with local and remote repositories (for example at GitHub) that abstract away some steps that always also can be done using <code>git</code> at the CLI.</p>
 
-<p>Setting up RStudio for using <code>git</code> and GitHub requires using the GIT icon from the RStudio toolbar but first you need to do some <a href='https://support.rstudio.com/hc/en-us/articles/200532077-Version-Control-with-Git-and-SVN' title=''>initial setup in RStudio</a> - richly <a href='https://www.rstudio.com/resources/webinars/collaboration-and-time-travel-version-control-with-git-github-and-rstudio/' title=''>documented in excellent ways</a> in many places if you search the Internets.</p>
+<p>Setting up RStudio for using <code>git</code> and GitHub requires using the GIT icon from the RStudio toolbar but first you need to do some <a href='https://support.rstudio.com/hc/en-us/articles/200532077-Version-Control-with-Git-and-SVN' title=''>initial setup in RStudio</a> - richly <a href='https://www.rstudio.com/resources/webinars/collaboration-and-time-travel-version-control-with-git-github-and-rstudio/' title=''>documented in excellent ways</a> in many places if you search the Internet.</p>
 
 </article></slide><slide class=''><hgroup><h2>Learning Resources</h2></hgroup><article  id="learning-resources">
 
@@ -326,7 +328,11 @@ firefox http://localhost:8787 &amp;</pre>
 <li><a href='http://adv-r.had.co.nz/' title=''>Advanced R</a></li>
 <li><a href='https://www.rstudio.com/resources/webinars/rstudio-essentials-webinar-series-part-1/' title=''>RStudio Essentials Webinar</a></li>
 <li><a href='https://www.rstudio.com/resources/cheatsheets/' title=''>&quot;Cheatsheets&quot;</a></li>
-</ul></article></slide>
+</ul>
+
+</article></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>Usage Examples</h2></hgroup><article  id="usage-examples">
+
+<p>If time permits&#8230;</p></article></slide>
 
 
   <slide class="backdrop"></slide>
