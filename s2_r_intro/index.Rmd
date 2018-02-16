@@ -42,8 +42,8 @@ The session will also suggest a few _*online learning resources*_ for intermedia
 If time permits, also some usage example:
 
 - A function for Automated [Downloads of Event Data from GBIF.org](https://www.gbif.org/dataset/search?type=SAMPLING_EVENT)
-- The path from an R script towards a function in a package?
-- R-based web service serving synthetic geodata
+- The path from an R script towards [a function in a package](http://r-pkgs.had.co.nz/r.html)?
+- R-based web service [serving synthetic geodata](https://github.com/bioatlas/data-mobilization-pipeline/blob/master/sweref99-to-wgs84/sci_bear_data.R#L54-L57)
 
 # Installing your stack
 
@@ -121,7 +121,7 @@ This 5G image [extends the above stack]() with additional R packages:
 
 ## Working with geospatial data
 
-For doing [geospatial data analysis work](https://cran.r-project.org/web/views/Spatial.html) in general and in particular for being able to work with data from [GBIF](https://gbif.org) and [various related data sources](https://living-atlases.gbif.org/), this is a recommended software "stack":
+For doing [geospatial data analysis work](https://cran.r-project.org/web/views/Spatial.html)  and for working on [spatiotemporal tasks](https://cran.r-project.org/web/views/SpatioTemporal.html)in general and in particular for being able to work with data from [GBIF](https://gbif.org) and [various related data sources](https://living-atlases.gbif.org/), this is a recommended software "stack":
 
 - R + RStudio + [Rtools](https://cran.r-project.org/bin/windows/Rtools/) (if on Windows OS)
 - R packages that supports [geospatial work](https://hub.docker.com/r/rocker/geospatial/)
@@ -216,3 +216,7 @@ Setting up RStudio for using `git` and GitHub requires using the GIT icon from t
 - [Advanced R](http://adv-r.had.co.nz/)
 - [RStudio Essentials Webinar](https://www.rstudio.com/resources/webinars/rstudio-essentials-webinar-series-part-1/)
 - ["Cheatsheets"](https://www.rstudio.com/resources/cheatsheets/)
+
+# Usage Examples
+
+If time permits...
