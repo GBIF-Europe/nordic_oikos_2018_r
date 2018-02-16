@@ -36,7 +36,7 @@ The session will also suggest a few _*online learning resources*_ for intermedia
 ## Topics
 
 - Before work - How can you get it all onto your laptop? 
-- What "stack" for R along with an IDE and other trimmings is normally needed for working with geospatial data?
+- What "stack" for R along with an Integrated Development Environment (IDE) and other trimmings is normally needed for working with geospatial data?
 - What is git and GitHub and how can you use workflows like [GitFlow](https://guides.github.com) to collaborate with others?
 
 If time permits, also some usage example:
@@ -49,7 +49,7 @@ If time permits, also some usage example:
 
 There are *different ways to get started* with everything you need onto your laptop:
 
-1. Easiest/ SaaS - Use The Cloud and a Web Browser
+1. Easiest / SaaS - Use The Cloud and a Web Browser
 1. Traditional Non-Isolated - Manual Interactive Steps
 1. Traditional Isolated VM - Semi-Automated Steps
 1. Modern / FOSS - Use Docker
@@ -66,21 +66,21 @@ There are *different ways to get started* with everything you need onto your lap
 
 ## Different ways to get started:
 
-*"Traditional Non-Isolated"* - Do a tradional manual installation of all software components step-by-step along with various adaptations required depending on the OS used (Windows, Mac, Linux etc). Non-isolated = it is mixed up with other stuff on your laptop.
+*"Traditional Non-Isolated"* - Do a traditional manual installation of all software components step-by-step along with various adaptations required depending on the OS used (Windows, Mac, Linux etc). Non-isolated = it is mixed up with other stuff on your laptop.
 
 - Manual Interactive Steps
 - Not Portable - "it works (only?) on my machine"
-- Troubleshooting system library installation issues - read manuals or search the Internets :)
+- Troubleshooting system library installation issues - read manuals or search the Internet :)
 - How Can You Share or Run Your Work Reproducibly On Another Host?
 
 ## Different ways to get started:
 
-*"Traditional Isolated - VM"* - Create a VM - Virtual Machine - for example using VirtualBox - by launching an instance of a FOSS OS and run a script to install all required dependencies.
+*"Traditional Isolated - VM"* - Create a VM - Virtual Machine - for example using VirtualBox - starting with an instance of a Free and Open-Source Software-based (FOSS) OS.
 
 1. Download a recent [Linux Mint](http://ftp.portlane.com/pub/os/linux/linuxmint/stable/18.3/linuxmint-18.3-xfce-64bit.iso) (Linux Mint uses Debian or Ubuntu package bases) or equivalent OS, see <https://distrowatch.com/> for popularity rankings
 1. Get [VirtualBox](https://www.virtualbox.org/wiki/Downloads) and launch an instance of this [ISO in VirtualBox](http://techooid.com/install-linux-mint-virtual-machine) - configure VirtualBox to use bridged networking
-1. Log in an run an [install script]() to get everything in a hopefully automated, reproducible, non-interactive way, "semi-deterministic" but not "immutable"
-1. Copy the whole unit (.vmdk) [to another server](https://www.techrepublic.com/blog/tr-dojo/clone-and-move-virtual-machines-in-virtualbox/) if you wish
+1. Log in an run custom install scripts to automate installs in a "semi-deterministic" but not always "immutable" way - or use tools like [Ansible](https://www.ansible.com/)
+1. A unit (.vmdk) can be moved [to another server](https://www.techrepublic.com/blog/tr-dojo/clone-and-move-virtual-machines-in-virtualbox/) - with limited portability
 
 
 ## Different ways to get started:
@@ -90,6 +90,9 @@ There are *different ways to get started* with everything you need onto your lap
 - Fast, Versioned and Up-To-Date
 - Permits Offline Work
 - FOSS software :) - you can use local data and build from source!
+- Great for reproducible open research
+- Can be used to share both [code](https://hub.docker.com/r/bioatlas/mirroreum/) and [data](https://hub.docker.com/r/bioatlas/backbone/)
+
 
 ## Modern Setup - Steps
 
@@ -106,7 +109,7 @@ docker run -d --name mywebide \
 firefox http://localhost:8787 &
 ```
 
-This 5G image [extends the above stack]() with additional R packages:
+This 5G image [extends the above stack](https://hub.docker.com/r/bioatlas/mirroreum/) with additional R packages:
 
 ```bash
     docker pull bioatlas/mirroreum
@@ -116,7 +119,7 @@ This 5G image [extends the above stack]() with additional R packages:
 
 1. Install R (>= v3.0) possibly with Rtools (if on Windows OS) from <https://cran.rstudio.com/>
 1. Install RStudio from <https://www.rstudio.com/products/rstudio/download/#download>
-1. Install various packages - which packages do you need? - including [system libraries](https://github.com/rocker-org/rocker-versioned/blob/master/r-dependencies.md) - and hunt for dependencies, sometimes resolving issues, conflicts etc by [searching the Internets for solutions](https://stackoverflow.com/questions/44973639/trouble-installing-sf-due-to-gdal)
+1. Install various packages - which packages do you need? - including [system libraries](https://github.com/rocker-org/rocker-versioned/blob/master/r-dependencies.md) - and hunt for dependencies, sometimes resolving issues, conflicts etc by [searching the Internet for solutions](https://stackoverflow.com/questions/44973639/trouble-installing-sf-due-to-gdal)
 1. Customize your setup. For example, with RStudio, edit your *.Rprofile* in your home directory to override relevant settings/options, for example with the ALA4R package you could use [these settings](https://gist.github.com/mskyttner/146b8d76013bbf790b3c6957f73e32ee) to override [these default options](https://github.com/AtlasOfLivingAustralia/ALA4R/blob/master/R/onload.R)
 
 ## Working with geospatial data
@@ -124,7 +127,7 @@ This 5G image [extends the above stack]() with additional R packages:
 For doing [geospatial data analysis work](https://cran.r-project.org/web/views/Spatial.html)  and for working on [spatiotemporal tasks](https://cran.r-project.org/web/views/SpatioTemporal.html)in general and in particular for being able to work with data from [GBIF](https://gbif.org) and [various related data sources](https://living-atlases.gbif.org/), this is a recommended software "stack":
 
 - R + RStudio + [Rtools](https://cran.r-project.org/bin/windows/Rtools/) (if on Windows OS)
-- R packages that supports [geospatial work](https://hub.docker.com/r/rocker/geospatial/)
+- R packages that support [geospatial work](https://hub.docker.com/r/rocker/geospatial/)
 - System libraries (depends on OS) such as [GDAL](http://www.gdal.org/) and [TeX](https://tug.org/texlive/) etc
 - R packages that provide access to [GBIF]() and related data sources [such as ALA4R](https://github.com/AtlasOfLivingAustralia/ALA4R) and various [tools to support reproducible research](https://ropensci.org/packages/)
 
@@ -205,7 +208,7 @@ If you [use the CLI to push](https://help.github.com/articles/adding-an-existing
 
 There are UIs for example in RStudio for working with local and remote repositories (for example at GitHub) that abstract away some steps that always also can be done using `git` at the CLI. 
 
-Setting up RStudio for using `git` and GitHub requires using the GIT icon from the RStudio toolbar but first you need to do some [initial setup in RStudio](https://support.rstudio.com/hc/en-us/articles/200532077-Version-Control-with-Git-and-SVN) - richly [documented in excellent ways](https://www.rstudio.com/resources/webinars/collaboration-and-time-travel-version-control-with-git-github-and-rstudio/) in many places if you search the Internets. 
+Setting up RStudio for using `git` and GitHub requires using the GIT icon from the RStudio toolbar but first you need to do some [initial setup in RStudio](https://support.rstudio.com/hc/en-us/articles/200532077-Version-Control-with-Git-and-SVN) - richly [documented in excellent ways](https://www.rstudio.com/resources/webinars/collaboration-and-time-travel-version-control-with-git-github-and-rstudio/) in many places if you search the Internet. 
 
 ## Learning Resources
 
