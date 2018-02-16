@@ -9,7 +9,7 @@
 <meta name="generator" content="pandoc" />
 
 
-<meta name="author" content="Anders Gravbrøt Finstad" />
+<meta name="author" content="Anders Gravbrøt Finstad, https://orcid.org/0000-0003-4529-6266" />
 
 
 <title>Event data download and data-wrangling</title>
@@ -117,7 +117,7 @@ $(document).ready(function () {
 
 
 <h1 class="title toc-ignore">Event data download and data-wrangling</h1>
-<h4 class="author"><em>Anders Gravbrøt Finstad</em></h4>
+<h4 class="author"><em>Anders Gravbrøt Finstad, <a href="https://orcid.org/0000-0003-4529-6266" class="uri">https://orcid.org/0000-0003-4529-6266</a></em></h4>
 <h4 class="date"><em>February 8, 2018</em></h4>
 
 </div>
@@ -125,10 +125,18 @@ $(document).ready(function () {
 <div id="TOC">
 <ul>
 <li><a href="#discover-event-data-in-gbif">Discover event data in GBIF</a></li>
-<li><a href="#download-dwc-a-from-ipt">Download dwc-a from IPT</a></li>
+<li><a href="#download-dwc-a-from-ipt">Download dwc-a from IPT</a><ul>
+<li><a href="#get-endpoint-url-ipt-version-of-the-dwc-a">1. Get endpoint URL (IPT version of the DwC-A)</a></li>
+<li><a href="#download">2. Download</a></li>
+<li><a href="#extract-and-join-event-and-occurrence">3. Extract and join event and occurrence</a></li>
+</ul></li>
+<li><a href="#measurmentsorfacts">MeasurmentsOrFacts</a><ul>
+<li><a href="#citation">Citation</a></li>
+</ul></li>
 </ul>
 </div>
 
+<hr />
 <div id="discover-event-data-in-gbif" class="section level2">
 <h2>Discover event data in GBIF</h2>
 <p>Event data are a new datatype for GBIF, and still not truly discover able through GBIF API searches and hence not in the rgbif package. Typical uses includes searching for specific sampling protocols in given areas. However, you can use the GBIF portal, or the API and rgbif function metadata search through the “datasets” call of rgbif, or search through the GBIF portal and locate the UUID of the dataset. Event with only this rudimentary functionality in place, GBIF still provides some advantages over unstructured repositories for event type data.</p>
@@ -144,55 +152,221 @@ dataset_search &lt;- RJSONIO::fromJSON(paste0(&quot;http://api.gbif.org/v1/datas
                                            search_string))
 dataset_search$count
 dataset_search$results[[1]]</code></pre>
+<hr />
 </div>
 <div id="download-dwc-a-from-ipt" class="section level2">
 <h2>Download dwc-a from IPT</h2>
 <p>Some essential event-type data terms are currently not available through the GBIF API. For example, the GBIF API (and also the gbif portal, which in reality is built on top of this) does not yet throw back empty events and potential hierarchical structures which may be essential for inferring sampling effort. Here, we download the data set as a DwC-A directly from the IPT using the following workflow.This is however under implementation and we hope that the workaround described below in a short while will be redundant.</p>
-<ol style="list-style-type: decimal">
-<li>Use the <a href="https://cran.r-project.org/web/packages/jsonlite/vignettes/json-apis.html">jsonlite package</a> to get the endpoint for the raw DwC-a representation of the dataset at the IPT installation. This takes the raw API call “<a href="http://api.gbif.org/v1/dataset/'dataset" class="uri">http://api.gbif.org/v1/dataset/'dataset</a> UUID’/endpoint”, downloads information as JSON. This is address is can also be found by scrolling down on the dataset homepage to the <a href="https://www.gbif.org/dataset/78360224-5493-45fd-a9a0-c336557f09c3#dataDescription">data description section</a></li>
-<li>Then we extract the DWC-A endpoint URL download the DwC-A to a temporary file</li>
-<li>We extract the event and occurrence table and join the table with the left_join command from the <a href="https://cran.r-project.org/web/packages/dplyr/vignettes/dplyr.html">dplyr package</a>. Note that we here remove id field id “%&gt;% select(-id)” from the occurrence and event table respectively to avoid duplicated column names (the id field represent the eventID and occurrenceID respectively)</li>
-<li>Finally, we may have a <a href="http://rs.tdwg.org/dwc/terms/#MeasurementOrFact">measurmentORFact</a> (MOF) table attached. This is a generic way of attaching no-dwc terms like measurements, traits etc. to the data (<a href="https://tools.gbif.org/dwca-validator/extension.do?id=dwc:MeasurementOrFact">description</a>), and is in a <a href="https://sejdemyr.github.io/r-tutorials/basics/wide-and-long/">long dataformat</a>. When attached to an event-core DwC-A this always has an ID corresponding to the eventID (core file). Likewise, when attached to an occurrence-core DwC-A the ID field corresponds to the occurrence core-table of the DWC-A. There are also a new type in use a type called extendedMeasurmentsOrFact (eMOF) which is able to hold measures linked to both event and occurrence tables (<a href="http://www.iobis.org/manual/dataformat/">description</a>). Usage is otherwise more or less similar. The MOF (or eMOF) table have to be converted to a wide format before joined to the occurrence and event data.</li>
-<li>Citation: suggestive hack of default citation from dwc-a metadata to get the dataset DOI in the citation string.</li>
-</ol>
+<div id="get-endpoint-url-ipt-version-of-the-dwc-a" class="section level3">
+<h3>1. Get endpoint URL (IPT version of the DwC-A)</h3>
+<p>Use the <a href="https://cran.r-project.org/web/packages/jsonlite/vignettes/json-apis.html">jsonlite package</a> to get the endpoint for the raw DwC-a representation of the dataset at the IPT installation. This takes the raw API call “<a href="http://api.gbif.org/v1/dataset/'dataset" class="uri">http://api.gbif.org/v1/dataset/'dataset</a> UUID’/endpoint”, downloads information as JSON. This is address is can also be found by scrolling down on the dataset homepage to the <a href="https://www.gbif.org/dataset/78360224-5493-45fd-a9a0-c336557f09c3#dataDescription">data description section</a></p>
 <pre class="r"><code>library(RJSONIO)
-library(dplyr)
-library(tidyr)
-library(xml2)
-
-# 1. Resolve endpoint URL from datasetID using the GBIF API
+# Resolve endpoint URL from datasetID using the GBIF API
 datasetID &lt;- &quot;78360224-5493-45fd-a9a0-c336557f09c3&quot;
 dataset &lt;- RJSONIO::fromJSON(paste0(&quot;http://api.gbif.org/v1/dataset/&quot;,datasetID,&quot;/endpoint&quot;))
-endpoint_url &lt;- dataset[[1]]$url # extracting URL from API call result
-
-# 2. Download from dwc-a from IPT
+endpoint_url &lt;- dataset[[1]]$url # extracting URL from API call result</code></pre>
+<p>The endpoint URL will look like</p>
+<ul>
+<li><a href="http://gbif.vm.ntnu.no/ipt/archive.do?r=lepidurus-arcticus-survey_northeast-greenland_2013" class="uri">http://gbif.vm.ntnu.no/ipt/archive.do?r=lepidurus-arcticus-survey_northeast-greenland_2013</a></li>
+</ul>
+</div>
+<div id="download" class="section level3">
+<h3>2. Download</h3>
+<p>We then extract the DWC-A endpoint URL and download the DwC-A to a temporary file</p>
+<pre class="r"><code># Download from dwc-a from IPT
 tmp &lt;- tempfile() # create temporary file for download
 download.file(endpoint_url, tmp)
 archive_files &lt;- unzip(tmp, files = &quot;NULL&quot;, list = T) 
-unzip(tmp, list = F)
-
-# 3. extract occurrence, event and measurmentandfacts tables from dwc-a and join
-
+unzip(tmp, list = F)</code></pre>
+<p>The DwC-A contains the following files where dataset metadata are in .xml format and the .txt files contains data.</p>
+<pre class="r"><code>paste(archive_files[,1])</code></pre>
+<pre><code>## [1] &quot;event.txt&quot;             &quot;measurementorfact.txt&quot; &quot;meta.xml&quot;             
+## [4] &quot;eml.xml&quot;               &quot;occurrence.txt&quot;</code></pre>
+</div>
+<div id="extract-and-join-event-and-occurrence" class="section level3">
+<h3>3. Extract and join event and occurrence</h3>
+<p>We extract the event and occurrence table and join the table with the left_join command from the <a href="https://cran.r-project.org/web/packages/dplyr/vignettes/dplyr.html">dplyr package</a>. Note that we here remove id field id “%&gt;% select(-id)” from the occurrence and event table respectively to avoid duplicated column names (the id field represent the eventID and occurrenceID respectively)</p>
+<pre class="r"><code># Extract occurrence, event and measurmentandfacts tables from dwc-a and join
+library(dplyr)
 occurrence &lt;- read.table(&quot;occurrence.txt&quot;,sep=&quot;\t&quot;,header = T, stringsAsFactors = FALSE) %&gt;% select(-id) # id field duplicates occurrenceID
 event &lt;- read.table(&quot;event.txt&quot;,sep=&quot;\t&quot;,header = T, stringsAsFactors = FALSE) %&gt;% select(-id) # id field duplicates eventID
-measurementorfact &lt;- read.table(&quot;measurementorfact.txt&quot;,sep=&quot;\t&quot;,header = T, stringsAsFactors = FALSE) %&gt;% rename(eventID=id) # NOTE! id field in a measurmentandfact table linked to the event core is an eventID
+
 
 # Joint occurrences to events
-df &lt;- left_join(event,occurrence,by=&quot;eventID&quot;)
-
-# 4. create wide format from measurmentsandfacts and join
-mof_wide &lt;- measurementorfact %&gt;% select(eventID,measurementValue,measurementType) %&gt;% 
-  spread(key=measurementType,
-                   value=measurementValue)
-
-df &lt;- left_join(df,mof_wide)
-
+df &lt;- left_join(event,occurrence,by=&quot;eventID&quot;)</code></pre>
+</div>
+</div>
+<div id="measurmentsorfacts" class="section level1">
+<h1>MeasurmentsOrFacts</h1>
+<p>We may have a <a href="http://rs.tdwg.org/dwc/terms/#MeasurementOrFact">measurmentORFact</a> (MOF) table attached. This is a generic way of attaching no-dwc terms like measurements, traits etc. to the data (<a href="https://tools.gbif.org/dwca-validator/extension.do?id=dwc:MeasurementOrFact">description</a>). This is inn a <a href="https://sejdemyr.github.io/r-tutorials/basics/wide-and-long/">long dataformat</a>. When attached to an event-core DwC-A this always has an ID corresponding to the eventID (core file). Likewise, when attached to an occurrence-core DwC-A the ID field corresponds to the occurrence core-table of the DWC-A. There are also a new type in use a type called extendedMeasurmentsOrFact (eMOF) which is able to hold measures linked to both event and occurrence tables (<a href="http://www.iobis.org/manual/dataformat/">description</a>). Usage is otherwise more or less similar.</p>
+<pre class="r"><code>library(knitr)
+measurementorfact &lt;- read.table(&quot;measurementorfact.txt&quot;,sep=&quot;\t&quot;,header = T, stringsAsFactors = FALSE) %&gt;% rename(eventID=id) # NOTE! id field in a measurmentandfact table linked to the event core is an eventID
+kable(measurementorfact[88:95,]) # example extract from table</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th align="left">eventID</th>
+<th align="left">measurementType</th>
+<th align="left">measurementValue</th>
+<th align="left">measurementUnit</th>
+<th align="left">measurementMethod</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>88</td>
+<td align="left"><a href="http://purl.org/nhmuio/id/5a067911-37d2-4d9f-aaf8-8bde6cc9c4b2" class="uri">http://purl.org/nhmuio/id/5a067911-37d2-4d9f-aaf8-8bde6cc9c4b2</a></td>
+<td align="left">maxdepth_cm</td>
+<td align="left">180</td>
+<td align="left">cm</td>
+<td align="left">Manual measurments | litterature values: (ZERO annual repports <a href="http://zackenberg.dk/publications/annual-reports/" class="uri">http://zackenberg.dk/publications/annual-reports/</a>)</td>
+</tr>
+<tr class="even">
+<td>89</td>
+<td align="left"><a href="http://purl.org/nhmuio/id/47bd37ad-d92f-4ca5-bffb-56ebe72c2ec0" class="uri">http://purl.org/nhmuio/id/47bd37ad-d92f-4ca5-bffb-56ebe72c2ec0</a></td>
+<td align="left">maxdepth_cm</td>
+<td align="left">&gt;150</td>
+<td align="left">cm</td>
+<td align="left">Manual measurments | litterature values: (ZERO annual repports <a href="http://zackenberg.dk/publications/annual-reports/" class="uri">http://zackenberg.dk/publications/annual-reports/</a>)</td>
+</tr>
+<tr class="odd">
+<td>90</td>
+<td align="left"><a href="http://purl.org/nhmuio/id/a26592eb-ff62-4804-9130-ec4f64b5d868" class="uri">http://purl.org/nhmuio/id/a26592eb-ff62-4804-9130-ec4f64b5d868</a></td>
+<td align="left">maxdepth_cm</td>
+<td align="left">&gt;150</td>
+<td align="left">cm</td>
+<td align="left">Manual measurments | litterature values: (ZERO annual repports <a href="http://zackenberg.dk/publications/annual-reports/" class="uri">http://zackenberg.dk/publications/annual-reports/</a>)</td>
+</tr>
+<tr class="even">
+<td>91</td>
+<td align="left"><a href="http://purl.org/nhmuio/id/95d868d6-1c6b-4686-a45e-7a57da19459d" class="uri">http://purl.org/nhmuio/id/95d868d6-1c6b-4686-a45e-7a57da19459d</a></td>
+<td align="left">presence_of_fish</td>
+<td align="left">TRUE</td>
+<td align="left">bolean</td>
+<td align="left">litterature values (ZERO annual repports: <a href="http://zackenberg.dk/publications/annual-reports/" class="uri">http://zackenberg.dk/publications/annual-reports/</a>)</td>
+</tr>
+<tr class="odd">
+<td>92</td>
+<td align="left"><a href="http://purl.org/nhmuio/id/d7199c68-1985-494e-8ad4-010d3328e779" class="uri">http://purl.org/nhmuio/id/d7199c68-1985-494e-8ad4-010d3328e779</a></td>
+<td align="left">presence_of_fish</td>
+<td align="left">FALSE</td>
+<td align="left">bolean</td>
+<td align="left">litterature values (ZERO annual repports: <a href="http://zackenberg.dk/publications/annual-reports/" class="uri">http://zackenberg.dk/publications/annual-reports/</a>)</td>
+</tr>
+<tr class="even">
+<td>93</td>
+<td align="left"><a href="http://purl.org/nhmuio/id/d2c7ba64-c1e9-41bc-b2da-cda0e584b697" class="uri">http://purl.org/nhmuio/id/d2c7ba64-c1e9-41bc-b2da-cda0e584b697</a></td>
+<td align="left">presence_of_fish</td>
+<td align="left">TRUE</td>
+<td align="left">bolean</td>
+<td align="left">litterature values (ZERO annual repports: <a href="http://zackenberg.dk/publications/annual-reports/" class="uri">http://zackenberg.dk/publications/annual-reports/</a>)</td>
+</tr>
+<tr class="odd">
+<td>94</td>
+<td align="left"><a href="http://purl.org/nhmuio/id/01421a15-d3a3-40f0-8577-d025a01fb8dc" class="uri">http://purl.org/nhmuio/id/01421a15-d3a3-40f0-8577-d025a01fb8dc</a></td>
+<td align="left">presence_of_fish</td>
+<td align="left">TRUE</td>
+<td align="left">bolean</td>
+<td align="left">litterature values (ZERO annual repports: <a href="http://zackenberg.dk/publications/annual-reports/" class="uri">http://zackenberg.dk/publications/annual-reports/</a>)</td>
+</tr>
+<tr class="even">
+<td>95</td>
+<td align="left"><a href="http://purl.org/nhmuio/id/83888ae2-41dd-4656-91fe-bead0c7474f4" class="uri">http://purl.org/nhmuio/id/83888ae2-41dd-4656-91fe-bead0c7474f4</a></td>
+<td align="left">presence_of_fish</td>
+<td align="left">FALSE</td>
+<td align="left">bolean</td>
+<td align="left">litterature values (ZERO annual repports: <a href="http://zackenberg.dk/publications/annual-reports/" class="uri">http://zackenberg.dk/publications/annual-reports/</a>)</td>
+</tr>
+</tbody>
+</table>
+<p>The MOF (or eMOF) table have to be converted to a wide format before joined to the occurrence and event data.</p>
+<pre class="r"><code># Create wide format from measurmentsandfacts
+library(tidyr)
+mof_wide &lt;- measurementorfact %&gt;% 
+  select(eventID,measurementValue,measurementType) %&gt;% 
+  spread(key=measurementType, value=measurementValue)
+kable(head(mof_wide))</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">eventID</th>
+<th align="left">Area</th>
+<th align="left">maxdepth_cm</th>
+<th align="left">perimeter</th>
+<th align="left">pond_or_lake_substrate</th>
+<th align="left">presence_of_fish</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><a href="http://purl.org/nhmuio/id/01421a15-d3a3-40f0-8577-d025a01fb8dc" class="uri">http://purl.org/nhmuio/id/01421a15-d3a3-40f0-8577-d025a01fb8dc</a></td>
+<td align="left">42348</td>
+<td align="left">&gt;150</td>
+<td align="left">976</td>
+<td align="left">60% cobbel and stone / 30% silt or mud / 10% sand (in deepest pool )</td>
+<td align="left">TRUE</td>
+</tr>
+<tr class="even">
+<td align="left"><a href="http://purl.org/nhmuio/id/0aa6a907-c6ba-487b-b7dc-936575ab9986" class="uri">http://purl.org/nhmuio/id/0aa6a907-c6ba-487b-b7dc-936575ab9986</a></td>
+<td align="left">17041</td>
+<td align="left">270</td>
+<td align="left">613</td>
+<td align="left">20% cobbel and stone / 80% sand</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="odd">
+<td align="left"><a href="http://purl.org/nhmuio/id/12166a74-5471-4e2d-a586-cb950a423f13" class="uri">http://purl.org/nhmuio/id/12166a74-5471-4e2d-a586-cb950a423f13</a></td>
+<td align="left">17041</td>
+<td align="left">270</td>
+<td align="left">613</td>
+<td align="left">20% cobbel and stone / 80% sand</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="even">
+<td align="left"><a href="http://purl.org/nhmuio/id/1b92a0be-d942-45b9-8ae5-a5bef21ce34e" class="uri">http://purl.org/nhmuio/id/1b92a0be-d942-45b9-8ae5-a5bef21ce34e</a></td>
+<td align="left">2486</td>
+<td align="left">70</td>
+<td align="left">182</td>
+<td align="left">100% cobbel and stone / pond dries considerably out during study</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="odd">
+<td align="left"><a href="http://purl.org/nhmuio/id/22477041-4870-4677-b2c4-6b6bd0d1aa13" class="uri">http://purl.org/nhmuio/id/22477041-4870-4677-b2c4-6b6bd0d1aa13</a></td>
+<td align="left">22462</td>
+<td align="left">460</td>
+<td align="left">618</td>
+<td align="left">70% cobbel and stone / 30% sand (in deepst pool)</td>
+<td align="left">TRUE</td>
+</tr>
+<tr class="even">
+<td align="left"><a href="http://purl.org/nhmuio/id/2e051d85-a224-45d6-b62d-13ca5df9e40f" class="uri">http://purl.org/nhmuio/id/2e051d85-a224-45d6-b62d-13ca5df9e40f</a></td>
+<td align="left">31459</td>
+<td align="left">&gt;150</td>
+<td align="left">773</td>
+<td align="left">60%cobbel and stones / 40% sand (in deepest pool)</td>
+<td align="left">FALSE</td>
+</tr>
+</tbody>
+</table>
+<p>Then join to event and occurrence data</p>
+<pre class="r"><code>df &lt;- left_join(df,mof_wide)</code></pre>
+<div id="citation" class="section level3">
+<h3>Citation</h3>
+<p>Suggestive hack of default citation from dwc-a metadata to get the dataset DOI in the citation string.</p>
+<pre class="r"><code>library(xml2)
 # 5. Suggested citation: Take the citation as from downloaded from GBIF website, replace &quot;via GBIF.org&quot; by endpoint url. 
+datasetID &lt;- &quot;78360224-5493-45fd-a9a0-c336557f09c3&quot;
 tmp &lt;- tempfile()
 download.file(paste0(&quot;http://api.gbif.org/v1/dataset/&quot;,datasetID,&quot;/document&quot;),tmp) # get medatadata from gbif api
 meta &lt;- read_xml(tmp) %&gt;% as_list() # create list from xml schema
 gbif_citation &lt;- meta$additionalMetadata$metadata$gbif$citation[[1]] # extract citation
 citation &lt;- gsub(&quot;GBIF.org&quot;, paste(endpoint_url), gbif_citation) # replace &quot;gbif.org&quot; with endpoint url</code></pre>
+<p>The citation string will then be</p>
+<ul>
+<li>Finstad A G, Hendrichsen D K, Nilsen E (2016). Lepidurus arcticus survey Northeast Greenland 2013. Version 1.7. NTNU University Museum. Sampling_event Dataset <a href="https://doi.org/10.15468/ancuku" class="uri">https://doi.org/10.15468/ancuku</a> accessed via <a href="http://gbif.vm.ntnu.no/ipt/archive.do?r=lepidurus-arcticus-survey_northeast-greenland_2013" class="uri">http://gbif.vm.ntnu.no/ipt/archive.do?r=lepidurus-arcticus-survey_northeast-greenland_2013</a> on 2018-02-16.</li>
+</ul>
+</div>
 </div>
 
 
