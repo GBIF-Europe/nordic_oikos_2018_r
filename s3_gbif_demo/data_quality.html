@@ -11,7 +11,6 @@
 
 <meta name="author" content="Dag Endresen, http://orcid.org/0000-0002-2352-5497" />
 
-<meta name="date" content="2018-02-18" />
 
 <title>Some occurrence data quality tests</title>
 
@@ -121,7 +120,7 @@ $(document).ready(function () {
 
 <h1 class="title toc-ignore">Some occurrence data quality tests</h1>
 <h4 class="author"><em>Dag Endresen, <a href="http://orcid.org/0000-0002-2352-5497" class="uri">http://orcid.org/0000-0002-2352-5497</a></em></h4>
-<h4 class="date"><em>February 18, 2018</em></h4>
+<h4 class="date"><em>February 18-19, 2018</em></h4>
 
 </div>
 
@@ -140,6 +139,7 @@ $(document).ready(function () {
 </ul>
 </div>
 
+<!-- data_quality.html is generated from data_quality.Rmd. Please edit that file -->
 <hr />
 <p>You are here: <a href="../">R workshop</a> &gt;&gt; <a href="./">Session 3 GBIF data</a> &gt;&gt; <strong>occurrence data quality checks</strong></p>
 <div class="figure">
@@ -149,16 +149,14 @@ $(document).ready(function () {
 <hr />
 <div id="nordic-oikos-2018---r-workshop---session-3" class="section level1">
 <h1>Nordic Oikos 2018 - R workshop - Session 3</h1>
-<p>Scientific reuse of openly published biodiversity information: Programmatic access to and analysis of primary biodiversity information using R. Nordic Oikos 2018, pre-conference R workshop, 18 and 19 February 2018. Further information <a href="http://www.gbif.no/events/2018/Nordic-Oikos-2018-R-workshop.html">here</a>.</p>
-<p><a href="./">Session 3</a> includes examples of accessing GBIF data from R using the <a href="https://www.gbif.org/tool/81747/rgbif">rgbif</a> <a href="https://cran.r-project.org/web/packages/rgbif/index.html">package</a> from <a href="https://ropensci.org/">rOpenSci</a>.</p>
-<p>This script (<code>data_quality</code>) provides a small set of examples for data quality checks you may want to perform.</p>
+<p><a href="./">Session 3</a> includes examples of accessing GBIF data from R using the <a href="https://www.gbif.org/tool/81747/rgbif">rgbif</a> <a href="https://cran.r-project.org/web/packages/rgbif/index.html">package</a> from <a href="https://ropensci.org/">rOpenSci</a>. This script (<code>data_quality</code>) provides a small set of examples for data quality checks you may want to perform.</p>
 <hr />
 <div id="read-in-some-example-data" class="section level3">
 <h3>Read in some example data</h3>
 <p>Using <a href="http://readxl.tidyverse.org/">readxl</a> from tidyverse.</p>
 <pre class="r"><code>library(tidyverse) ## tidyverse is without external dependencies such as Java or Pearl
 library(readxl) ## readxl is part of tidyverse
-#excel_sheets(&quot;./demo_data/spp_dq.xlsx&quot;) ## List sheets
+#excel_sheets(&quot;./demo_data/spp_dq.xlsx&quot;) ## List sheets in a xlsx document
 #spp_dq &lt;- read_excel(&quot;./demo_data/spp_dq.xlsx&quot;, sheet=1, range=&quot;A1:BQ101&quot;) ## example with range
 spp_dq &lt;- read_excel(&quot;./demo_data/spp_dq.xlsx&quot;, sheet=1) ## manipulated occurrence data, introduced errors
 head(spp_dq, n=5)</code></pre>

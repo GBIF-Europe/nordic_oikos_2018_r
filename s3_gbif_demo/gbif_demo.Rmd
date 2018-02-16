@@ -1,13 +1,15 @@
 ---
 title:  "GBIF rgbif demonstration"
 author: "Dag Endresen, http://orcid.org/0000-0002-2352-5497"
-date:   "February 18, 2018"
+date:   "February 18-19, 2018"
 output:
   html_document:
-    keep_md: true
+    keep_md: false
     toc: true
     toc_depth: 3
 ---
+
+<!-- gbif_demo.html is generated from gbif_demo.Rmd. Please edit that file -->
 
 ***
 
@@ -18,9 +20,6 @@ You are here: [R workshop](../) >> [Session 3 GBIF data](./) >> **rgbif demo**
 ***
 
 # Nordic Oikos 2018 - R workshop - Session 3
-
-Scientific reuse of openly published biodiversity information: Programmatic access to and analysis of primary biodiversity information using R. Nordic Oikos 2018, pre-conference R workshop, 18<sup>th></sup> and 19<sup>th</sup> February 2018. Further information [here](http://www.gbif.no/events/2018/Nordic-Oikos-2018-R-workshop.html).
-
 
 **Session 3** includes examples of accessing GBIF data from R using the [rgbif](https://www.gbif.org/tool/81747/rgbif) [package](https://cran.r-project.org/web/packages/rgbif/index.html) from [rOpenSci](https://ropensci.org/).
 
@@ -196,3 +195,4 @@ Read more about colors at the [https://www.r-bloggers.com/palettes-in-r/](R-blog
 
 Navigate back to [GitHub project home](https://github.com/GBIF-Europe/nordic_oikos_2018_r) or [GitHub.io html](https://gbif-europe.github.io/nordic_oikos_2018_r/) pages.
 
+***

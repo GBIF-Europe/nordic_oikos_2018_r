@@ -1,10 +1,11 @@
 ---
 title: "Intro and some R setup examples"
+subtitle: "R workshop by GBIF.no and ForBio"
 author: "Dag Endresen, https://orcid.org/0000-0002-2352-5497"
 date: "February 18-19, 2018"
 output:
   html_document:
-    keep_md: true
+    keep_md: false
     toc: true
     toc_depth: 3
 ---

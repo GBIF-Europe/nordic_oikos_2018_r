@@ -10,13 +10,17 @@ output:
     toc_depth: 3
 ---
 
+<!-- worldclim.html is generated from worldclim.Rmd. Please edit that file -->
+
+***
+
+You are here: [R workshop](../) >> [Session 5 Environmemt layers](./) >> **worldclim**
+
 ![](../demo_data/NSO_2018_GBIF_NO.png "NSO 2018")
 
 ***
 
 # Nordic Oikos 2018 - R workshop - Session 5
-
-Scientific reuse of openly published biodiversity information: Programmatic access to and analysis of primary biodiversity information using R. Nordic Oikos 2018, pre-conference R workshop, 18<sup>th</sup> and 19<sup>th</sup> February 2018 in Trondheim. Further information [here](http://www.gbif.no/events/2018/Nordic-Oikos-2018-R-workshop.html).
 
 [Session 5](./) focus on linking GBIF data with environment layers, using the [Raster R-package](https://cran.r-project.org/web/packages/raster/index.html) and other tools.
 

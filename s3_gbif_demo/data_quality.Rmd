@@ -1,13 +1,15 @@
 ---
 title:  "Some occurrence data quality tests"
 author: "Dag Endresen, http://orcid.org/0000-0002-2352-5497"
-date:   "February 18, 2018"
+date:   "February 18-19, 2018"
 output:
   html_document:
-    keep_md: true
+    keep_md: false
     toc: true
     toc_depth: 3
 ---
+
+<!-- data_quality.html is generated from data_quality.Rmd. Please edit that file -->
 
 ***
 
