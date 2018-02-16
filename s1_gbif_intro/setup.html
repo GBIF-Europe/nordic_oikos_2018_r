@@ -11,7 +11,6 @@
 
 <meta name="author" content="Dag Endresen, https://orcid.org/0000-0002-2352-5497" />
 
-<meta name="date" content="2018-02-18" />
 
 <title>Intro and some R setup examples</title>
 
@@ -120,8 +119,9 @@ $(document).ready(function () {
 
 
 <h1 class="title toc-ignore">Intro and some R setup examples</h1>
+<h3 class="subtitle"><em>R workshop by GBIF.no and ForBio</em></h3>
 <h4 class="author"><em>Dag Endresen, <a href="https://orcid.org/0000-0002-2352-5497" class="uri">https://orcid.org/0000-0002-2352-5497</a></em></h4>
-<h4 class="date"><em>February 18, 2018</em></h4>
+<h4 class="date"><em>February 18-19, 2018</em></h4>
 
 </div>
 
@@ -136,6 +136,7 @@ $(document).ready(function () {
 </ul>
 </div>
 
+<!-- setup.html is generated from setup.Rmd. Please edit that file -->
 <hr />
 <p>You are here: <a href="../">R workshop</a> &gt;&gt; <a href="./">Session 1 GBIF intro</a> &gt;&gt; <strong>R settings</strong></p>
 <div class="figure">
@@ -146,11 +147,16 @@ $(document).ready(function () {
 <div id="nordic-oikos-2018---r-workshop---session-1" class="section level1">
 <h1>Nordic Oikos 2018 - R workshop - Session 1</h1>
 <p>Scientific reuse of openly published biodiversity information: Programmatic access to and analysis of primary biodiversity information using R. Nordic Oikos 2018, pre-conference R workshop, 18<sup>th</sup> and 19<sup>th</sup> February 2018. Further information <a href="http://www.gbif.no/events/2018/Nordic-Oikos-2018-R-workshop.html">here</a>.</p>
-<p><strong>Session 1</strong> gives an introduction to <a href="https://www.gbif.org/">GBIF</a>, use of <a href="https://www.gbif.org/resource/search?contentType=dataUse">GBIF data</a> and the <a href="https://www.gbif.org/developer/summary">GBIF API</a>.</p>
-<p>Notice that most of the R-commands below are commented out (with a hash #). To execute selected lines on your computer, you need to uncomment (remove the hash #) first.</p>
 <hr />
-<pre class="r"><code>## Notice that eval=FALSE will exclude execution of this chunk in knitr, but enable manual execution in RStudio.
-## Setting the working directory, here: to the same directory as the RMD-script. Primarily useful &quot;outside&quot; of RMarkup chuks.
+<p><strong>Session 1</strong> gives an introduction to <a href="https://www.gbif.org/">GBIF</a>, use of <a href="https://www.gbif.org/resource/search?contentType=dataUse">GBIF data</a> and the <a href="https://www.gbif.org/developer/summary">GBIF API</a>. This script presents some useful settings, in particular how to install some of the R-packages we will use during the workshop. For more information see <a href="../s2_r_intro">session 2</a>.</p>
+<ul>
+<li>Notice that most Rmd chuncks have settings <code>eval=FALSE</code>, which will exclude execution of this chunk in knitr, but enable manual execution in RStudio.</li>
+<li>Notice that some of the R-commands below are commented out (with a hash #). To execute selected lines on your computer, you need to uncomment (remove the hash #) first. You may add comments inside chucks (or in R scripts) using a hash at the start of lines, or in the middle to make the text after the hash a comment.</li>
+</ul>
+<p><a href="http://rmarkdown.rstudio.com/">R Markdown</a> is a convinient format (R Notebooks) for writing R-scripts, introduced in 2014. R Markdown integrates very well in RStudio (and can also be used form the command line). <a href="../s2_r_intro">Session 2</a> will provide an introduction to R-scripting including R Markdown.</p>
+<hr />
+<pre class="r"><code>## Setting the working directory, here: to the same directory as the RMD-script. 
+## Primarily useful &quot;outside&quot; of RMarkup chunks.
 ## RMarkup (Rmd) seems to always change current working directory to the same as the Rmd-script.
 require(rstudioapi)
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
@@ -158,7 +164,7 @@ getwd() ## will display the working directory</code></pre>
 <pre><code>[1] &quot;/Users/dag/workspace/gitHub/nordic_oikos_2018_r/s1_gbif_intro&quot;</code></pre>
 <div id="create-a-folder-for-demo-data" class="section level3">
 <h3>Create a folder for demo data</h3>
-<pre class="r"><code>## Note however, that RMarkdown with knitr works best with all files in the same directory
+<pre class="r"><code>## Note however, that RMarkdown with knitr works best with all files in the same directory.
 #dir.create(file.path(&quot;./demo_data&quot;)) ## create a folder for demo files (inside working directory)
 #dir.create(file.path(&quot;../demo_data&quot;)) ## create a folder for demo files (next to working directory)
 #dir.create(file.path(&quot;..&quot;, &quot;demo_data&quot;)) # will work better accross OS? on Windows?</code></pre>
@@ -167,63 +173,60 @@ getwd() ## will display the working directory</code></pre>
 <h3>Some useful R-packages to install, that we will use during the workshop</h3>
 <pre class="r"><code>## It is possible to install R-packages from the script
 install.packages(&quot;rmarkdown&quot;) # R Markdown
-## rOpenSci packages
+## rOpenSci
 install.packages(&quot;rgbif&quot;) # species occurrence data from GBIF
 install.packages(&quot;mapr&quot;, dependencies = TRUE) # rOpenSci mapping tools
 install.packages(&quot;spocc&quot;, dependencies = TRUE) # species occurrence, more than GBIF
-## Some mapping packages
+## Mapping tools
 install.packages(&quot;maps&quot;) # mapping tools
 install.packages(&quot;mapproj&quot;) # map projection tools
 install.packages(&quot;rgdal&quot;) # r gdal tools
-install.packages(mapdata) # map data
+install.packages('mapdata') # map data
 ## Dismo and Raster by R Hijmans
 install.packages(&quot;dismo&quot;) # species occurrence data from GBIF with dismo
 install.packages(&quot;raster&quot;) # raster data tools
-##
+## Plotting tools
 install.packages(&quot;plotly&quot;)
 install.packages(&quot;RColorBrewer&quot;)
-##
+## Data management
 install.packages(&quot;tidyverse&quot;) ## tidyverse
 install.packages(&quot;readxl&quot;) ## Read Excel, from tidyverse (without external Java dependencies)
-##
-##Sys.setenv(JAVA_HOME=&quot;PATH-TO-JAVA_HOME&quot;)
+## If you need Java-based packages (such as eg. xlsx)
+## Sys.setenv(JAVA_HOME=&quot;PATH-TO-JAVA_HOME&quot;)
 #Sys.setenv(JAVA_HOME='/Library/Java/Home') ## or use '/usr/libexec/java_home -d 64'
-#Sys.setenv(JAVA_HOME='/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home')
-### macOS High Sierra Version 10.13.3
-install.packages(&quot;rJava&quot;)
-install.packages(&quot;xlsx&quot;)
+#install.packages(&quot;rJava&quot;)
+#install.packages(&quot;xlsx&quot;)
 ##</code></pre>
 </div>
 <div id="load-r-packages" class="section level3">
 <h3>Load R-packages</h3>
-<pre class="r"><code># Use functions library() or require() to load the R-packages you need
-
-#require(rgbif) # r-package for accessing GBIF
-#library('mapr') # rOpenSci r-package for mapping (occurrence data)
-#library('spocc') # rOpenSci r-package with more biodiversity data sources than GBIF
-#require(maps)
-#require(mapproj)
-#require(mapdata)
-#require(maptools) # mapping tools for spatial objects
-#require(rgdal) # provides the Geospatial Data Abstraction Library
-#require(raster) # spatial raster data management
+<pre class="r"><code>## Use functions library() or require() to load the R-packages you need
+##
+## rOpenSci
+require('rgbif') # r-package for accessing GBIF
+library('mapr') # rOpenSci r-package for mapping (occurrence data)
+library('spocc') # rOpenSci r-package with more biodiversity data sources than GBIF
+## Mapping tools
+require('raster') # spatial raster data management
+library('dismo') # spatial data and distribution modelling tools
+#library(maps)
+#library(mapproj)
+library(mapdata)
+#library(maptools) # mapping tools for spatial objects
+#library(rgdal) # provides the Geospatial Data Abstraction Library
+## Data mangement
 #library(gapminder)
-#library(tidyverse) ## includes dplyr etc for handling data, select(), filter()
-#library('plyr') ##
+library(tidyverse) ## includes dplyr etc for handling data, select(), filter()
+library('plyr') ##
+## Plotting tools
 #library('RColorBrewer')</code></pre>
 </div>
 <div id="clear-workspace-be-careful" class="section level3">
 <h3>Clear workspace (be careful)</h3>
-<pre class="r"><code># Large arrays and dataframes can consume huge parts of your working memory,
-# and you probably want to remove some of them from memory when they are not needed anymore.
-
+<pre class="r"><code>## Large arrays and dataframes can consume huge parts of your working memory,
+## and you probably want to remove some of them from memory when they are not needed anymore.
 #rm(list = ls()) # Be careful, this line cleans the entire R workspace
 #rm(sp) # Probably better to remove large arrays and dataframes individually</code></pre>
-<hr />
-<p><a href="http://rmarkdown.rstudio.com/">R Markdown</a> is a convinient format (R Notebooks) for writing R-scripts, introduced in 2014. R Markdown integrates very well in RStudio (and can also be used form the command line). <a href="../s2_r_intro">Session 2</a> will provide an introduction to R-scripting including R Markdown.</p>
-<hr />
-<hr />
-<hr />
 <hr />
 <hr />
 <hr />
@@ -236,7 +239,7 @@ bb &lt;- c(18.7, 69.6, 19.2, 69.8) # Tromsoe
 bb &lt;- c(10.6, 59.9, 10.9, 60.0) # Oslo
 bb &lt;- c(4.5, 54.9, 31.0, 71.0) # Scandinavia = lon(4.5, 31.0), lon(55, 71)
 ##
-bbox(norway_mask) ## use bbox(spatialObj) to find the bounding box of any spatial object</code></pre>
+#bbox(norway_mask) ## use bbox(spatialObj) to find the bounding box of a spatial object</code></pre>
 <p>Norway: min max x 4.6280575 31.078054 y 58.0702763 71.113054</p>
 <pre class="r"><code>## Print text and variables
 message(sprintf(&quot;Current working dir: %s\n&quot;, getwd()))
@@ -245,14 +248,16 @@ paste(&quot;Today is&quot;, date())</code></pre>
 sprintf(5.55555, fmt = '%#.3g') ## 5.56</code></pre>
 <pre class="r"><code>library('plyr') ## r-pkg plyr for data handling
 spp_df &lt;- ldply(spp) ## ldply - split list, apply function, return dataframe (here list to df)</code></pre>
-<pre class="r"><code>crs(r) &lt;- &quot;+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0&quot;
-crs(r) &lt;- CRS('+init=EPSG:4326') ## same result, but using EPSG is shorter to write, and easier</code></pre>
 <p>List to dataframe</p>
-<pre class="r"><code>#spp &lt;- occ_search(taxonKey=keys, limit=100, return='data', country='NO', hasCoordinate=TRUE)
+<pre class="r"><code>#spp &lt;- occ_search(taxonKey=3073, limit=100, return='data', country='NO', hasCoordinate=TRUE)
 library('plyr') ## r-pkg plyr for 
 spp_df &lt;- ldply(spp) ## ldply - split list, apply function, return dataframe (here list to df)
 #spp_m &lt;- spp_df[c(&quot;name&quot;, &quot;decimalLongitude&quot;,&quot;decimalLatitude&quot;, &quot;basisOfRecord&quot;, &quot;year&quot;, &quot;municipality&quot;)]
 #map_leaflet(spp_m, &quot;decimalLongitude&quot;, &quot;decimalLatitude&quot;, size=3, color=cols)</code></pre>
+<pre class="r"><code>## coordinate reference system
+crs(r) &lt;- &quot;+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0&quot; ## set CRS
+crs(r) &lt;- CRS('+init=EPSG:4326') ## same result, but using EPSG is shorter to write, and easier</code></pre>
+<hr />
 <p>Read.xlsx depend on JAVA which might be an obstacle</p>
 <pre class="r"><code>##Sys.setenv(JAVA_HOME=&quot;PATH-TO-JAVA_HOME&quot;)
 #Sys.setenv(JAVA_HOME='/Library/Java/Home') ## or use '/usr/libexec/java_home -d 64'
@@ -271,6 +276,8 @@ display.brewer.pal(n=9, name='Set1')</code></pre>
 <p class="caption">colorBrewer Set1</p>
 </div>
 <p>Read more about colors at the <a href="R-bloggers%20story%20about%20color%20palettes%20in%20R">https://www.r-bloggers.com/palettes-in-r/</a></p>
+<hr />
+<p>Navigate back to <a href="https://github.com/GBIF-Europe/nordic_oikos_2018_r">GitHub project home</a> or <a href="https://gbif-europe.github.io/nordic_oikos_2018_r/">GitHub.io html</a> pages.</p>
 <hr />
 </div>
 </div>

@@ -11,12 +11,13 @@ Access to and the linking of GBIF data to environmental raster and vector data i
 
 **Learning target**: Understanding basic spatial data manipulation and the basic properties of spatial data, including both raster data (gridded spatial data) and vector data (species occurrence point data, polygon data such as country borders, etc). Learning how to extract information from either raster data (eg. environment layers) and vector data for a list of species occurrences point data.
 
-
+***
 
 ## Workshop training materials
 
 * [Worldclim demonstration](worldclim.Rmd)
 
+***
 
 ## Excercises
 

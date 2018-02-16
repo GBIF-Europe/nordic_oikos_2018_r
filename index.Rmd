@@ -1,11 +1,14 @@
 ---
 title: "Nordic Oikos 2018 -- workshop on GBIF data and R"
-author: "Dag Endresen, https://orcid.org/0000-0002-2352-5497"
-date: "February 18, 2018"
+author: "Dag Endresen, Anders Finstad, Erlend B. Nilsen, Markus Skyttner"
+date: "February 18-19, 2018"
 output:
   html_document:
     keep_md: false
 ---
+
+<!-- index.html is generated from index.Rmd. Please edit that file -->
+
 
 ![](./demo_data/NSO_2018_GBIF_NO.png "NSO 2018")
 
@@ -18,6 +21,8 @@ Scientific reuse of openly published biodiversity information: Programmatic acce
  * Sunday 18 Feb 2018, 10:00 - 17:00
  * Monday 19 Feb 2018, 09:00 - 16:00
 
+***
+
 ## Workshop sessions include:
 * Session 1: [Quick introduction to GBIF and biodiversity informatics](s1_gbif_intro)
 * Session 2: [Quick intro to R, RStudio, GitHub](s2_r_intro)
@@ -28,6 +33,8 @@ Scientific reuse of openly published biodiversity information: Programmatic acce
 
 **Venue**: Auditorium [DU2-150](https://use.mazemap.com/#v=1&zlevel=-2&left=10.4044354&right=10.4080592&top=63.4160961&bottom=63.4145612&campusid=1&campuses=ntnu&sharepoitype=identifier&sharepoi=360-DU2-150), NTNU Gl&oslash;shaugen campus, Norwegian University of Science and Technology, H&oslash;gskoleringen 5, NO-7491 Trondheim, Norway (latitude 63.415275, longitude 10.406295).
 
+***
+
 ### More information is available at:
 * [http://www.gbif.no/events/2018/Nordic-Oikos-2018-R-workshop.html](http://www.gbif.no/events/2018/Nordic-Oikos-2018-R-workshop.html)
 * [http://www.forbio.uio.no/events/courses/2018/GBIF_R.html](http://www.forbio.uio.no/events/courses/2018/GBIF_R.html)
@@ -37,4 +44,6 @@ Scientific reuse of openly published biodiversity information: Programmatic acce
 
 ***
 
-**Organized by**: GBIF.no - Global Biodiversity Information Facility Norway (www.GBIF.no) and ForBio Research School in Biosystematics (www.forbio.uio.no). Short description of the workshop [trainers here](./trainers.md), ([html](./trainers.html)).
+**Organized by**: GBIF.no - Global Biodiversity Information Facility Norway (www.GBIF.no) and ForBio Research School in Biosystematics (www.forbio.uio.no). Short description of the workshop [trainers here](./trainers.html).
+
+***

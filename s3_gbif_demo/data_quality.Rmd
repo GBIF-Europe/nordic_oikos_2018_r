@@ -1,13 +1,15 @@
 ---
 title:  "Some occurrence data quality tests"
 author: "Dag Endresen, http://orcid.org/0000-0002-2352-5497"
-date:   "February 18, 2018"
+date:   "February 18-19, 2018"
 output:
   html_document:
-    keep_md: true
+    keep_md: false
     toc: true
     toc_depth: 3
 ---
+
+<!-- data_quality.html is generated from data_quality.Rmd. Please edit that file -->
 
 ***
 
@@ -19,11 +21,7 @@ You are here: [R workshop](../) >> [Session 3 GBIF data](./) >> **occurrence dat
 
 # Nordic Oikos 2018 - R workshop - Session 3
 
-Scientific reuse of openly published biodiversity information: Programmatic access to and analysis of primary biodiversity information using R. Nordic Oikos 2018, pre-conference R workshop, 18 and 19 February 2018. Further information [here](http://www.gbif.no/events/2018/Nordic-Oikos-2018-R-workshop.html).
-
-
 [Session 3](./) includes examples of accessing GBIF data from R using the [rgbif](https://www.gbif.org/tool/81747/rgbif) [package](https://cran.r-project.org/web/packages/rgbif/index.html) from [rOpenSci](https://ropensci.org/).
-
 This script (```data_quality```) provides a small set of examples for data quality checks you may want to perform.
 
 ***
@@ -33,7 +31,7 @@ Using [readxl](http://readxl.tidyverse.org/) from tidyverse.
 ```{r eval=FALSE}
 library(tidyverse) ## tidyverse is without external dependencies such as Java or Pearl
 library(readxl) ## readxl is part of tidyverse
-#excel_sheets("./demo_data/spp_dq.xlsx") ## List sheets
+#excel_sheets("./demo_data/spp_dq.xlsx") ## List sheets in a xlsx document
 #spp_dq <- read_excel("./demo_data/spp_dq.xlsx", sheet=1, range="A1:BQ101") ## example with range
 spp_dq <- read_excel("./demo_data/spp_dq.xlsx", sheet=1) ## manipulated occurrence data, introduced errors
 head(spp_dq, n=5)
