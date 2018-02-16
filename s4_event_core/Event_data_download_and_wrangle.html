@@ -131,13 +131,26 @@ $(document).ready(function () {
 
 <div id="discover-event-data-in-gbif" class="section level2">
 <h2>Discover event data in GBIF</h2>
+<p>Event data are a new datatype for GBIF, and still not truly discover able through GBIF API searches and hence not in the rgbif package. Typical uses includes searching for specific sampling protocols in given areas. However, you can use the GBIF portal, or the API and rgbif function metadata search through the “datasets” call of rgbif, or search through the GBIF portal and locate the UUID of the dataset. Event with only this rudimentary functionality in place, GBIF still provides some advantages over unstructured repositories for event type data.</p>
+<ul>
+<li>Facilities for metadata search and discover ability</li>
+<li>Data are available standardized formats reducing the need for tedious data-reshaping and cleaning in workflows</li>
+<li>You can automatize the whole procedure in a reproducible script</li>
+</ul>
+<p>The most convenient way of discovering data is probably by searching through the <a href="https://www.gbif.org/dataset/search?q=">dataset search pages</a> at the gbif.org portal.These pages are however built on top of the API, so you can reproduce that search in your script if you want. Quick example below.</p>
+<pre class="r"><code># Quick and dirty example on free text search in metadata from the GBIF API
+search_string &lt;- &quot;'sweep'&quot;
+dataset_search &lt;- RJSONIO::fromJSON(paste0(&quot;http://api.gbif.org/v1/dataset?q=&quot;,
+                                           search_string))
+dataset_search$count
+dataset_search$results[[1]]</code></pre>
 </div>
 <div id="download-dwc-a-from-ipt" class="section level2">
 <h2>Download dwc-a from IPT</h2>
-<p>Some essential event-type data terms are currently not searchable through the GBIF API, you can use metadata search through the “datasets” call of rgbif, or search through the GBIF portal and locate the UUID of the dataset. Here, we download the data set as a DwC-A directly from the IPT using the following workflow.</p>
+<p>Some essential event-type data terms are currently not available through the GBIF API. For example, the GBIF API (and also the gbif portal, which in reality is built on top of this) does not yet throw back empty events and potential hierarchical structures which may be essential for inferring sampling effort. Here, we download the data set as a DwC-A directly from the IPT using the following workflow.This is however under implementation and we hope that the workaround described below in a short while will be redundant.</p>
 <ol style="list-style-type: decimal">
 <li>Use the <a href="https://cran.r-project.org/web/packages/jsonlite/vignettes/json-apis.html">jsonlite package</a> to get the endpoint for the raw DwC-a representation of the dataset at the IPT installation. This takes the raw API call “<a href="http://api.gbif.org/v1/dataset/'dataset" class="uri">http://api.gbif.org/v1/dataset/'dataset</a> UUID’/endpoint”, downloads information as JSON. This is address is can also be found by scrolling down on the dataset homepage to the <a href="https://www.gbif.org/dataset/78360224-5493-45fd-a9a0-c336557f09c3#dataDescription">data description section</a></li>
-<li>Then we extract the DWC-A endpoint URL, and use the <a href="https://cran.r-project.org/web/packages/curl/vignettes/intro.html">curl package</a> to download this to a temporary file</li>
+<li>Then we extract the DWC-A endpoint URL download the DwC-A to a temporary file</li>
 <li>We extract the event and occurrence table and join the table with the left_join command from the <a href="https://cran.r-project.org/web/packages/dplyr/vignettes/dplyr.html">dplyr package</a>. Note that we here remove id field id “%&gt;% select(-id)” from the occurrence and event table respectively to avoid duplicated column names (the id field represent the eventID and occurrenceID respectively)</li>
 <li>Finally, we may have a <a href="http://rs.tdwg.org/dwc/terms/#MeasurementOrFact">measurmentORFact</a> (MOF) table attached. This is a generic way of attaching no-dwc terms like measurements, traits etc. to the data (<a href="https://tools.gbif.org/dwca-validator/extension.do?id=dwc:MeasurementOrFact">description</a>), and is in a <a href="https://sejdemyr.github.io/r-tutorials/basics/wide-and-long/">long dataformat</a>. When attached to an event-core DwC-A this always has an ID corresponding to the eventID (core file). Likewise, when attached to an occurrence-core DwC-A the ID field corresponds to the occurrence core-table of the DWC-A. There are also a new type in use a type called extendedMeasurmentsOrFact (eMOF) which is able to hold measures linked to both event and occurrence tables (<a href="http://www.iobis.org/manual/dataformat/">description</a>). Usage is otherwise more or less similar. The MOF (or eMOF) table have to be converted to a wide format before joined to the occurrence and event data.</li>
 <li>Citation: suggestive hack of default citation from dwc-a metadata to get the dataset DOI in the citation string.</li>
@@ -145,21 +158,20 @@ $(document).ready(function () {
 <pre class="r"><code>library(RJSONIO)
 library(dplyr)
 library(tidyr)
-library(stringr)
 library(xml2)
 
-# Resolve endpoint URL from datasetID using the GBIF API
+# 1. Resolve endpoint URL from datasetID using the GBIF API
 datasetID &lt;- &quot;78360224-5493-45fd-a9a0-c336557f09c3&quot;
 dataset &lt;- RJSONIO::fromJSON(paste0(&quot;http://api.gbif.org/v1/dataset/&quot;,datasetID,&quot;/endpoint&quot;))
 endpoint_url &lt;- dataset[[1]]$url # extracting URL from API call result
 
-# Download from dwc-a from IPT
+# 2. Download from dwc-a from IPT
 tmp &lt;- tempfile() # create temporary file for download
 download.file(endpoint_url, tmp)
 archive_files &lt;- unzip(tmp, files = &quot;NULL&quot;, list = T) 
 unzip(tmp, list = F)
 
-# extract occurrence, event and measurmentandfacts tables from dwc-a and join
+# 3. extract occurrence, event and measurmentandfacts tables from dwc-a and join
 
 occurrence &lt;- read.table(&quot;occurrence.txt&quot;,sep=&quot;\t&quot;,header = T, stringsAsFactors = FALSE) %&gt;% select(-id) # id field duplicates occurrenceID
 event &lt;- read.table(&quot;event.txt&quot;,sep=&quot;\t&quot;,header = T, stringsAsFactors = FALSE) %&gt;% select(-id) # id field duplicates eventID
@@ -168,19 +180,19 @@ measurementorfact &lt;- read.table(&quot;measurementorfact.txt&quot;,sep=&quot;\
 # Joint occurrences to events
 df &lt;- left_join(event,occurrence,by=&quot;eventID&quot;)
 
-# create wide format from measurmentsandfacts and join
+# 4. create wide format from measurmentsandfacts and join
 mof_wide &lt;- measurementorfact %&gt;% select(eventID,measurementValue,measurementType) %&gt;% 
   spread(key=measurementType,
                    value=measurementValue)
 
 df &lt;- left_join(df,mof_wide)
 
-# Suggested citation: Take the citation as from downloaded from GBIF website, replace &quot;via GBIF.org&quot; by endpoint url. 
+# 5. Suggested citation: Take the citation as from downloaded from GBIF website, replace &quot;via GBIF.org&quot; by endpoint url. 
 tmp &lt;- tempfile()
 download.file(paste0(&quot;http://api.gbif.org/v1/dataset/&quot;,datasetID,&quot;/document&quot;),tmp) # get medatadata from gbif api
 meta &lt;- read_xml(tmp) %&gt;% as_list() # create list from xml schema
 gbif_citation &lt;- meta$additionalMetadata$metadata$gbif$citation[[1]] # extract citation
-citation &lt;- str_replace(citation, pattern=&quot;GBIF.org&quot;,replacement=endpoint_url) # replace &quot;gbif.org&quot; with endpoint url</code></pre>
+citation &lt;- gsub(&quot;GBIF.org&quot;, paste(endpoint_url), gbif_citation) # replace &quot;gbif.org&quot; with endpoint url</code></pre>
 </div>
 
 
