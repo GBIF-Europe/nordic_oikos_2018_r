@@ -1,10 +1,7 @@
 ![](../demo_data/NSO_2018_GBIF_NO.png "NSO 2018")
 
-# Nordic Oikos 2018 -- GBIF data with R
 
-Scientific reuse of openly published biodiversity information: Programmatic access to and analysis of primary biodiversity information using R. Nordic Oikos 2018, pre-conference [R workshop](https://github.com/GBIF-Europe/nordic_oikos_2018_r), 18<sup>th</sup> and 19<sup>th</sup> February 2018 in Trondheim, Norway.
-
-## Session 5: Linking environment layers to GBIF data
+# Session 5: Linking environment layers to GBIF data
 Access to and the linking of GBIF data to environmental raster and vector data is a frequently asked question from users of GBIF mediated species occurrence data.
 
 * [WorldClim](http://worldclim.org/version2) global climate layers ([Fick and Hijmans, 2017](https://doi.org/10.1002/joc.5086)), ([Hijmans *et al.* 2005](https://doi.org/10.1002/joc.1276)).
@@ -16,12 +13,12 @@ Access to and the linking of GBIF data to environmental raster and vector data i
 
 
 
-## Workshop training materials for session 5
+## Workshop training materials
 
 * [Worldclim demonstration](worldclim.Rmd)
 
 
-## Excercises for session 5
+## Excercises
 
 * Select a stydy area and a species (or species group).
 * Download species occurrences from GBIF and environment layers from WorldClim using R.

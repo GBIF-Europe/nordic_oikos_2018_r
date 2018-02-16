@@ -18,10 +18,10 @@ Scientific reuse of openly published biodiversity information: Programmatic acce
 **Venue**: Auditorium [DU2-150](https://use.mazemap.com/#v=1&zlevel=-2&left=10.4044354&right=10.4080592&top=63.4160961&bottom=63.4145612&campusid=1&campuses=ntnu&sharepoitype=identifier&sharepoi=360-DU2-150), NTNU Gl&oslash;shaugen campus, Norwegian University of Science and Technology, H&oslash;gskoleringen 5, NO-7491 Trondheim, Norway (latitude 63.415275, longitude 10.406295).
 
 ### More information is available at:
-* http://www.gbif.no/events/2018/Nordic-Oikos-2018-R-workshop.html
-* http://www.forbio.uio.no/events/courses/2018/GBIF_R.html
-* https://www.ntnu.edu/web/oikos2018/workshops
-* https://gbif-europe.github.io/nordic_oikos_2018_r
+* [http://www.gbif.no/events/2018/Nordic-Oikos-2018-R-workshop.html](http://www.gbif.no/events/2018/Nordic-Oikos-2018-R-workshop.html)
+* [http://www.forbio.uio.no/events/courses/2018/GBIF_R.html](http://www.forbio.uio.no/events/courses/2018/GBIF_R.html)
+* [https://www.ntnu.edu/web/oikos2018/workshops](https://www.ntnu.edu/web/oikos2018/workshops)
+* [https://gbif-europe.github.io/nordic_oikos_2018_r](https://gbif-europe.github.io/nordic_oikos_2018_r)
 
 
 ***
