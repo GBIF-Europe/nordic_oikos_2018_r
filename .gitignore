@@ -36,3 +36,6 @@ vignettes/*.pdf
 *.utf8.md
 *.knit.md
 .Rproj.user
+
+# GBIF user credentials to make rmarkdown run
+gbif_login_cred.R
