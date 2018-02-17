@@ -129,7 +129,10 @@ $(document).ready(function () {
 <li><a href="#load-packages">Load packages</a></li>
 <li><a href="#set-user_name-e-mail-and-pswd-as-global-options-first">set user_name, e-mail, and pswd as global options first</a></li>
 <li><a href="#search-and-request-download-key">Search and request download key</a></li>
-<li><a href="#download-data">Download data</a></li>
+<li><a href="#download-data">Download data</a><ul>
+<li><a href="#direct-download">1. Direct download</a></li>
+<li><a href="#coffebreak-version">2. Coffebreak version</a></li>
+</ul></li>
 <li><a href="#open-the-data-and-extract-into-data.frame">Open the data and extract into data.frame</a></li>
 <li><a href="#cite-your-data">Cite your data!</a></li>
 </ul>
@@ -137,10 +140,11 @@ $(document).ready(function () {
 
 <div id="introduction" class="section level2">
 <h2>Introduction</h2>
-<p>Procedures and examples on downloading using registered downloads (as opposite to the download without registration through e.g. rgbif). This has several advantages. The most prominent are:</p>
+<p>GBIF provides two ways to get occurrence data: through the <a href="https://www.gbif.org/developer/occurrence">/occurrence/search route or via the /occurrence/download route</a> of the GBIF API. The former is wrapped in the rgbif::occ_search() / rgbif::occ_data() functions, the latter in the rgbif::occ_download*() functions. The use of the /occurrence/download route and the occ_download() has several advantages. The most prominent are:</p>
 <ul>
 <li>You are not restricted to a hard limit of 200 000 records</li>
 <li>You get a citation of your downloaded data that can/must be used when citing your data usage in e.g. a scientific publication or thesis.</li>
+<li>It enables GBIF to track and publish data usage (number of downloads and publications - the link between your user account and data downloads are private). Needless to say, motivating and supporting data publishers should be a strong priority and long-term advantage for you as a data user.</li>
 </ul>
 <p>Due to the latter, <strong>you should always use asyncronous downloads when fetching data for use in publications</strong>, at least when your analyses are based upon data from parts of multiple datasets. See the <a href="https://www.gbif.org/tool/81747/rgbif">rgbif citation guide</a> for info on how to cite results from the rgbif occ_search function, this will become very awkward if your data are collated from a large number of datasets. Your specific download-request will be assigned a DOI which will resolve to the exact same representation of the data as used creating a citable, reproducible workflow for your analyses. GBIF will keep the data for this DOI for a prolonged time, “forever” if this DOI appears in a publication. By using the assigned DOIs included with your citations, you also vastly improve GBIF’s ability to <a href="https://www.gbif.org/literature-tracking">track the use of data</a>. It also provides the mechanism for connecting published uses of the data back to each source record of data. In addition to acknowledging data publishers, the practice of using DOI citations rewards them by reinforcing the value of sharing open data to the publisher’s stakeholders and .</p>
 <p>In the following we go through the procedure of asynchronous download using the rgbif package step by step:</p>
@@ -161,7 +165,7 @@ $(document).ready(function () {
 library(stringr) # string manipulations (not needed, may also be done by base R)
 library(rio) # data import (not needed, may also be done by base R)
 library(dplyr) # for data-wrangling
-library(wicket)</code></pre>
+library(wicket) # check WKT strings</code></pre>
 </div>
 <div id="set-user_name-e-mail-and-pswd-as-global-options-first" class="section level2">
 <h2>set user_name, e-mail, and pswd as global options first</h2>
@@ -186,47 +190,36 @@ geom_param &lt;- paste(&quot;geometry&quot;, &quot;within&quot;, my_wkt)
 
 
 # Get download key. NB! Maximum of 3 download requests handled simultaneously
-download_key &lt;- 
-  occ_download(
+ 
+ download_key &lt;- occ_download(
     'taxonKey = 2346633',
     'hasCoordinate = TRUE',
     geom_param,
     type = &quot;and&quot;
   ) %&gt;% 
-  occ_download_meta</code></pre>
+   occ_download_meta</code></pre>
+<p>The download request will among other things give you link to the data download and a a <a href="https://www.gbif.org/citation-guidelines">citable DOI for the download</a></p>
+<ul>
+<li><a href="http://api.gbif.org/v1/occurrence/download/request/0006714-180131172636756.zip" class="uri">http://api.gbif.org/v1/occurrence/download/request/0006714-180131172636756.zip</a></li>
+<li>10.15468/dl.nph8lk</li>
+</ul>
 </div>
 <div id="download-data" class="section level2">
 <h2>Download data</h2>
-<p>Two ways to do this, you can either wait for you confirmation e-mail or just try by simply pasting the download key into an URL string. If you want to rather just run your scrips and have a cup of coffee before your workflow finalizes, or want to set up a workflow that runs automatically e.g. as a nightly cron-job you may need something slightly more sophisticated. Below we therefore give a short but inelegant demo for how to put the download into a time-delay function.</p>
-<p>The current script is set up to store the downloaded data to a temporary file. If you work with large datasets you probably want to store the data on disk for re-use in later sessions.</p>
-<pre class="r"><code>#--------------------------------------------------------------------------
-# Direct download by link: The download key will be shown as last part of the url e.g. https://www.gbif.org/occurrence/download/0003580-171002173027117
-#--------------------------------------------------------------------------
-
-tmp &lt;- tempfile() # create temporary file for download
+<p>There will take some time before you download link is ready (seconds, minutes, hours depending on the size of your download request) you can either wait for you confirmation e-mail, or just try by simply pasting the download key into an URL string. If you want to rather just run your scrips and have a cup of coffee before your workflow finalizes you may need something slightly more sophisticated. This also holds if you want to set up a workflow that runs automatically e.g. as a nightly cron-job or use it in a rmarkdown document (like this one). Below we therefore give a short but inelegant demo for how to put the download into a time-delay function.</p>
+<p>The current script is set up to store the downloaded .zip to a temporary file. If you work with large datasets you probably want to store this version of the data on disk for re-use in later sessions.</p>
+<div id="direct-download" class="section level3">
+<h3>1. Direct download</h3>
+<pre class="r"><code>tmp &lt;- tempfile() # create temporary file for download
 download.file(url=paste(&quot;http://api.gbif.org/v1/occurrence/download/request/&quot;,
                         download_key[1],sep=&quot;&quot;),
               destfile=tmp,
-              quiet=FALSE)
-
-#--------------------------------------------------------------------------
-# Coffebreak version
-#------------------------------------------------------------------------------
-# Asyncronous download from the GBIF API. 
-# The function tries, with given time intervall to download data generated 
-# by the download key as objec given by &quot;occ_download&quot; function of the &quot;rgbif&quot; 
-# library. 
-#
-# Input:
-# download_key: GBIF API download key (e.g. from occ_download in rgbif package)
-# n_try: Number of times the function should keep trying
-# Sys.sleep_duration: Time interval between each try
-#
-# Output: 
-# Downloaded dwc-archive, named with the download key and written to the 
-# the current R session working directory.
-#------------------------------------------------------------------------------
-
+              quiet=TRUE)</code></pre>
+</div>
+<div id="coffebreak-version" class="section level3">
+<h3>2. Coffebreak version</h3>
+<p>Here, we use a home-brewed “quick-and-dirty” function that tries, with given time intervall, to download data generated by the download key as objec given by “occ_download” function of the “rgbif” library. The input is the download_key, n_try (number of times the function should keep trying before giving up, Sys.sleep_duration (Time interval between each try) and the destfile_name (name and path to the destination file of the download).</p>
+<pre class="r"><code># define function
 download_GBIF_API &lt;- function(download_key,n_try,Sys.sleep_duration,destfile_name){
   start_time &lt;- Sys.time()
   n_try_count &lt;- 1
@@ -251,6 +244,9 @@ download_GBIF_API &lt;- function(download_key,n_try,Sys.sleep_duration,destfile_
 # call function
 tmp &lt;- tempfile() # create temporary file for download
 download_GBIF_API(download_key=download_key,destfile_name=tmp,n_try=5,Sys.sleep_duration=30)</code></pre>
+<pre><code>## [1] &quot;trying... Download link not ready. Time elapsed (min): 0.51&quot;
+## [1] &quot;trying... Download link not ready. Time elapsed (min): 1.01&quot;</code></pre>
+</div>
 </div>
 <div id="open-the-data-and-extract-into-data.frame" class="section level2">
 <h2>Open the data and extract into data.frame</h2>
@@ -266,6 +262,7 @@ occurrence &lt;- import(unzip(tmp,
 <h2>Cite your data!</h2>
 <p>Finally but not at least, remember to cite your data properly:</p>
 <pre class="r"><code>paste(&quot;GBIF Occurrence Download&quot;, download_key[2], &quot;accessed via GBIF.org on&quot;, Sys.Date())</code></pre>
+<pre><code>## [1] &quot;GBIF Occurrence Download 10.15468/dl.nph8lk accessed via GBIF.org on 2018-02-17&quot;</code></pre>
 </div>
 
 
