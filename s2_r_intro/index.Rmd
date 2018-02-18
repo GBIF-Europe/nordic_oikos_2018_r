@@ -223,3 +223,27 @@ Setting up RStudio for using `git` and GitHub requires using the GIT icon from t
 # Usage Examples
 
 If time permits...
+
+## Rscript -> R package
+
+The R package is the unit to collaborate on for functionality that maybe useful to others (algorithms, web apps, data). R packages are published and shared through CRAN/MRAN or RForge - global networks of archive mirrors for R packages. You can also put an R package on GitHub (and someone else can install such a package with `devtools::install_github()`). The path *from an Rscript to an R package* involves:
+
+* First try to break out functions from the Rscript. Try to export as few functions as possible for meeting a specific need. 
+* Here is a small example based on the Session 4 [workflow for downloading sampling event based datasets]( https://github.com/GBIF-Europe/nordic_oikos_2018_r/blob/master/s4_event_core/4_2_Event_data_download_and_wrangle.Rmd)
+* Link to our starting point - a single [Rscript for Downloading Sampling Event Datasets Published At GBIF.org](https://github.com/GBIF-Europe/nordic_oikos_2018_r/tree/master/s2_r_intro/sampling_event_data.R)
+
+## Steps in RStudio
+
+1. In RStudio, create a new project for an R package and load the devtools package and follow guidelines in <http://r-pkgs.had.co.nz/>
+
+1. Put the functions from the Rscript in the "/R/" directory - document exported functions using roxygen2/devtools::document() (comments look like `# ' `) and move the parts of the Rscript where you call the functions into various "/tests/" (use `devtools::use_testthat` and `devtools::use_test`)
+
+1. The library statements goes away and are put in the function documentation using `#' @importFrom` or `#' @import` documentation comments, ending up in NAMESPACE and DESCRIPTION files
+
+## continued ...
+
+1. Add commentary in a a Vignette - an introduction.Rmd providing a short tutorial for the relevant workflow - showing how to use the functionality.
+
+1. Run "devtools::check()" to see if package conforms to CRAN requirements and fix complaints reported, then put code on GitHub to collaborate with others on the package
+
+An example R package with the earlier function can be found here: [`darwinator` R package example @ GitHub](https://github.com/GBIF-Europe/darwinator)
