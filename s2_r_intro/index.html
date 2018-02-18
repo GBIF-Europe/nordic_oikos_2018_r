@@ -332,7 +332,34 @@ firefox http://localhost:8787 &amp;</pre>
 
 </article></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>Usage Examples</h2></hgroup><article  id="usage-examples">
 
-<p>If time permits&#8230;</p></article></slide>
+<p>If time permits&#8230;</p>
+
+</article></slide><slide class=''><hgroup><h2>Rscript -&gt; R package</h2></hgroup><article  id="rscript---r-package">
+
+<p>The R package is the unit to collaborate on for functionality that maybe useful to others (algorithms, web apps, data). R packages are published and shared through CRAN/MRAN or RForge - global networks of archive mirrors for R packages. You can also put an R package on GitHub (and someone else can install such a package with <code>devtools::install_github()</code>). The path <em>from an Rscript to an R package</em> involves:</p>
+
+<ul>
+<li>First try to break out functions from the Rscript. Try to export as few functions as possible for meeting a specific need.</li>
+<li>Here is a small example based on the Session 4 <a href='https://github.com/GBIF-Europe/nordic_oikos_2018_r/blob/master/s4_event_core/4_2_Event_data_download_and_wrangle.Rmd' title=''>workflow for downloading sampling event based datasets</a></li>
+<li>Link to our starting point - a single <a href='https://github.com/GBIF-Europe/nordic_oikos_2018_r/tree/master/s2_r_intro/sampling_event_data.R' title=''>Rscript for Downloading Sampling Event Datasets Published At GBIF.org</a></li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Steps in RStudio</h2></hgroup><article  id="steps-in-rstudio">
+
+<ol>
+<li><p>In RStudio, create a new project for an R package and load the devtools package and follow guidelines in <a href='http://r-pkgs.had.co.nz/' title=''>http://r-pkgs.had.co.nz/</a></p></li>
+<li><p>Put the functions from the Rscript in the &quot;/R/&quot; directory - document exported functions using roxygen2/devtools::document() (comments look like <code># &#39;</code>) and move the parts of the Rscript where you call the functions into various &quot;/tests/&quot; (use <code>devtools::use_testthat</code> and <code>devtools::use_test</code>)</p></li>
+<li><p>The library statements goes away and are put in the function documentation using <code>#&#39; @importFrom</code> or <code>#&#39; @import</code> documentation comments, ending up in NAMESPACE and DESCRIPTION files</p></li>
+</ol>
+
+</article></slide><slide class=''><hgroup><h2>continued &#8230;</h2></hgroup><article  id="continued-...">
+
+<ol>
+<li><p>Add commentary in a a Vignette - an introduction.Rmd providing a short tutorial for the relevant workflow - showing how to use the functionality.</p></li>
+<li><p>Run &quot;devtools::check()&quot; to see if package conforms to CRAN requirements and fix complaints reported, then put code on GitHub to collaborate with others on the package</p></li>
+</ol>
+
+<p>An example R package with the earlier function can be found here: <a href='https://github.com/GBIF-Europe/darwinator' title=''><code>darwinator</code> R package example @ GitHub</a></p></article></slide>
 
 
   <slide class="backdrop"></slide>
