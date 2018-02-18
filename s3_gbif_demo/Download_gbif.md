@@ -1,6 +1,13 @@
-# Asyncronous download demo
-Anders Gravbrøt Finstad  
-2018-02-08  
+---
+title: "Asyncronous download demo"
+author: "Anders Gravbrøt Finstad"
+date: "2018-02-08"
+output:
+  html_document:
+    keep_md: true
+    toc: true
+    toc_depth: 3
+---
 ## Introduction
 GBIF provides two ways to get occurrence data: through the [/occurrence/search route or via the /occurrence/download route](https://www.gbif.org/developer/occurrence) of the GBIF API. The former is wrapped in the rgbif::occ_search() / rgbif::occ_data() functions, the latter in the rgbif::occ_download*() functions. The use of the /occurrence/download route and the occ_download() has several advantages. The most prominent are: 
 
@@ -25,16 +32,23 @@ In the following we go through the procedure of asynchronous download using the 
 
 ```r
 library(rgbif)
-library(stringr) # string manipulations (not needed, may also be done by base R)
-library(rio) # data import (not needed, may also be done by base R)
 library(dplyr) # for data-wrangling
 library(wicket) # check WKT strings
 ```
 
-## set user_name, e-mail, and pswd as global options first
-It is necessary to register as a GIBF user to create a download request (see https://www.gbif.org/developer/occurrence#download). You can create your user for free at the [GBIF website](https://www.gbif.org)
+## Set user_name, e-mail, and pswd as global options first
+It is necessary to register as a GIBF user to create a download request (see https://www.gbif.org/developer/occurrence#download). You can create your user for free at the [GBIF website](https://www.gbif.org). 
 
-You can do this directly in the occ_download call below, however, here we for convenience put it in global options of your R session so that you don't have to hard-code passwords into scripts (always a bad idea). You only need to do this once per R session. The below chunk requires that you run your script through R-studio. 
+* Register your own account at gbif.org. While you can use third party authentication through e.g. your github or facebook account when loggin into the GBIF website, this don't seem to work with the API/rgbif. 
+
+You have three options for passing your user credentials (user, pwd, and email parameters) for autentication along with and occurrence download request, see [occ_download documentation](https://www.rdocumentation.org/packages/rgbif/versions/0.9.9/topics/occ_download):
+ 
+
+1. Set them in your .Rprofile file with the names gbif_user, gbif_pwd, and gbif_email
+2. Simply pass strings to each of the parameters in the function call 
+3. Set them in your .Renviron/.bash_profile (or similar) file with the names GBIF_USER, GBIF_PWD, and GBIF_EMAIL
+
+Here, we for convenience put it in global options of your R session. Try to awoid hard-code passwords into scripts (always a bad idea). You only need to do this once per R session. The below chunk requires that you run your script through R-studio and will create an pop-up window for you to enter credentials into. 
 
 
 ```r
@@ -45,7 +59,7 @@ options(gbif_pwd=rstudioapi::askForPassword("my gbif password"))
 
 
 
-## Search and request download key
+## Search, and request download key
 Here we request a download key by sending an API call to GBIF using the occ_download function in rgbif. The download key will later be used to download the data
 
 first find a species key using the name_suggest function and create a polygon for spatial filtering (for convenience, we do this step outside the request for download key). Secondly, we create the query and request the download key.
@@ -57,13 +71,13 @@ Note that there may be some time-delay before GBIF are able to handle your reque
 # Find a taxonkey - get list of gbif keys to filter download
 key <- name_suggest(q='Esox lucius', rank='species')$key[1] 
 
-# Crate spatial filter
+# Crate spatial filter 
 my_wkt <- "POLYGON((10.32989501953125 63.26787016946243, 10.32989501953125 63.455051146616825, 10.8819580078125 63.455051146616825, 10.8819580078125 63.26787016946243, 10.32989501953125 63.26787016946243))" 
 #wicket::validate_wkt(my_wkt)
 geom_param <- paste("geometry", "within", my_wkt)
 
 
-# Get download key. NB! Maximum of 3 download requests handled simultaneously
+# Send download request
  
  download_key <- occ_download(
     'taxonKey = 2346633',
@@ -76,8 +90,8 @@ geom_param <- paste("geometry", "within", my_wkt)
 
 The download request will among other things give you link to the data download and a a [citable DOI for the download](https://www.gbif.org/citation-guidelines)
 
-* http://api.gbif.org/v1/occurrence/download/request/0006714-180131172636756.zip
-* 10.15468/dl.nph8lk
+* http://api.gbif.org/v1/occurrence/download/request/0007083-180131172636756.zip
+* 10.15468/dl.pfrirl
 
 ## Download data 
 There will take some time before you download link is ready (seconds, minutes, hours depending on the size of your download request) you can either wait for you confirmation e-mail, or just try by simply pasting the download key into an URL string. If you want to rather just run your scrips and have a cup of coffee before your workflow finalizes you may need something slightly more sophisticated. This also holds if you want to set up a workflow that runs automatically e.g. as a nightly cron-job or use it in a rmarkdown document (like this one). Below we therefore give a short but inelegant demo for how to put the download into a time-delay function. 
@@ -88,15 +102,15 @@ The current script is set up to store the downloaded .zip to a temporary file. I
 
 
 ```r
-tmp <- tempfile() # create temporary file for download
 download.file(url=paste("http://api.gbif.org/v1/occurrence/download/request/",
                         download_key[1],sep=""),
-              destfile=tmp,
-              quiet=TRUE)
+              destfile="tmp.zip",
+              quiet=TRUE, mode="wb")
 ```
 
+
 ### 2. Coffebreak version
-Here, we use a home-brewed "quick-and-dirty" function that tries, with given time intervall, to download data generated by the download key as objec given by "occ_download" function of the "rgbif" library. The input is the download_key, n_try (number of times the function should keep trying before giving up, Sys.sleep_duration (Time interval between each try) and the destfile_name (name and path to the destination file of the download).
+Here, we use a home-brewed "quick-and-dirty" function that tries, with given time intervall, to download data generated by the download key as objec given by "occ_download" function of the "rgbif" library. The input is the download_key, n_try (number of times the function should keep trying before giving up, Sys.sleep_duration (Time interval between each try) and the destfile_name (name and path to the destination file of the download). NB! Windows users may need to modify this chunck also (see above).
 
 
 ```r
@@ -109,7 +123,7 @@ download_GBIF_API <- function(download_key,n_try,Sys.sleep_duration,destfile_nam
                         download_key[1],sep="")
   
   try_download <- try(download.file(url=download_url,destfile=destfile_name,
-                                    quiet=TRUE),silent = TRUE)
+                                    quiet=TRUE, mode="wb"),silent = TRUE)
   
   while (inherits(try_download, "try-error") & n_try_count < n_try) {   
     Sys.sleep(Sys.sleep_duration)
@@ -123,8 +137,7 @@ download_GBIF_API <- function(download_key,n_try,Sys.sleep_duration,destfile_nam
 
 
 # call function
-tmp <- tempfile() # create temporary file for download
-download_GBIF_API(download_key=download_key,destfile_name=tmp,n_try=5,Sys.sleep_duration=30)
+download_GBIF_API(download_key=download_key,destfile_name="tmp.zip",n_try=5,Sys.sleep_duration=30)
 ```
 
 ```
@@ -134,16 +147,34 @@ download_GBIF_API(download_key=download_key,destfile_name=tmp,n_try=5,Sys.sleep_
 
 
 ## Open the data and extract into data.frame 
-The download gives us back a package with data and metadata bundled together in a .zip file. This includes both the metadata, citations of the original datasets that the occurrence download is a composite of, the licenses, as well as the data in both gbif interpreted form (occurrence.txt) and the raw data as provided by the user (verbatim.txt). It is usually the interpreted data you want to use (found in the file occurrence.txt). 
+The download gives us back a package with data and metadata bundled together in a .zip file ([a Darwin Core Archive](https://en.wikipedia.org/wiki/Darwin_Core_Archive)). This includes citations of the original datasets that the occurrence download is a composite of (citations.txt), the licenses (rights.txt), the metadata file in .xlm format describing the structure of the .zip package (if you are specially interested), the metadata of the individual datasets from which the downloaded data originates (dataset/{datasetUUID}.xlm) as well as the data in both gbif interpreted form (occurrence.txt) and the raw data as provided by the user (verbatim.txt). The below chunck of code unzips and prints the files in the downloaded zipfile. 
 
 
 ```r
 # Get a list of the files within the archive by using "list=TRUE" in the unzip function.
-archive_files <- unzip(tmp, files = "NULL", list = T) 
+archive_files <- unzip("tmp.zip", files = "NULL", list = T) 
+archive_files$Name
+```
 
-# Get the occurrence.txt file in as a dataframe (using import from rio)
-occurrence <- import(unzip(tmp,
-                 files="occurrence.txt"),header=T,sep="\t")
+```
+##  [1] "occurrence.txt"                                  
+##  [2] "verbatim.txt"                                    
+##  [3] "multimedia.txt"                                  
+##  [4] "citations.txt"                                   
+##  [5] "dataset/819b724f-d32a-48ac-a62a-9a3425b9b0a0.xml"
+##  [6] "dataset/492d63a8-4978-4bc7-acd8-7d0e3ac0e744.xml"
+##  [7] "dataset/a639542a-654a-427b-9cf1-bde1953bbb52.xml"
+##  [8] "dataset/b124e1e0-4755-430f-9eab-894f25a9b59c.xml"
+##  [9] "rights.txt"                                      
+## [10] "metadata.xml"                                    
+## [11] "meta.xml"
+```
+
+It is usually the interpreted data you want to use (found in the file occurrence.txt). 
+
+
+```r
+occurrence <- read.table(unzip("tmp.zip",files="occurrence.txt"),header=T,sep="\t")
 ```
 
 ## Cite your data! 
@@ -151,9 +182,14 @@ Finally but not at least, remember to cite your data properly:
 
 
 ```r
-paste("GBIF Occurrence Download", download_key[2], "accessed via GBIF.org on", Sys.Date())
+paste0("GBIF Occurrence Download https://doi.org/", download_key[2], " accessed via GBIF.org on", Sys.Date())
 ```
 
 ```
-## [1] "GBIF Occurrence Download 10.15468/dl.nph8lk accessed via GBIF.org on 2018-02-17"
+## [1] "GBIF Occurrence Download https://doi.org/10.15468/dl.pfrirl accessed via GBIF.org on2018-02-18"
 ```
+
+## Exersize 
+Try to expand the download_key to something more interesting and try to putting in more complex predicatives (i.e. search parameters). See [occ_download function documentation](https://www.rdocumentation.org/packages/rgbif/versions/0.9.9/topics/occ_download) for example and the [GBIF API description](https://www.gbif.org/developer/occurrence#predicates) for description of download predicatives (query expression to retrieve occurrence record downloads).
+
+
