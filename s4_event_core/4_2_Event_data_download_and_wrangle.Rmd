@@ -58,10 +58,9 @@ We then extract the DWC-A endpoint URL  and download the DwC-A to a temporary fi
 
 ```{r download, warning=F,message=F,eval=TRUE}
 # Download from dwc-a from IPT
-tmp <- tempfile() # create temporary file for download
-download.file(endpoint_url, tmp)
-archive_files <- unzip(tmp, files = "NULL", list = T) 
-unzip(tmp, list = F)
+download.file(endpoint_url, "tmp.zip")
+archive_files <- unzip("tmp.zip", files = "NULL", list = T) 
+unzip("tmp.zip", list = F)
 ```
 
 The DwC-A contains the following files where dataset metadata are in .xml format and the .txt files contains data. 
@@ -84,7 +83,7 @@ event <- read.table("event.txt",sep="\t",header = T, stringsAsFactors = FALSE) %
 df <- left_join(event,occurrence,by="eventID")
 ```
 
-# MeasurmentsOrFacts
+### 4. MeasurmentsOrFacts
 We may have a [measurmentORFact](http://rs.tdwg.org/dwc/terms/#MeasurementOrFact) (MOF) table attached. This is a generic way of attaching no-dwc terms like measurements, traits etc. to the data ([description](https://tools.gbif.org/dwca-validator/extension.do?id=dwc:MeasurementOrFact)). This is inn a [long dataformat](https://sejdemyr.github.io/r-tutorials/basics/wide-and-long/). When attached to an event-core DwC-A this always has an ID corresponding to the eventID (core file). Likewise, when attached to an occurrence-core DwC-A the ID field corresponds to the occurrence core-table of the DWC-A. There are also a new type in use a type called extendedMeasurmentsOrFact (eMOF) which is able to hold measures linked to both event and occurrence tables ([description](http://www.iobis.org/manual/dataformat/)). Usage is otherwise more or less similar. 
 
 
@@ -109,7 +108,7 @@ df <- left_join(df,mof_wide)
 ```
 
 
-### Citation
+### 5. Citation
 Suggestive hack of default citation from dwc-a metadata to get the dataset DOI in the citation string.  
 
 ```{r cite, warning=F,message=F,eval=TRUE}
@@ -117,13 +116,30 @@ library(xml2)
 # 5. Suggested citation: Take the citation as from downloaded from GBIF website, replace "via GBIF.org" by endpoint url. 
 datasetID <- "78360224-5493-45fd-a9a0-c336557f09c3"
 tmp <- tempfile()
-download.file(paste0("http://api.gbif.org/v1/dataset/",datasetID,"/document"),tmp) # get medatadata from gbif api
-meta <- read_xml(tmp) %>% as_list() # create list from xml schema
-gbif_citation <- meta$additionalMetadata$metadata$gbif$citation[[1]] # extract citation
-citation <- gsub("GBIF.org", paste(endpoint_url), gbif_citation) # replace "gbif.org" with endpoint url
+download.file(paste0("http://api.gbif.org/v1/dataset/",datasetID,"/document"),tmp)
+meta <- read_xml(tmp) %>% as_list() 
+gbif_citation <- meta$eml$additionalMetadata$metadata$gbif$citation[[1]] 
+citation <- gsub("GBIF.org", paste(endpoint_url), gbif_citation) 
 ```
 
 The citation string will then be
 
 * `r paste(citation)`
+
+## Try out the Darwinator R package!
+
+See the [Darwinator vignette](https://github.com/GBIF-Europe/darwinator/blob/master/vignettes/introduction.Rmd) for examples and use-cases. Install the package using devtools (see below) 
+
+```{r,eval=FALSE}
+# First make sure you have the devtools package
+# which simplifies installations from github
+# Note: Windows users have to first install Rtools to use devtools
+
+install.packages("devtools") 
+library(devtools)
+install_github("GBIF-Europe/darwinator")
+```
+
+
+
 
