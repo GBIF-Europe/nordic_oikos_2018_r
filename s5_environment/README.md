@@ -15,7 +15,7 @@ Access to and the linking of GBIF data to environmental raster and vector data i
 
 ## Workshop training materials
 
-* [Worldclim demonstration](worldclim.Rmd)
+* [Worldclim demonstration](worldclim.Rmd), ([html](worldclim.html))
 
 ***
 
