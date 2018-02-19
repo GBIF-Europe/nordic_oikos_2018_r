@@ -31,9 +31,9 @@ Using [readxl](http://readxl.tidyverse.org/) from tidyverse.
 ```{r eval=FALSE}
 library(tidyverse) ## tidyverse is without external dependencies such as Java or Pearl
 library(readxl) ## readxl is part of tidyverse
-#excel_sheets("./demo_data/spp_dq.xlsx") ## List sheets in a xlsx document
-#spp_dq <- read_excel("./demo_data/spp_dq.xlsx", sheet=1, range="A1:BQ101") ## example with range
-spp_dq <- read_excel("./demo_data/spp_dq.xlsx", sheet=1) ## manipulated occurrence data, introduced errors
+##excel_sheets("./demo_data/spp_dq.xlsx") ## List sheets in a xlsx document
+##spp_dq <- read_excel("./demo_data/spp_dq.xlsx", sheet=1, range="A1:BQ101") ## example with range
+spp_dq <- readxl::read_excel("./demo_data/spp_dq.xlsx", sheet=1) ## occurrences with some introduced errors
 head(spp_dq, n=5)
 ```
 ![Dummy occurrences for data quality tests, from Excel file](./demo_data/head_spp_dq.png "spp_dq")
@@ -78,11 +78,11 @@ table(spp_dq$county)
 
 ### Vector data with country polygons (maptools:wrld_simpl)
 For more detailed borders use a source such as GADM! Here we use wrld_simpl for faster calculations and demonstration purposes.
-```{r message=FALSE, eval=FALSE}
+```{r eval=FALSE}
 library(maptools)
 library(rgeos)
-data(wrld_simpl) ## vector/factor of ISO2, ISO2, NAME, REGION, SUBREGION, LON, LAT, ...
-#norway_mask <- subset(wrld_simpl, NAME=="Norway")
+data(wrld_simpl) ## load data ## vector/factor of ISO2, ISO2, NAME, REGION, SUBREGION, LON, LAT, ...
+#norway_mask <- subset(wrld_simpl, NAME=="Norway") ## make a mask for Norway
 plot(wrld_simpl, xlim=c(4, 31), ylim=c(54,64), axes=TRUE) ## xlim=c(minLon,maxLon) ylim=c(minLat,maxLat)
 title("Dummy occurrences plotted on wrld_simpl")
 points(xy_dq, col='red', pch=20, cex=1) # plot species occurrence points to the map
@@ -151,12 +151,12 @@ spp_dq_over: ISO2, NAME, country, couMatch, couMatched, longitude, latitude, cat
 ```
 
 ```{r eval=FALSE}
-i1 <- which(is.na(spp_dq_over$NAME)) ## int [1:29] 1 5 8 9 ... (these did NOT match the overlay, ie. WITH issue)
-i2 <- which(toupper(spp_dq_over$NAME) == toupper(spp_dq_over$country)) ## int [1:71] 2 3 4 6 7 10 ... (occ without overlay issue)
+i1 <- which(is.na(spp_dq_over$NAME)) ## int [1:29] 1 5 8 ... (these did NOT match the overlay, ie. WITH issue)
+i2 <- which(toupper(spp_dq_over$NAME) == toupper(spp_dq_over$country)) ## int [1:71] 2 3 4 6 ... (without issue)
 plot(wrld_simpl, xlim=c(4, 31), ylim=c(54,64), axes=TRUE, border="#555555") ## xlim=c(minLon,maxLon) ylim=c(minLat,maxLat)
 title("Dummy test occurrences for data quality control demo")
 points(xy_dq, col='blue', pch=20, cex=0.9) # plot species occurrence (all occurrences)
-points(xy_dq[i,], col='red', pch='x', cex=1) ## plot occurrences WITH issue on top (this line is after points for all)
+points(xy_dq[i1,], col='red', pch='x', cex=1) ## plot occurrences WITH issue on top (after points for all)
 legend("bottomright", title=NULL, legend=c(paste("with issue: ", length(i1), " occurrences"), paste("without issue: ", length(i2), " occurrences")), col=c("red", "blue"), pch=c('x'), cex=0.9, box.col="#777777")
 ```
 ![Dummy occurrences with data quality test result](./demo_data/map_spp_dq_issues.png "wrld_simpl")
@@ -168,6 +168,7 @@ legend("bottomright", title=NULL, legend=c(paste("with issue: ", length(i1), " o
 ```{r eval=FALSE}
 library('mapr') # rOpenSci r-package for mapping (occurrence data)
 library('spocc') # rOpenSci r-package with more biodiversity data sources than GBIF
+library(RColorBrewer)
 ### TODO spp_dq_issue
 head(spp_dq_over[i1,])
 #map_leaflet(spp_dq_over[i1,], "longitude", "latitude", size=5)

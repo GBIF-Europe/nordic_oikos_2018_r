@@ -30,41 +30,37 @@ You are here: [R workshop](../) >> [Session 6 Mapping](./) >> **mapping demo**
 library('rgbif') # rOpenSci r-package for GBIF data
 library('mapr') # rOpenSci r-package for mapping (occurrence data)
 sp_name <- "Hepatica nobilis"; kingdom <- "Plantae" # liverleaf (blaaveis:no), taxonKey=5371699
-key <- name_backbone(name=sp_name, kingdom=kingdom)$speciesKey
-sp <- occ_search(taxonKey=key, return="data", hasCoordinate=TRUE, country="NO", limit=100)
+key <- rgbif::name_backbone(name=sp_name, kingdom=kingdom)$speciesKey
+sp <- rgbif::occ_search(taxonKey=key, return="data", hasCoordinate=TRUE, country="NO", limit=100)
 sp_m <- sp[c("name", "catalogNumber", "decimalLongitude","decimalLatitude", "basisOfRecord", "year", "municipality", "taxonKey", "occurrenceID")] ## Subset columns (for more useful map pop-up)
-#gbifmap(sp, region = "norway")
-map_leaflet(sp_m, "decimalLongitude", "decimalLatitude", size=2, color="blue")
+#rgbif::gbifmap(sp, region = "norway")
+mapr::map_leaflet(sp_m, "decimalLongitude", "decimalLatitude", size=2, color="blue")
 ```
 ![Map GBIF data for Hepatica nobilis from Norway](./demo_data/map_sp_norway.png "Leaflet map, Norway")
 
 ***
 
-## Extract coordinates suitable for e.g. Maxent
+### Read example species occurrence data into R
+Or choose your own species data following the examples provided in [session 3](../s3_gbif_demo).
 ```{r eval=FALSE}
+sp <- utils::read.delim("./demo_data/sp.txt", header=TRUE, dec=".", stringsAsFactors=FALSE) ## read from file
+#head(sp, n=5) ## preview first 5 records
+##utils::write.table(sp, file="./demo_data/sp.txt", sep="\t", row.names=FALSE, qmethod="double") ## write
+```
+
+### Extract coordinates suitable for e.g. Maxent
+```{r eval=FALSE}
+library('utils')
 xy <- sp[c("decimalLongitude","decimalLatitude")] ## Extract only the coordinates
 sp_xy <- sp[c("species", "decimalLongitude","decimalLatitude")] ## Input format for Maxent
-#head(sp_xy, n=5) ## preview first 5 records
-```
-
-### Write dataframe to file (useful for Maxent etc.)
-```{r eval=FALSE}
-write.table(sp_xy, file="./demo_data/sp_xy.txt", sep="\t", row.names=FALSE, qmethod="double") ## for Maxent
+#utils::write.table(sp_xy, file="./demo_data/sp_xy.txt", sep="\t", row.names=FALSE, qmethod="double")
 #readLines("./demo_data/sp_xy.txt", n=10)
-write.table(sp, file="./demo_data/sp.txt", sep="\t", row.names=FALSE, qmethod="double") ## dataframe
-#readLines("./demo_data/sp.txt", n=10)
-```
-
-### Read data file back into R
-```{r eval=FALSE}
-sp_xy <- read.delim("./demo_data/sp_xy.txt", header=TRUE, dec=".", stringsAsFactors=FALSE)
-sp <- read.delim("./demo_data/sp.txt", header=TRUE, dec=".", stringsAsFactors=FALSE) ## dataframe
 ```
 
 ***
 
 ### Get (detailed) administrative borders for Norway from GADM
-Very slow to plot, many details...
+Slow to render, many details for the coast...
 ```{r eval=FALSE}
 library(raster)
 gadm_norway_1 <- getData('GADM', country='NOR', level=1, path="./demo_data") ## level 0,1,2,...
@@ -94,11 +90,11 @@ legend("bottomright", title = "Legend", legend = "Occurrences", pch = 20, col="b
 
 ***
 
-### Admin borders from DIVA-GIS
+### Admin borders from DIVA-GIS (read shapefile)
 
 DIVA-GIS data by country: [http://www.diva-gis.org/gdata].
 DIVA-GIS admin borders for Norway: [http://biogeo.ucdavis.edu/data/diva/adm/NOR_adm.zip].
-Notice that these are the same (detailed) borders as available from GADM.
+Notice that these are the very same (detailed) borders as available from GADM.
 
 ```{r eval=FALSE}
 ## Download DIVA-GIS admin borders for Norway
@@ -107,18 +103,14 @@ if (!file.exists('./demo_data/NOR_adm.zip')) {
     dir.create(file.path("./demo_data/NOR_adm")) ## create a folder for shape files
     unzip('./demo_data/NOR_adm.zip', exdir='./demo_data/NOR_adm')
 }
-#NOR_adm1 <- shapefile('./demo_data/NOR_adm/NOR_adm1.shp') ## county borders
-#plot(NOR_adm1, axes=FALSE, border="#666666")
 ```
-![DIVA-GIS NOR_adm1 (source: GADM)](./demo_data/gadm_norway_sp.png "NOR_adm1")
-
 
 ```{r eval=FALSE}
 library(raster)
 library(sp)
-#NOR_adm0 <- shapefile('./demo_data/NOR_adm/NOR_adm0.shp') ## country border
-#NOR_adm1 <- shapefile('./demo_data/NOR_adm/NOR_adm1.shp') ## county borders
-#NOR_adm2 <- shapefile('./demo_data/NOR_adm/NOR_adm2.shp') ## municipality borders
+NOR_adm0 <- raster::shapefile('./demo_data/NOR_adm/NOR_adm0.shp') ## country border
+#NOR_adm1 <- raster::shapefile('./demo_data/NOR_adm/NOR_adm1.shp') ## county borders
+#NOR_adm2 <- raster::shapefile('./demo_data/NOR_adm/NOR_adm2.shp') ## municipality borders
 par(mfrow=c(1,3)) ## combining plots: nrows, ncols
 ##
 plot(NOR_adm0, axes=FALSE, border="#666666")
@@ -135,7 +127,7 @@ title("NOR_adm2, municipality")
 #legend("bottomright", title = "Legend", legend = "Occurrences", pch = 20, col="blue", cex = 0.9)
 ##
 ```
-![DIVA-GIS NOR_adm (source: GADM)](./demo_data/map_NOR_adm.png "NOR_adm1")
+![DIVA-GIS NOR_adm (source: GADM)](./demo_data/map_NOR_adm.png "NOR_adm 0,1,2")
 
 
 ***
@@ -213,20 +205,18 @@ plot(norway_mask, add=TRUE, lwd=2)
 
 ### Plot with extent Scandinavia (using zoom)
 Using zoom, the raster data in R workspace environment is still the same size. You only zoom into the region of interest for more useful maps.
-```{r messages=FALSE, echo=FALSE, eval=FALSE}
+```{r eval=FALSE}
 library(raster)
 ext <- extent(3,35,54,72) ## minLon=3, maxLon=35, minLat=54, MaxLat=72 for Scandinavia
-#plot(zoom(env$bio1, ext), add = TRUE); title(main="Bio1, Annual annual temperature")
 plot(zoom(env$bio12, ext), add = TRUE); title(main="Bio12, Annual precipitation") 
 points(xy, col='blue', pch=20) ## plot species occurrence points # Error msg: plot.new not called yet
-## If running plots line by line, it seems that dev.off() is called ## Error msg: plot.new not called yet
 ```
 ![Bioclim 12, Annual precepitation](./demo_data/map_bio_scandinavia.png "Bioclim 12")
 
 ***
 
 ### Map of the cropped and masked raster layers
-```{r messages=FALSE, eval=FALSE}
+```{r eval=FALSE}
 par(mfrow=c(1,2)) ## combining two plot with par(n_rows, n_columns)
 ##plot(env_cut$bio12); title(main="Bio12 cut to Scandinavia")
 plot(env_crop$bio12); title(main="Bio12 cropped to Norway")
@@ -237,30 +227,10 @@ points(xy, col='blue', pch=20) ## add species occurrence points to masked map
 ![Bioclim 12 (Annual precepitation) respectively cropped and masked to Norway](./demo_data/map_bio_cropped.png "Bioclim 12 crop and mask")
 
 ***
-
-***
-
-### Testing remote sensing image for Trondheim downloaded from Landsat
-I used the [USGS](https://landsat.usgs.gov/landsat-data-access) [LandsatLook Viewer](https://landsatlook.usgs.gov/) and [Sentinel2Look Viewer](https://landsatlook.usgs.gov/sentinel2/) to download sattelite data for Trondheim.
-
-```{r eval=FALSE}
-rs_l <- brick('./demo_data/landsat_trondheim_web_mercartor_wgs84.tif')
-rs_s <- brick('./demo_data/sentinel_trondheim_web_mercartor_wgs84.tif')
-nlayers(rs_l); nlayers(rs_s) ## 3 layers
-crs(rs_l); crs(rs_s) ## +proj=merc +a=6378137 +b=6378137 ... +units=m ...
-ncell(rs_l); ncell(rs_s) ## rs_l = 100738 ## rs_s = 204530
-dim(rs_l); dim(rs_s) ## rs_l = 241 418   3 ## rs_s = 362 565   3
-res(rs_l);res(rs_s) ## rs_l = 30.09113 30.09113 ## rs_s = 20.03305 20.03305
-#par(mfrow=c(2,1)) ## combining two plot with par(n_rows, n_columns)
-#plotRGB(rs_l, stretch="lin", axes=FALSE, main="Landsat True Color Composite")
-plotRGB(rs_s, stretch="lin", axes=FALSE, main="Sentinel True Color Composite")
-```
-![Remote sensing data, sentinel, Trondheim](./demo_data/sentinel_trondheim.png "Sentinel remote sensing")
-
 ***
 
 ### Base map from Google
-```{r message=FALSE, echo=FALSE, eval=FALSE}
+```{r eval=FALSE}
 library(dismo)
 g_no <- gmap("Norway")
 trd <- geocode('Trondheim, Norway')
@@ -275,6 +245,26 @@ points(trd_merc, pch='*', col='red', cex=3) ## add * for Trondheim
 points(osl_merc, pch='*', col='red', cex=3) ## add * for Oslo
 ```
 ![Base map from Google, with *H. nobilis*, Trondheim, Oslo](./demo_data/map_google_sp.png "Base map")
+
+***
+
+### Testing remote sensing image for Trondheim downloaded from Landsat
+I used the [USGS](https://landsat.usgs.gov/landsat-data-access) [LandsatLook Viewer](https://landsatlook.usgs.gov/) and [Sentinel2Look Viewer](https://landsatlook.usgs.gov/sentinel2/) to download sattelite data for Trondheim.
+
+```{r eval=FALSE}
+## A rasterBrick is a multi-layer raster object (similar to a rasterStack)
+rs_l <- brick('./demo_data/landsat_trondheim_web_mercartor_wgs84.tif')
+rs_s <- brick('./demo_data/sentinel_trondheim_web_mercartor_wgs84.tif')
+nlayers(rs_l); nlayers(rs_s) ## result = 3 layers
+crs(rs_l); crs(rs_s) ## +proj=merc +a=6378137 +b=6378137 ... +units=m ...
+ncell(rs_l); ncell(rs_s) ## rs_l = 100738 ## rs_s = 204530
+dim(rs_l); dim(rs_s) ## rs_l = 241 418   3 ## rs_s = 362 565   3
+res(rs_l);res(rs_s) ## rs_l = 30.09113 30.09113 ## rs_s = 20.03305 20.03305
+#par(mfrow=c(2,1)) ## combining two plot with par(n_rows, n_columns) ## if landsat & sentinel
+#plotRGB(rs_l, stretch="lin", axes=FALSE, main="Landsat True Color Composite") ## Landsat example
+plotRGB(rs_s, stretch="lin", axes=FALSE, main="Sentinel True Color Composite") ## Sentinel example
+```
+![Remote sensing data, sentinel, Trondheim](./demo_data/sentinel_trondheim.png "Sentinel remote sensing")
 
 ***
 
@@ -297,12 +287,12 @@ cat("\nSize of gadm_norway_1 =", format(object.size(gadm_norway_1), units = "aut
  * Size of gadm_norway_1 =   12.8 Mb
 
 ***
-
+***
 ***
 
 ### The BioClim layers:
 
- * BIO1 = Annual Mean Temperature
+ * BIO1 = Annual Mean Temperature (degree C multiplied by 10, to avoid decimal point)
  * BIO2 = Mean Diurnal Range (Mean of monthly (max temp – min temp)) 
  * BIO3 = Isothermality (BIO2/BIO7) (* 100)
  * BIO4 = Temperature Seasonality (standard deviation *100)
@@ -313,9 +303,9 @@ cat("\nSize of gadm_norway_1 =", format(object.size(gadm_norway_1), units = "aut
  * BIO9 = Mean Temperature of Driest Quarter
  * BIO10 = Mean Temperature of Warmest Quarter 
  * BIO11 = Mean Temperature of Coldest Quarter 
- * BIO12 = Annual Precipitation
- * BIO13 = Precipitation of Wettest Month
- * BIO14 = Precipitation of Driest Month
+ * BIO12 = Annual Precipitation (mm)
+ * BIO13 = Precipitation of Wettest Month (mm)
+ * BIO14 = Precipitation of Driest Month (mm)
  * BIO15 = Precipitation Seasonality (Coe cient of Variation) 
  * BIO16 = Precipitation of Wettest Quarter
  * BIO17 = Precipitation of Driest Quarter
@@ -329,14 +319,14 @@ cat("\nSize of gadm_norway_1 =", format(object.size(gadm_norway_1), units = "aut
 library('rgbif') # rOpenSci r-package for GBIF data
 library('mapr') # rOpenSci r-package for mapping (occurrence data)
 sp_name <- "Hepatica nobilis"; kingdom <- "Plantae" # liverleaf (blaaveis:no), taxonKey=5371699
-key <- name_backbone(name=sp_name, kingdom=kingdom)$speciesKey
+key <- rgbif::name_backbone(name=sp_name, kingdom=kingdom)$speciesKey
 bb <- c(10.2,63.3,10.6,63.5) # Trondheim
 #bb <- c(5.25, 60.3, 5.4, 60.4) # Bergen
 #bb <- c(18.7, 69.6, 19.2, 69.8) # Tromsoe
 #bb <- c(10.6, 59.9, 10.9, 60.0) # Oslo
-sp_bb <- occ_search(taxonKey=key, return="data", hasCoordinate=TRUE, country="NO", geometry=bb, limit=100)
+sp_bb <- rgbif::occ_search(taxonKey=key, return="data", hasCoordinate=TRUE, country="NO", geometry=bb, limit=100)
 sp_bb_m <- sp_bb[c("name", "catalogNumber", "decimalLongitude","decimalLatitude", "basisOfRecord", "year", "municipality", "taxonKey", "occurrenceID")] ## Subset columns
-map_leaflet(sp_bb_m, "decimalLongitude", "decimalLatitude", size=2, color="blue")
+mapr::map_leaflet(sp_bb_m, "decimalLongitude", "decimalLatitude", size=2, color="blue")
 ```
 ![Map GBIF data with bounding box for Trondheim](./demo_data/map_sp_trondheim.png "Leaflet map, Trondheim")
 
