@@ -26,4 +26,8 @@ Scientific reuse of openly published biodiversity information: Programmatic acce
 
 ***
 
+[Course evaluation form](https://skjema.uio.no/94578)
+
+***
+
 **Organized by**: GBIF.no - Global Biodiversity Information Facility Norway (www.GBIF.no) and ForBio Research School in Biosystematics (www.forbio.uio.no). Short description of the workshop [trainers here](./trainers.Rmd).
