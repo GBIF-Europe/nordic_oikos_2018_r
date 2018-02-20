@@ -26,7 +26,8 @@ Scientific reuse of openly published biodiversity information: Programmatic acce
 
 ***
 
-[Course evaluation form](https://skjema.uio.no/94578)
+We invite all participants to give us feedback using the 
+[Course evaluation form](https://skjema.uio.no/94578)!
 
 ***
 
