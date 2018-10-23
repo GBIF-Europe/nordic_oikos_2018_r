@@ -14,10 +14,10 @@ This session presents programmatic access to GBIF data using R with focus on the
 
 ## Workshop training materials
 
- * [Programmatic access to GBIF data in R with rgbif](gbif_demo.Rmd), ([html](gbif_demo.html))
- * [Asynchron download](3.x_async_download_gbif.Rmd), ([html]((3.x_async_download_gbif.html)))
+ * [Programmatic access to GBIF data in R with rgbif](https://gbif-europe.github.io/nordic_oikos_2018_r/s3_gbif_demo/gbif_demo.html) ([Rmd script](gbif_demo.Rmd))
+ * [Asynchron download](https://gbif-europe.github.io/nordic_oikos_2018_r/s3_gbif_demo/3.x_async_download_gbif.html) ([Rmd script](3.x_async_download_gbif.Rmd))
  * Filtering using data terms and spatial geometry (to be added)
- * [Example data quality tests](data_quality.Rmd), ([html](data_quality.html))
+ * [Example data quality tests](https://gbif-europe.github.io/nordic_oikos_2018_r/s3_gbif_demo/data_quality.html) ([Rmd script](data_quality.Rmd))
  * Taxon names information (to be added)
  * [Slides](./slides)
  
