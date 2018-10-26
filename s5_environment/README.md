@@ -16,7 +16,7 @@ Access to and the linking of GBIF data to environmental raster and vector data i
 
 ## Workshop training materials
 
-* [Worldclim demonstration](worldclim.Rmd), ([rendered HTML version](https://gbif-europe.github.io/nordic_oikos_2018_r/s5_environment/worldclim.html))
+* [Worldclim demonstration](worldclim.Rmd) (rendered [MarkDown](worldclim.md) and [HTML](https://gbif-europe.github.io/nordic_oikos_2018_r/s5_environment/worldclim.html) version here)
 
 ***
 
