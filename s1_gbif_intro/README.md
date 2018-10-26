@@ -16,7 +16,7 @@ This session gives an introduction to the Global Biodiversity Information Facili
 
 
 ## Workshop training materials
- * [Brief R settings and hints](settings.Rmd), ([rendered version](https://gbif-europe.github.io/nordic_oikos_2018_r/s1_gbif_intro/settings.html)) (more in [session 2](../s2_r_intro))
+ * [Brief R settings and hints](setup.Rmd), ([rendered version](https://gbif-europe.github.io/nordic_oikos_2018_r/s1_gbif_intro/setup.html)) (more in [session 2](../s2_r_intro))
  * [Brief intro to rgbif](gbif_intro.Rmd), ([rendered version](https://gbif-europe.github.io/nordic_oikos_2018_r/s1_gbif_intro/gbif_intro.html)) (more in [session 3](../s3_gbif_demo))
  * [Session 1 slides](slides)
 
