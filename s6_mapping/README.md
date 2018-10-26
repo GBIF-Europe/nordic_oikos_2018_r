@@ -6,10 +6,11 @@
 * https://github.com/ropensci/mapr
 * Hijmans (2016) Spatial data analysis and modelling with R http://www.rspatial.org/
 * https://cran.r-project.org/web/packages/raster/vignettes/Raster.pdf
+* Session 6 [rendered HTML version here](https://gbif-europe.github.io/nordic_oikos_2018_r/s6_mapping/).
 
 ## Workshop training materials
 
- * [Some mapping tools and hints](mapping.Rmd)
+ * [Some mapping tools and hints](mapping.Rmd) ([html](https://gbif-europe.github.io/nordic_oikos_2018_r/s6_mapping/mapping.html))
 
 ## Excercises
 
