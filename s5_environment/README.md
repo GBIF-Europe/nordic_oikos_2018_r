@@ -7,7 +7,7 @@ Access to and the linking of GBIF data to environmental raster and vector data i
 * [WorldClim](http://worldclim.org/version2) global climate layers ([Fick and Hijmans, 2017](https://doi.org/10.1002/joc.5086)), ([Hijmans *et al.* 2005](https://doi.org/10.1002/joc.1276)).
 * Bioclimatic variables ([Bioclim](http://www.worldclim.org/bioclim)) (Nix 1986; Busby 1991; [Booth 2014](http://doi.org/10.1111/ddi.12144)).
 * R Spatial: [Guide to environmental data](http://www.rspatial.org/sdm/rst/4_sdm_envdata.html).
-* [Session 5 rendered HTML version here](https://gbif-europe.github.io/nordic_oikos_2018_r/s5_environment/)
+* [Session 5 rendered HTML version on GitHub.io here](https://gbif-europe.github.io/nordic_oikos_2018_r/s5_environment/)
 
 
 **Learning target**: Understanding basic spatial data manipulation and the basic properties of spatial data, including both raster data (gridded spatial data) and vector data (species occurrence point data, polygon data such as country borders, etc). Learning how to extract information from either raster data (eg. environment layers) and vector data for a list of species occurrences point data.
@@ -16,7 +16,7 @@ Access to and the linking of GBIF data to environmental raster and vector data i
 
 ## Workshop training materials
 
-* [Worldclim demonstration](worldclim.Rmd), ([html](https://gbif-europe.github.io/nordic_oikos_2018_r/s5_environment/worldclim.html))
+* [Worldclim demonstration](worldclim.Rmd), ([rendered HTML version](https://gbif-europe.github.io/nordic_oikos_2018_r/s5_environment/worldclim.html))
 
 ***
 
