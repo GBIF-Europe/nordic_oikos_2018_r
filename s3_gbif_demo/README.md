@@ -14,12 +14,12 @@ This session presents programmatic access to GBIF data using R with focus on the
 
 ## Workshop training materials
 
- * [Programmatic access to GBIF data in R with rgbif](https://gbif-europe.github.io/nordic_oikos_2018_r/s3_gbif_demo/gbif_demo.html) ([Rmd script](gbif_demo.Rmd))
- * [Asynchron download](https://gbif-europe.github.io/nordic_oikos_2018_r/s3_gbif_demo/3.x_async_download_gbif.html) ([Rmd script](3.x_async_download_gbif.Rmd))
+ * [Programmatic access to GBIF data in R with rgbif](gbif_demo.Rmd) ([Rendered version here](https://gbif-europe.github.io/nordic_oikos_2018_r/s3_gbif_demo/gbif_demo.html))
+ * [Asynchron download](3.x_async_download_gbif.Rmd) ([Rendered version here](https://gbif-europe.github.io/nordic_oikos_2018_r/s3_gbif_demo/3.x_async_download_gbif.html))
  * Filtering using data terms and spatial geometry (to be added)
- * [Example data quality tests](https://gbif-europe.github.io/nordic_oikos_2018_r/s3_gbif_demo/data_quality.html) ([Rmd script](data_quality.Rmd))
- * Taxon names information (to be added)
+ * [Example data quality tests](data_quality.Rmd) ([Rendered version here](https://gbif-europe.github.io/nordic_oikos_2018_r/s3_gbif_demo/data_quality.html))
  * [Slides](./slides)
+ * See the [rendered version on GitHub.io](https://gbif-europe.github.io/nordic_oikos_2018_r/s3_gbif_demo/).
  
 
 
