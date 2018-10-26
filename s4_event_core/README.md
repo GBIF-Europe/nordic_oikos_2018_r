@@ -4,6 +4,7 @@
 # Session 4: Event core / sample-based data from GBIF
 
 This session gives a brief introduction to what "event" data is, why it mathers, and how to access this datatype. 
+[HTML version here](https://gbif-europe.github.io/nordic_oikos_2018_r/s4_event_core/).
 
 Content of lesson:
 
@@ -17,9 +18,9 @@ Sample based data / Event data is a rather new datatype in GBIF and not all func
 
 ## Workshop training materials
 
-* Use case 4_2, [Discover event data in GBIF and download DwC-archive from IPT](4_2_Event_data_download_and_wrangle.Rmd) ([html](4_2_Event_data_download_and_wrangle.html))
-* Use case 4_3, [Introduction to long-term line transect sampling survey targeting willow ptarmigan (*Lagopus lagopus*)](4_3_Use_case_Ptarmigan_LineTransect.html)
-* Use case 4_3, [Continued, long-term line transect sampling survey targeting willow ptarmigan (*Lagopus lagopus*)](4_3_Ptarmigan_Presentation.rmd), ([html](4_3_Ptarmigan_Presentation.html))
+* Use case 4_2, [Discover event data in GBIF and download DwC-archive from IPT](4_2_Event_data_download_and_wrangle.Rmd) ([html](https://gbif-europe.github.io/nordic_oikos_2018_r/s4_event_core/4_2_Event_data_download_and_wrangle.html))
+* Use case 4_3, [Introduction to long-term line transect sampling survey targeting willow ptarmigan (*Lagopus lagopus*)](4_3_Use_case_Ptarmigan_LineTransect.Rmd)
+* Use case 4_3, [Continued, long-term line transect sampling survey targeting willow ptarmigan (*Lagopus lagopus*)](4_3_Ptarmigan_Presentation.rmd)
 
 ***
 
