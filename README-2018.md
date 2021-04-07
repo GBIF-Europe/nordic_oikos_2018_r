@@ -31,4 +31,4 @@ We invite all participants to give us feedback using the
 
 ***
 
-**Organized by**: GBIF.no - Global Biodiversity Information Facility Norway (www.GBIF.no) and ForBio Research School in Biosystematics (www.forbio.uio.no). Short description of the workshop [trainers here](./trainers.Rmd).
+**Organized by**: GBIF.no - Global Biodiversity Information Facility Norway (www.GBIF.no) and ForBio Research School in Biosystematics (www.forbio.uio.no). Short description of the workshop [trainers here](./trainers.md).
