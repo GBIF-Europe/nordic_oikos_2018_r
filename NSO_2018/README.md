@@ -1,4 +1,4 @@
-![](./demo_data/NSO_2018_GBIF_NO.png "NSO 2018")
+![](./images/NSO_2018_GBIF_NO.png "NSO 2018")
 
 # Nordic Oikos 2018 -- workshop on GBIF data and R
 
