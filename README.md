@@ -17,7 +17,7 @@ Scientific reuse of openly published biodiversity information: Programmatic acce
 
 <!-- ![](./demo_data/NSO_2018_GBIF_NO.png "NSO 2018") -->
 
-Course materials was originally developed for the [Nordic Oikos 2018, pre-conference R workshop](./README-2018.md), 18<sup>th</sup> and 19<sup>th</sup> February 2018 in Trondheim, Norway.
+Course materials was originally developed for the [Nordic Oikos 2018, pre-conference R workshop](./README-2018.md).
 
 * [gbif.no/events/2018/Nordic-Oikos-2018-R-workshop.html](https://www.gbif.no/events/2018/Nordic-Oikos-2018-R-workshop.html)
 * [forbio.uio.no/events/courses/2018/GBIF_R.html](https://www.forbio.uio.no/events/courses/2018/GBIF_R.html)
