@@ -1,4 +1,4 @@
-
+![](./demo_data/gbif-norway-full.png "GBIF-Norway-Banner")
 
 # GBIF data and R
 
@@ -17,11 +17,11 @@ Scientific reuse of openly published biodiversity information: Programmatic acce
 
 ***
 
-**Organized by**: GBIF.no - Global Biodiversity Information Facility Norway (www.GBIF.no) and ForBio Research School in Biosystematics (www.forbio.uio.no). Short description of the workshop [trainers here](./trainers.Rmd).
+![](./demo_data/NSO_2018_GBIF_NO.png "NSO 2018")
 
 Course materials was originally developed for the Nordic Oikos 2018, pre-conference R workshop, 18<sup>th</sup> and 19<sup>th</sup> February 2018 in Trondheim, Norway.
 
-![](./demo_data/NSO_2018_GBIF_NO.png "NSO 2018")
+**Organized by**: GBIF.no - Global Biodiversity Information Facility Norway (www.GBIF.no) and ForBio Research School in Biosystematics (www.forbio.uio.no). Short description of the workshop [trainers here](./trainers.Rmd).
 
 * [http://www.gbif.no/events/2018/Nordic-Oikos-2018-R-workshop.html](http://www.gbif.no/events/2018/Nordic-Oikos-2018-R-workshop.html)
 * [http://www.forbio.uio.no/events/courses/2018/GBIF_R.html](http://www.forbio.uio.no/events/courses/2018/GBIF_R.html)
