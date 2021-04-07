@@ -1,11 +1,9 @@
 ![](./demo_data/gbif-norway-full.png "GBIF-Norway-Banner")
 
-# GBIF data and R
+# GBIF data access with R
 
 Scientific reuse of openly published biodiversity information: Programmatic access to and analysis of primary biodiversity information using R.
 
-
-## Workshop sessions:
 * Session 1: [Quick introduction to GBIF and biodiversity informatics](s1_gbif_intro)
 * Session 2: [Quick intro to R, RStudio, GitHub](s2_r_intro)
 * Session 3: [Download occurrence data from GBIF using rgbif](s3_gbif_demo)
@@ -17,7 +15,7 @@ Scientific reuse of openly published biodiversity information: Programmatic acce
 
 ***
 
-![](./demo_data/NSO_2018_GBIF_NO.png "NSO 2018")
+<!-- ![](./demo_data/NSO_2018_GBIF_NO.png "NSO 2018") -->
 
 Course materials was originally developed for the [Nordic Oikos 2018, pre-conference R workshop](./README-2018.md), 18<sup>th</sup> and 19<sup>th</sup> February 2018 in Trondheim, Norway.
 
