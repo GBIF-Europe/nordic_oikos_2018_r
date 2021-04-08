@@ -27,22 +27,19 @@ Scientific reuse of openly published biodiversity information: Programmatic acce
 
 ***
 
-```{r include=FALSE, messages=FALSE, eval=FALSE}
-# Setting the working directory, here: to the same directory as the RMD-script
-# Notice that eval=FALSE will exclude execution of this chunk in knitr, but enable manual execution in RStudio
-setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
-getwd() ## will display the working directory
-```
+
 
 ### Choose a species name
-```{r message=FALSE}
+
+```r
 require(rgbif) # r-package for GBIF data
 sp_name <- "Hepatica nobilis" # liverleaf (blaaveis:no)
 key <- name_backbone(name=sp_name, kingdom="Plantae")$speciesKey
 ```
 
 ### Retrieve GBIF species occurrence data
-```{r message=FALSE, eval=FALSE}
+
+```r
 require(rgbif) # r-package for GBIF data
 sp <- occ_search(taxonKey=key, return="data", hasCoordinate=TRUE, limit=200) 
 gbifmap(sp)
@@ -50,8 +47,9 @@ gbifmap(sp)
 ![Map of Hepatica nobilis occurrences](./demo_data/gbifmap_Hepatica_nobilis.png "gbifmap")
 
 ### Retrieve GBIF species occurrence data from Trondheim
-Species is *`r sp_name`* with taxonKey **`r key`**
-```{r message=FALSE, eval=FALSE}
+Species is *Hepatica nobilis* with taxonKey **5371699**
+
+```r
 require('rgbif') # r-package for GBIF data
 require('mapr') # rOpenSci r-package for mapping (occurrence data)
 bbox <- c(10.2,63.3,10.6,63.5) # Trondheim
@@ -63,25 +61,28 @@ map_leaflet(sp_bb, "decimalLongitude", "decimalLatitude", size=3, color="blue")
 
 
 ### Extract coordinates suitable for e.g. Maxent
-```{r eval=FALSE}
+
+```r
 xy <- sp[c("decimalLongitude","decimalLatitude")] ## Extract only the coordinates
 sp_xy <- sp[c("species", "decimalLongitude","decimalLatitude")] ## Input format for Maxent
 head(sp_xy, n=5) ## preview first 5 records
 ```
 
 ### Write dataframe to file (useful for Maxent etc)
-```{r messages=FALSE, eval=FALSE}
+
+```r
 write.table(sp_xy, file="./demo_data/sp_xy.txt", sep="\t", row.names=FALSE, qmethod="double") ## for Maxent
 ```
 
 ### Read data file back into R
-```{r eval=FALSE}
+
+```r
 sp_xy <- read.delim("./demo_data/sp_xy.txt", header=TRUE, dec=".", stringsAsFactors=FALSE)
 ```
 
 ***
 
-GBIF demo examples for species: *`r sp_name`* (taxonKey:`r key`).
+GBIF demo examples for species: *Hepatica nobilis* (taxonKey:5371699).
 
 ***
 

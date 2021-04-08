@@ -37,7 +37,8 @@ Scientific reuse of openly published biodiversity information: Programmatic acce
 
 ***
 
-```{r tidy=TRUE, eval=FALSE}
+
+```r
 ## Setting the working directory, here: to the same directory as the RMD-script. 
 ## Primarily useful "outside" of RMarkup chunks.
 ## RMarkup (Rmd) seems to always change current working directory to the same as the Rmd-script.
@@ -51,7 +52,8 @@ getwd() ## will display the working directory
 ```
 
 ### Create a folder for demo data
-```{r warning=FALSE, eval=FALSE}
+
+```r
 ## Note however, that RMarkdown with knitr works best with all files in the same directory.
 #dir.create(file.path("./demo_data")) ## create a folder for demo files (inside working directory)
 #dir.create(file.path("../demo_data")) ## create a folder for demo files (next to working directory)
@@ -59,7 +61,8 @@ getwd() ## will display the working directory
 ```
 
 ### Some useful R-packages to install, that we will use during the workshop
-```{r eval=FALSE}
+
+```r
 ## It is possible to install R-packages from the script
 install.packages("rmarkdown") # R Markdown
 ## rOpenSci
@@ -89,7 +92,8 @@ install.packages("readxl") ## Read Excel, from tidyverse (without external Java 
 ```
 
 ### Load R-packages
-```{r eval=FALSE}
+
+```r
 ## Use functions library() or require() to load the R-packages you need
 ##
 ## rOpenSci
@@ -113,7 +117,8 @@ library('plyr') ##
 ```
 
 ### Clear workspace (be careful)
-```{r eval=FALSE}
+
+```r
 ## Large arrays and dataframes can consume huge parts of your working memory,
 ## and you probably want to remove some of them from memory when they are not needed anymore.
 #rm(list = ls()) # Be careful, this line cleans the entire R workspace
@@ -130,7 +135,8 @@ library('plyr') ##
 ***
 ***
 
-```{r eval=FALSE}
+
+```r
 ## BOUNDING BOX
 ##bb <- c(lowerLon, lowerLat, higherLon, higherLat) # bounding box
 bb <- c(10.2,63.3,10.6,63.5) # Trondheim
@@ -148,24 +154,28 @@ x  4.6280575 31.078054
 y 58.0702763 71.113054
 
 
-```{r eval=FALSE}
+
+```r
 ## Print text and variables
 message(sprintf("Current working dir: %s\n", getwd()))
 paste("Today is", date())
 ```
 
-```{r eval=FALSE}
+
+```r
 sprintf(5.55555, fmt = '%#.3f') ## 5.556
 sprintf(5.55555, fmt = '%#.3g') ## 5.56
 ```
 
-```{r eval=FALSE}
+
+```r
 library('plyr') ## r-pkg plyr for data handling
 spp_df <- ldply(spp) ## ldply - split list, apply function, return dataframe (here list to df)
 ```
 
 List to dataframe
-```{r eval=FALSE}
+
+```r
 #spp <- occ_search(taxonKey=3073, limit=100, return='data', country='NO', hasCoordinate=TRUE)
 library('plyr') ## r-pkg plyr for 
 spp_df <- ldply(spp) ## ldply - split list, apply function, return dataframe (here list to df)
@@ -173,22 +183,21 @@ spp_df <- ldply(spp) ## ldply - split list, apply function, return dataframe (he
 #map_leaflet(spp_m, "decimalLongitude", "decimalLatitude", size=3, color=cols)
 ```
 
-```{r eval=FALSE}
+
+```r
 ## coordinate reference system
 crs(r) <- "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0" ## set CRS
 crs(r) <- CRS('+init=EPSG:4326') ## same result, but using EPSG is shorter to write, and easier
 ```
 
 
-```{r echo=FALSE, results='asis', eval=FALSE}
-library(knitr)
-#kable(trainers)
-```
+
 
 ***
 
 Read.xlsx depend on JAVA which might be an obstacle
-```{r eval=FALSE}
+
+```r
 ##Sys.setenv(JAVA_HOME="PATH-TO-JAVA_HOME")
 #Sys.setenv(JAVA_HOME='/Library/Java/Home') ## or use '/usr/libexec/java_home -d 64'
 #Sys.setenv(JAVA_HOME='/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home')
@@ -201,7 +210,8 @@ head(spp_da, n=5)
 ***
 
 Diverse color palettes
-```{r eval=FALSE}
+
+```r
 library(RColorBrewer)
 #display.brewer.all()
 display.brewer.pal(n=9, name='Set1')

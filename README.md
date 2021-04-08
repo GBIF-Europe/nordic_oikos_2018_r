@@ -14,13 +14,13 @@ Scientific reuse of openly published biodiversity information: Programmatic acce
 
 Open the HTML rendered version at [gbif-europe.github.io](https://gbif-europe.github.io/nordic_oikos_2018_r)
 
-![](./demo_data/gbif-norway-full.png "GBIF-Norway-Banner")
-
 ***
+
+![](./demo_data/gbif-norway-full.png "GBIF-Norway-Banner")
 
 <!-- ![](./demo_data/NSO_2018_GBIF_NO.png "NSO 2018") -->
 
 Course materials was originally developed for the [Nordic Oikos 2018, pre-conference R workshop](./README-2018.md). Read more from
-[gbif.no](https://www.gbif.no/events/2018/Nordic-Oikos-2018-R-workshop.html)
-[forbio.uio.no](https://www.forbio.uio.no/events/courses/2018/GBIF_R.html)
+[gbif.no](https://www.gbif.no/events/2018/Nordic-Oikos-2018-R-workshop.html), 
+[forbio.uio.no](https://www.forbio.uio.no/events/courses/2018/GBIF_R.html), or
 [ntnu.edu](https://www.ntnu.edu/web/oikos2018/workshops).
