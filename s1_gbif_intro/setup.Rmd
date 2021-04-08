@@ -1,5 +1,5 @@
 ---
-title: "Intro and some R setup examples"
+title: "GBIF data access with R - Session 1 - R settings"
 subtitle: "R workshop by GBIF.no and ForBio"
 author: "Dag Endresen, https://orcid.org/0000-0002-2352-5497"
 date: "February 18-19, 2018"
@@ -14,13 +14,13 @@ output:
 
 ***
 
-You are here: [R workshop](../) >> [Session 1 GBIF intro](./) >> **R settings**
+You are here: [R workshop](../) >> [Session 1 Intro](./) >> **R settings**
 
-![](../demo_data/NSO_2018_GBIF_NO.png "NSO 2018")
+
 
 ***
 
-# Nordic Oikos 2018 - R workshop - Session 1
+# GBIF data access with R - Session 1 - R settings
 
 Scientific reuse of openly published biodiversity information: Programmatic access to and analysis of primary biodiversity information using R. Nordic Oikos 2018, pre-conference R workshop, 18<sup>th</sup> and 19<sup>th</sup> February 2018. Further information [here](http://www.gbif.no/events/2018/Nordic-Oikos-2018-R-workshop.html).
 
@@ -217,3 +217,5 @@ Read more about colors at the [https://www.r-bloggers.com/palettes-in-r/](R-blog
 Navigate back to [GitHub project home](https://github.com/GBIF-Europe/nordic_oikos_2018_r) or [GitHub.io html](https://gbif-europe.github.io/nordic_oikos_2018_r/) pages.
 
 ***
+
+![](../demo_data/NSO_2018_GBIF_NO.png "NSO 2018")

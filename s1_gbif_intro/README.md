@@ -1,7 +1,5 @@
-![](../demo_data/NSO_2018_GBIF_NO.png "banner")
 
-
-# Session 1: Quick intro to GBIF and biodiversity informatics
+# Session 1: Intro to GBIF and biodiversity informatics
 
 This session gives an introduction to the Global Biodiversity Information Facility ([GBIF](https://www.gbif.org)) and international standards for primary biodiversity information with focus on the [Darwin Core](http://rs.tdwg.org/dwc/terms/) standard.
 
@@ -27,3 +25,4 @@ Navigate back to [GitHub project home](https://github.com/GBIF-Europe/nordic_oik
 
 ***
 
+![](../demo_data/NSO_2018_GBIF_NO.png "banner")
