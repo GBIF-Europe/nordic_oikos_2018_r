@@ -1,4 +1,4 @@
-![](./demo_data/gbif-norway-full.png "GBIF-Norway-Banner")
+
 
 # GBIF data access with R
 
@@ -10,16 +10,17 @@ Scientific reuse of openly published biodiversity information: Programmatic acce
 * Session 4: [Download event data et al. from GBIF / IPT and retrieve associated information](s4_event_core)
 * Session 5: [Linking species occurrence data with environmental layers](s5_environment)
 * Session 6: [Mapping species occurrences and environment layers](s6_mapping)
+* Session 9: [Machine-learning prediction studies](s9_ml_prediction)
 
+Open the HTML rendered version at [gbif-europe.github.io](https://gbif-europe.github.io/nordic_oikos_2018_r)
 
+![](./demo_data/gbif-norway-full.png "GBIF-Norway-Banner")
 
 ***
 
 <!-- ![](./demo_data/NSO_2018_GBIF_NO.png "NSO 2018") -->
 
-Course materials was originally developed for the [Nordic Oikos 2018, pre-conference R workshop](./README-2018.md).
-
-* [gbif.no/events/2018/Nordic-Oikos-2018-R-workshop.html](https://www.gbif.no/events/2018/Nordic-Oikos-2018-R-workshop.html)
-* [forbio.uio.no/events/courses/2018/GBIF_R.html](https://www.forbio.uio.no/events/courses/2018/GBIF_R.html)
-* [ntnu.edu/web/oikos2018/workshops](https://www.ntnu.edu/web/oikos2018/workshops)
-* [gbif-europe.github.io/nordic_oikos_2018_r](https://gbif-europe.github.io/nordic_oikos_2018_r)
+Course materials was originally developed for the [Nordic Oikos 2018, pre-conference R workshop](./README-2018.md). Read more from
+[gbif.no](https://www.gbif.no/events/2018/Nordic-Oikos-2018-R-workshop.html)
+[forbio.uio.no](https://www.forbio.uio.no/events/courses/2018/GBIF_R.html)
+[ntnu.edu](https://www.ntnu.edu/web/oikos2018/workshops).
