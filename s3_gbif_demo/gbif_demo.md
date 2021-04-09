@@ -26,7 +26,8 @@ You are here: [R workshop](../) >> [Session 3 GBIF data](./) >> **rgbif demo**
 ***
 
 ### Choose a species name
-```{r eval=FALSE}
+
+```r
 require(rgbif) # r-package for GBIF data
 sp_name <- "Hepatica nobilis"; kingdom <- "Plantae" # liverleaf (blaaveis:no), taxonKey=5371699
 #sp_name <- "Hordeum vulgare"; kingdom <- "Plantae" # barley (bygg:no)
@@ -40,7 +41,8 @@ key <- name_backbone(name=sp_name, kingdom=kingdom)$speciesKey
 ```
 
 ### You may also use a higher level group (with a taxonKey)
-```{r eval=FALSE}
+
+```r
 nub <- 'd7dddbf4-2cf0-4f39-9b2a-bb099caae36c'; sp_name <- NULL # GBIF NUB taxon backbone datasetKey
 #sp_name <- "Plantae";      rank <- "KINGDOM" # plants, taxonKey=6
 #sp_name <- "Tracheophyta"; rank <- "PHYLUM"  # vascular plants, taxonKey=7707728
@@ -51,7 +53,8 @@ key <- name_lookup(query=sp_name, rank=rank, datasetKey=nub, limit=1)$data$key #
 Choose a rank among: CLASS, CULTIVAR, CULTIVAR_GROUP, DOMAIN, FAMILY, FORM, GENUS, INFORMAL, INFRAGENERIC_NAME, INFRAORDER, INFRASPECIFIC_NAME, INFRASUBSPECIFIC_NAME, KINGDOM, ORDER, PHYLUM, SECTION, SERIES, SPECIES, STRAIN, SUBCLASS, SUBFAMILY, SUBFORM, SUBGENUS, SUBKINGDOM, SUBORDER, SUBPHYLUM, SUBSECTION, SUBSERIES, SUBSPECIES, SUBTRIBE, SUBVARIETY, SUPERCLASS, SUPERFAMILY, SUPERORDER, SUPERPHYLUM, SUPRAGENERIC_NAME, TRIBE, UNRANKED, VARIETY
 
 ### Species occurrence data from GBIF
-```{r eval=FALSE}
+
+```r
 require(rgbif) # r-package for GBIF data
 sp <- occ_search(taxonKey=key, return="data", hasCoordinate=TRUE, limit=100) 
 gbifmap(sp)
@@ -61,7 +64,8 @@ gbifmap(sp)
 ***
 
 ### Preview of dataframe with search results
-```{r eval=FALSE}
+
+```r
 head(sp, n=5) ## preview first 5 records
 ```
 ![Preview of dataframe for *Hepatica nobilis*](demo_data/head_sp.png 'head(sp, n=5)')
@@ -69,7 +73,8 @@ head(sp, n=5) ## preview first 5 records
 ***
 
 ### Extract coordinates suitable for e.g. Maxent
-```{r eval=FALSE}
+
+```r
 xy <- sp[c("decimalLongitude","decimalLatitude")] ## Extract only the coordinates
 sp_xy <- sp[c("species", "decimalLongitude","decimalLatitude")] ## Input format for Maxent
 # structure(sp_xy) ## preview the list of coordinates
@@ -78,7 +83,8 @@ head(sp_xy, n=5) ## preview first 5 records
 ![Preview of *sp-x-y* data extracted for use with Maxent etc.](./demo_data/head_sp_xy.png "head sp_xy")
 
 ### Write dataframe to file (useful for Maxent etc.)
-```{r messages=FALSE, eval=FALSE}
+
+```r
 #write.table(sp_xy, file="./demo_data/sp_xy.txt", sep="\t", row.names=FALSE, qmethod="double") ## for Maxent
 readLines("./demo_data/sp_xy.txt", n=10)
 #readChar("./demo_data/sp_xy.txt", file.info("./demo_data/sp_xy.txt")$size) ## Alternative preview
@@ -86,7 +92,8 @@ readLines("./demo_data/sp_xy.txt", n=10)
 ![Preview the exported data-file, `sp_xy.txt`](./demo_data/readLines_sp_xy_txt.png "readlines")
 
 ### Read data file back into R
-```{r eval=FALSE}
+
+```r
 #rm(sp_xy) ## remove vector sp_xy from the R workspace environment, before re-loading
 #sp_xy <- read.delim("./demo_data/sp_xy.txt", header=TRUE, dec=".", stringsAsFactors=FALSE)
 #head(sp_xy, n=5) ## preview first 5 records
@@ -95,35 +102,25 @@ readLines("./demo_data/sp_xy.txt", n=10)
 ***
 
 ### GBIF data from Norway
-```{r echo=FALSE, message=FALSE, eval=FALSE}
-require(rgbif) # r-package for GBIF data
-sp_no <- occ_search(taxonKey=key, return="data", hasCoordinate=TRUE, country="NO", limit=200) 
-gbifmap(sp_no, region = "norway")
-```
+
 ![gbifmap for Norway, *Hepatica nobilis*](./demo_data/gbifmap_norway.png "gbifmap_NO")
 
 ***
 
 ### GBIF data from Trondheim (or aother bounding box)
-```{r echo=FALSE, message=FALSE, eval=FALSE}
-require(rgbif) # r-package for GBIF data
-bb <- c(10.2,63.3,10.6,63.5) # Trondheim
-#bb <- c(5.25, 60.3, 5.4, 60.4) # Bergen
-#bb <- c(18.7, 69.6, 19.2, 69.8) # Tromsoe
-#bb <- c(10.6, 59.9, 10.9, 60.0) # Oslo
-sp_bb <- occ_search(taxonKey=key, return="data", hasCoordinate=TRUE, country="NO", geometry=bb, limit=200)
-sp_bb_m <- sp_bb[c("name", "catalogNumber", "decimalLongitude","decimalLatitude", "basisOfRecord", "year", "municipality", "taxonKey", "occurrenceID")] ## Subset columns
-```
+
 
 ### Preview data frame
-```{r message=FALSE, eval=FALSE}
+
+```r
 head(sp_bb, n=5) ## preview first 5 records
 #head(sp_bb_m, n=5) ## preview first 5 records
 ```
 ![Preview dataframe of results from GBIF using bounding box](./demo_data/head_sp_bb.png "head sp_bb")
 
 ### Mapping with leaflet
-```{r message=FALSE, eval=FALSE}
+
+```r
 library("mapr") # rOpenSci r-package for mapping (occurrence data)
 #library("spocc") # rOpenSci r-package with more biodiversity data sources than GBIF
 map_leaflet(sp_bb_m, "decimalLongitude", "decimalLatitude", size=2, color="blue")
@@ -133,7 +130,8 @@ map_leaflet(sp_bb_m, "decimalLongitude", "decimalLatitude", size=2, color="blue"
 ***
 
 ### Make a simple map of 4 spring flower species (in Norway)
-```{r message=FALSE, eval=FALSE}
+
+```r
 ## liverleaf, wood anemone, dandelion, red clover
 spp_names <- c('Hepatica nobilis', 'Anemone nemorosa', 'Taraxacum officinale', 'Trifolium pratense')  
 keys <- sapply(spp_names, function(x) name_backbone(name=x, kingdom='plants')$speciesKey, USE.NAMES=FALSE)
@@ -157,14 +155,16 @@ map_leaflet(spp_m, "decimalLongitude", "decimalLatitude", size=3, color=cols)
 
 ### Expand color-ramp when mapping many species
 Notice that colors will not be easy to distinguish when number of species is high. Standard color-ramps include 9-12 colors.
-```{r eval=FALSE}
+
+```r
 ## Poaceae has taxonKey=3073 - which gives us multiple species (here 31 unique "names", 33 unique "taxonKey")
 bb_t <- c(10.2,63.3,10.6,63.5) ## Trondheim
 spp_t <- occ_search(taxonKey='3073', limit=100, return='data', country='NO', geometry=bb_t, hasCoordinate=TRUE)
 spp_t_m <- spp_t[c("name", "decimalLongitude","decimalLatitude", "basisOfRecord", "year", "municipality", "taxonKey")]
 ```
 
-```{r message=FALSE, eval=FALSE}
+
+```r
 ## The default color-ramp (Set1) has 9 colors and cause a warning message when more than 9 species are included in the same map.
 library('mapr') # rOpenSci r-package for mapping (occurrence data)
 library('spocc') # rOpenSci r-package with more biodiversity data sources than GBIF
@@ -181,7 +181,8 @@ map_leaflet(spp_t_m, "decimalLongitude", "decimalLatitude", size=5, color=myColo
 
 ### Diverse color palettes
 
-```{r eval=FALSE}
+
+```r
 library(RColorBrewer)
 #display.brewer.all()
 display.brewer.pal(n=9, name='Set1')

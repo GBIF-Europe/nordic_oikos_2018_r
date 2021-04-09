@@ -12,22 +12,14 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# Nordic Oikos 2018 -- GBIF data with R
+<!-- index.html (slideset) is generated from index.Rmd. Please edit that file -->
+
+# GBIF data access using R
 
 Scientific reuse of openly published biodiversity information: Programmatic access to and analysis of primary biodiversity information using R. Nordic Oikos 2018, pre-conference R workshop, 18th and 19th February 2018 in Trondheim, Norway.
 
-## Acknowledgements
 
-![](layout_set_logo.jpeg "Nordic OIKOS 2018")
-
-![](bioatlas-logo-square.png "Biodiversity Atlas Sweden")
-
-The Swedish Research Council is the funder of Biodiversity Atlas Sweden
-
-Grant No 2017-00688
-
-
-## Session 2: Quick intro to R, RStudio, GitHub
+## Session 2: Introduction to R, RStudio, GitHub
 
 Session will cover getting started - installing recommended software and tools, installation procedures for some relevant packages used in some of the upcoming sessions - for working with _*geospatial data analysis*_ in R. 
 
@@ -247,3 +239,14 @@ The R package is the unit to collaborate on for functionality that maybe useful 
 1. Run "devtools::check()" to see if package conforms to CRAN requirements and fix complaints reported, then put code on GitHub to collaborate with others on the package
 
 An example R package with the earlier function can be found here: [`darwinator` R package example @ GitHub](https://github.com/GBIF-Europe/darwinator)
+
+
+
+## Acknowledgements
+
+![](bioatlas-logo-square.png "Biodiversity Atlas Sweden")
+
+The Swedish Research Council is the funder of Biodiversity Atlas Sweden.
+Grant No 2017-00688
+
+![](layout_set_logo.jpeg "Nordic OIKOS 2018")

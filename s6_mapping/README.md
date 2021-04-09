@@ -1,16 +1,16 @@
-![](../demo_data/NSO_2018_GBIF_NO.png "NSO 2018")
+# GBIF data access using R
 
-
-# Session 6: Mapping GBIF data in R
+## Session 6: Mapping GBIF data in R
 
 * https://github.com/ropensci/mapr
 * Hijmans (2016) Spatial data analysis and modelling with R http://www.rspatial.org/
 * https://cran.r-project.org/web/packages/raster/vignettes/Raster.pdf
-* Session 6 [rendered HTML version on GitHub.io here](https://gbif-europe.github.io/nordic_oikos_2018_r/s6_mapping/).
+* Session 6 [rendered HTML version on GitHub.io here](https://gbif-europe.github.io/nordic_oikos_2018_r/s6_mapping/) >> [mapping.html](https://gbif-europe.github.io/nordic_oikos_2018_r/s6_mapping/mapping.html)
 
 ## Workshop training materials
 
- * [Some mapping tools and hints](mapping.Rmd) ([rendered HTML version](https://gbif-europe.github.io/nordic_oikos_2018_r/s6_mapping/mapping.html))
+ * [Some mapping tools and hints](mapping.md) >> [Rmd script](mapping.Rmd)
+
 
 ## Excercises
 
@@ -21,4 +21,6 @@
 
 ***
 
-[Back to GitHub project home](https://github.com/GBIF-Europe/nordic_oikos_2018_r).
+Navigate to [workshop home (Github)](https://github.com/GBIF-Europe/nordic_oikos_2018_r) or the [GitHub.io](https://gbif-europe.github.io/nordic_oikos_2018_r/) pages.
+
+![](../demo_data/gbif-norway-full.png "GBIF-Norway-Banner")

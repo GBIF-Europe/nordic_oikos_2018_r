@@ -28,7 +28,8 @@ This script (```data_quality```) provides a small set of examples for data quali
 
 ### Read in some example data
 Using [readxl](http://readxl.tidyverse.org/) from tidyverse.
-```{r eval=FALSE}
+
+```r
 library(tidyverse) ## tidyverse is without external dependencies such as Java or Pearl
 library(readxl) ## readxl is part of tidyverse
 ##excel_sheets("./demo_data/spp_dq.xlsx") ## List sheets in a xlsx document
@@ -41,7 +42,8 @@ head(spp_dq, n=5)
 ***
 
 ### Extract a subset of data-columns
-```{r eval=FALSE}
+
+```r
 spp_dq_m <- spp_dq[c("name", "decimalLongitude","decimalLatitude", "basisOfRecord", "year", "month", "day", "eventDate", "country", "countryCode", "stateProvince", "county", "municipality", "taxonKey", "species", "scientificName", "catalogNumber", "occurrenceID")] ## Subset columns
 xy_dq <- spp_dq[c("decimalLongitude","decimalLatitude")] ## Extract only the coordinates
 #head(spp_dq_m, n=5)
@@ -50,7 +52,8 @@ xy_dq <- spp_dq[c("decimalLongitude","decimalLatitude")] ## Extract only the coo
 ***
 
 ### Make SpatialPointsDataFrame from the example data
-```{r eval=FALSE}
+
+```r
 options(digits=8) ## set 8 digits (ie. all digits, not decimals) for the type cast as.double to keep decimals
 spp_dq_m$lon <- as.double(spp_dq_m$decimalLongitude) ## cast lon from char to double
 spp_dq_m$lat <- as.double(spp_dq_m$decimalLatitude) ## cast lat from char to double
@@ -65,7 +68,8 @@ proj4string(spp_dq_m) <- CRS("+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs +
 ***
 
 ### Explore the occurrence data
-```{r eval=FALSE}
+
+```r
 table(spp_dq$name)
 table(spp_dq$country)
 table(spp_dq$countryCode)
@@ -78,7 +82,8 @@ table(spp_dq$county)
 
 ### Vector data with country polygons (maptools:wrld_simpl)
 For more detailed borders use a source such as GADM! Here we use wrld_simpl for faster calculations and demonstration purposes.
-```{r eval=FALSE}
+
+```r
 library(maptools)
 library(rgeos)
 data(wrld_simpl) ## load data ## vector/factor of ISO2, ISO2, NAME, REGION, SUBREGION, LON, LAT, ...
@@ -105,7 +110,8 @@ Hint: You can use ```sp:spTransform()``` to modify the CRS, eg:
 ***
 
 ### Overlay dummy occurrence data with spatial vector data (country borders)
-```{r eval=FALSE}
+
+```r
 library(sp)
 library(rgeos)
 library(dplyr)
@@ -150,7 +156,8 @@ Norway Sweden   <NA>
 spp_dq_over: ISO2, NAME, country, couMatch, couMatched, longitude, latitude, catalogNumber
 ```
 
-```{r eval=FALSE}
+
+```r
 i1 <- which(is.na(spp_dq_over$NAME)) ## int [1:29] 1 5 8 ... (these did NOT match the overlay, ie. WITH issue)
 i2 <- which(toupper(spp_dq_over$NAME) == toupper(spp_dq_over$country)) ## int [1:71] 2 3 4 6 ... (without issue)
 plot(wrld_simpl, xlim=c(4, 31), ylim=c(54,64), axes=TRUE, border="#555555") ## xlim=c(minLon,maxLon) ylim=c(minLat,maxLat)
@@ -165,7 +172,8 @@ legend("bottomright", title=NULL, legend=c(paste("with issue: ", length(i1), " o
 
 ### Leaflet map (with zoom) for occurrences WITH overlay issue
 
-```{r eval=FALSE}
+
+```r
 library('mapr') # rOpenSci r-package for mapping (occurrence data)
 library('spocc') # rOpenSci r-package with more biodiversity data sources than GBIF
 library(RColorBrewer)
@@ -190,14 +198,7 @@ map_leaflet(spp_dq_over_m, "longitude", "latitude", size=5, color=myCol)
 ***
 
 For this dummy test set I initially selected Poaceae occurrences from Scandinavia...
-```{r eval=FALSE, include=FALSE}
-## Poaceae has taxonKey=3073 - which gives us multiple species (here 31 unique "names", 33 unique "taxonKey")
-#bb <- c(10.2,63.3,10.6,63.5) ## Trondheim
-bb <- c(4.5, 54.9, 31.0, 61.0) # Scandinavia
-spp_p <- occ_search(taxonKey='3073', limit=100, return='data', geometry=bb, hasCoordinate=TRUE)
-#spp_p_m <- spp_p[c("name", "decimalLongitude","decimalLatitude", "basisOfRecord", "year", "county", "municipality", "taxonKey", "catalogNumber", "occurrenceID")]
-write.table(spp_p, file="./demo_data/spp_p.txt", sep="\t", row.names=FALSE, qmethod="double") ## for Maxent
-```
+
 
 ***
 

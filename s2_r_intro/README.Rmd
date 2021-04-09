@@ -12,10 +12,9 @@ knitr::opts_chunk$set(
 )
 ```
 
-![](../demo_data/NSO_2018_GBIF_NO.png "NSO 2018")
+# GBIF data access using R
 
-
-# Session 2: Quick intro to R, RStudio, GitHub
+## Session 2: Quick intro to R, RStudio, GitHub
 
 *Prerequisite*: Bring your own laptop with [R](https://www.r-project.org/) and [RStudio](https://www.rstudio.com/) installed and be familiar with the very basics of [R scripting](http://www.rspatial.org/intr/index.html). 
 
@@ -29,6 +28,8 @@ Session 2 web slides can be viewed here: [Session 2 web slides](https://GBIF-Eur
 
 ***
 
-[Back to GitHub project home](https://github.com/GBIF-Europe/nordic_oikos_2018_r).
+Navigate to [workshop home (Github)](https://github.com/GBIF-Europe/nordic_oikos_2018_r) or the [GitHub.io](https://gbif-europe.github.io/nordic_oikos_2018_r/) pages.
+
+![](../demo_data/gbif-norway-full.png "GBIF-Norway-Banner")
 
 

@@ -1,5 +1,6 @@
+# GBIF data access using R
 
-# Session 1: Intro to GBIF and biodiversity informatics
+## Session 1: GBIF and biodiversity informatics
 
 This session gives an introduction to the Global Biodiversity Information Facility ([GBIF](https://www.gbif.org)) and international standards for primary biodiversity information with focus on the [Darwin Core](http://rs.tdwg.org/dwc/terms/) standard.
 
@@ -21,8 +22,6 @@ This session gives an introduction to the Global Biodiversity Information Facili
 
 ***
 
-Navigate back to [GitHub project home](https://github.com/GBIF-Europe/nordic_oikos_2018_r) or [GitHub.io html](https://gbif-europe.github.io/nordic_oikos_2018_r/) pages.
+Navigate to [workshop home (Github)](https://github.com/GBIF-Europe/nordic_oikos_2018_r) or the [GitHub.io](https://gbif-europe.github.io/nordic_oikos_2018_r/) pages.
 
-***
-
-![](../demo_data/NSO_2018_GBIF_NO.png "banner")
+![](../demo_data/gbif-norway-full.png "GBIF-Norway-Banner")
