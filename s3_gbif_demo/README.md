@@ -8,13 +8,6 @@ This session presents programmatic access to GBIF data using R with focus on the
 * Filtering using data terms (and spatial geometry)
 * Taxon names / resolving (using [taxize](https://ropensci.org/tutorials/taxize_tutorial/)). [What is "nubkey”?](http://gbif.blogspot.no/search?q=names&max-results=20&by-date=true)
 * Asynchron download (see also [GBIF API](https://www.gbif.org/developer/summary))
-
-
-See the session 3 [rendered HTML version on GitHub.io](https://gbif-europe.github.io/nordic_oikos_2018_r/s3_gbif_demo/) >> 
-[gbif_demo.html](https://gbif-europe.github.io/nordic_oikos_2018_r/s3_gbif_demo/gbif_demo.html) &
-[asynchron download.html](https://gbif-europe.github.io/nordic_oikos_2018_r/s3_gbif_demo/3.x_async_download_gbif.html) &
-[data_quality.html](https://gbif-europe.github.io/nordic_oikos_2018_r/s3_gbif_demo/data_quality.html)
-
  
 ***
 
@@ -27,9 +20,15 @@ See the session 3 [rendered HTML version on GitHub.io](https://gbif-europe.githu
  * [Session 3 slides](./slides)
  
 
-
 ***
 
 Navigate to [workshop home (Github)](https://github.com/GBIF-Europe/nordic_oikos_2018_r) or the [GitHub.io](https://gbif-europe.github.io/nordic_oikos_2018_r/) pages.
+
+
+Session 3 [HTML version on GitHub.io here](https://gbif-europe.github.io/nordic_oikos_2018_r/s3_gbif_demo/) >> 
+[gbif_demo.html](https://gbif-europe.github.io/nordic_oikos_2018_r/s3_gbif_demo/gbif_demo.html) >>
+[asynchron download.html](https://gbif-europe.github.io/nordic_oikos_2018_r/s3_gbif_demo/3.x_async_download_gbif.html) >>
+[data_quality.html](https://gbif-europe.github.io/nordic_oikos_2018_r/s3_gbif_demo/data_quality.html)
+
 
 ![](../demo_data/gbif-norway-full.png "GBIF-Norway-Banner")

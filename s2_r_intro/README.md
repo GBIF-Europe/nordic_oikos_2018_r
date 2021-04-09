@@ -3,7 +3,7 @@
 
 # GBIF data access using R
 
-## Session 2: Quick intro to R, RStudio, GitHub
+## Session 2: Introduction to R, RStudio, GitHub
 
 *Prerequisite*: Bring your own laptop with
 [R](https://www.r-project.org/) and [RStudio](https://www.rstudio.com/)

@@ -3,7 +3,7 @@
 ## Session 4: Event core / sample-based data from GBIF
 
 This session gives a brief introduction to what "event" data is, why it mathers, and how to access this datatype. 
-[Session 4 HTML version here](https://gbif-europe.github.io/nordic_oikos_2018_r/s4_event_core/).
+
 
 Content of lesson:
 
@@ -34,8 +34,10 @@ Sample based data / Event data is a rather new datatype in GBIF and not all func
 
 ***
 
-Navigate to [workshop home
-(Github)](https://github.com/GBIF-Europe/nordic_oikos_2018_r) or the
-[GitHub.io](https://gbif-europe.github.io/nordic_oikos_2018_r/) pages.
+Navigate to [workshop home (Github)](https://github.com/GBIF-Europe/nordic_oikos_2018_r) or the [GitHub.io](https://gbif-europe.github.io/nordic_oikos_2018_r/) pages.
+
+
+[Session 4 HTML version on GitHub.io here](https://gbif-europe.github.io/nordic_oikos_2018_r/s4_event_core/).
+
 
 ![](../demo_data/gbif-norway-full.png "GBIF-Norway-Banner")

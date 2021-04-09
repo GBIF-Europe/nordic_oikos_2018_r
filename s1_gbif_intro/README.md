@@ -11,17 +11,22 @@ This session gives an introduction to the Global Biodiversity Information Facili
  * [GBIF Integrated Publishing Toolkit](https://www.gbif.org/ipt) ([IPT](https://github.com/gbif/ipt/wiki/IPT2ManualNotes.wiki) data exchange document format ([Robertson *et al.* 2014](https://doi.org/10.1371/journal.pone.0102623)).
  * Spreadsheet template available at https://data.gbif.no/dwcexcel/ and [here](https://www.gbif.org/news/82852/new-darwin-core-spreadsheet-templates-simplify-data-preparation-and-publishing).
  * [GBIF Taxon backbone](https://doi.org/10.15468/39omei), [taxize](https://github.com/ropensci/taxize), [taxize tutorial](https://ropensci.org/tutorials/taxize_tutorial/) ([more information](http://gbif.blogspot.no/search?q=backbone)).
- * See the session 1 [rendered HTML version here](https://gbif-europe.github.io/nordic_oikos_2018_r/s1_gbif_intro/).
+
 
 
 ## Workshop training materials
- * [Brief R settings and hints](setup.md), ([rendered HTML version](https://gbif-europe.github.io/nordic_oikos_2018_r/s1_gbif_intro/setup.html)) (more in [session 2](../s2_r_intro))
- * [Brief intro to rgbif](gbif_intro.md), ([rendered HTML version](https://gbif-europe.github.io/nordic_oikos_2018_r/s1_gbif_intro/gbif_intro.html)) (more in [session 3](../s3_gbif_demo))
+ * [Brief R settings and hints](setup.md) >> [Rmd script](setup.Rmd) (more in [session 2](../s2_r_intro))
+ * [Brief intro to rgbif](gbif_intro.md) >> [Rmd script](gbif_intro.Rmd) (more in [session 3](../s3_gbif_demo))
  * [Session 1 slides](slides)
 
 
 ***
 
 Navigate to [workshop home (Github)](https://github.com/GBIF-Europe/nordic_oikos_2018_r) or the [GitHub.io](https://gbif-europe.github.io/nordic_oikos_2018_r/) pages.
+
+
+ * Session 1 [HTML version here](https://gbif-europe.github.io/nordic_oikos_2018_r/s1_gbif_intro/) >>
+([setup.html](https://gbif-europe.github.io/nordic_oikos_2018_r/s1_gbif_intro/setup.html) >> [gbif_intro.html](https://gbif-europe.github.io/nordic_oikos_2018_r/s1_gbif_intro/gbif_intro.html)
+
 
 ![](../demo_data/gbif-norway-full.png "GBIF-Norway-Banner")
