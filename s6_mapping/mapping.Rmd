@@ -1,10 +1,10 @@
 ---
 title: "Some mapping tools for environment layers"
 author: "Dag Endresen, http://orcid.org/0000-0002-2352-5497"
-date: "February 18-19, 2018"
+date: "February 18-19, 2018, updated 2021-04-09"
 output:
   html_document:
-    keep_md: false
+    keep_md: true
     toc: true
     toc_depth: 3
 ---
@@ -15,13 +15,13 @@ output:
 
 You are here: [R workshop](../) >> [Session 6 Mapping](./) >> **mapping demo**
 
-![](../demo_data/NSO_2018_GBIF_NO.png "NSO 2018")
-
 ***
 
-# Nordic Oikos 2018 - R workshop - Session 6
+# GBIF data access using R
 
-**Session 6** focuses on working with environment layers, mapping, cropping and masking layers using the [Raster R-package](https://cran.r-project.org/web/packages/raster/index.html) and other tools.
+## Session 6: Mapping demo
+
+This session focuses on working with environment layers, mapping, cropping and masking layers using the [Raster R-package](https://cran.r-project.org/web/packages/raster/index.html) and other tools.
 
 ***
 
@@ -332,6 +332,11 @@ mapr::map_leaflet(sp_bb_m, "decimalLongitude", "decimalLatitude", size=2, color=
 
 ***
 
-Navigate back to [GitHub project home](https://github.com/GBIF-Europe/nordic_oikos_2018_r) or [GitHub.io html](https://gbif-europe.github.io/nordic_oikos_2018_r/) pages.
+Navigate to [workshop home (Github)](https://github.com/GBIF-Europe/nordic_oikos_2018_r) or the [GitHub.io](https://gbif-europe.github.io/nordic_oikos_2018_r/) pages.
 
-***
+
+[Session 6 HTML version on GitHub.io here](https://gbif-europe.github.io/nordic_oikos_2018_r/s6_mapping/) >> [mapping.html](https://gbif-europe.github.io/nordic_oikos_2018_r/s6_mapping/mapping.html)
+
+
+![](../demo_data/gbif-norway-full.png "GBIF-Norway-Banner")
+
