@@ -193,10 +193,6 @@ Read more about colors at the [https://www.r-bloggers.com/palettes-in-r/](R-blog
 
 ***
 
-***
-
 Navigate to [GitHub workshop home](https://github.com/GBIF-Europe/nordic_oikos_2018_r) or [GitHub.io html](https://gbif-europe.github.io/nordic_oikos_2018_r/) pages.
-
-***
 
 ![](../demo_data/gbif-norway-full.png "GBIF banner")

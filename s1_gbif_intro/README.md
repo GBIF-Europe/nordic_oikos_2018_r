@@ -24,9 +24,7 @@ This session gives an introduction to the Global Biodiversity Information Facili
 
 Navigate to [workshop home (Github)](https://github.com/GBIF-Europe/nordic_oikos_2018_r) or the [GitHub.io](https://gbif-europe.github.io/nordic_oikos_2018_r/) pages.
 
-
- * Session 1 [HTML version here](https://gbif-europe.github.io/nordic_oikos_2018_r/s1_gbif_intro/) >>
+Session 1 [HTML version here](https://gbif-europe.github.io/nordic_oikos_2018_r/s1_gbif_intro/) >>
 ([setup.html](https://gbif-europe.github.io/nordic_oikos_2018_r/s1_gbif_intro/setup.html) >> [gbif_intro.html](https://gbif-europe.github.io/nordic_oikos_2018_r/s1_gbif_intro/gbif_intro.html)
-
 
 ![](../demo_data/gbif-norway-full.png "GBIF-Norway-Banner")

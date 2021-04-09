@@ -23,8 +23,6 @@
 
 Navigate to [workshop home (Github)](https://github.com/GBIF-Europe/nordic_oikos_2018_r) or the [GitHub.io](https://gbif-europe.github.io/nordic_oikos_2018_r/) pages.
 
-
 [Session 6 HTML version on GitHub.io here](https://gbif-europe.github.io/nordic_oikos_2018_r/s6_mapping/) >> [mapping.html](https://gbif-europe.github.io/nordic_oikos_2018_r/s6_mapping/mapping.html)
-
 
 ![](../demo_data/gbif-norway-full.png "GBIF-Norway-Banner")

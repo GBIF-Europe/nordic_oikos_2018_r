@@ -204,6 +204,4 @@ For this dummy test set I initially selected Poaceae occurrences from Scandinavi
 
 Navigate to [GitHub workshop home](https://github.com/GBIF-Europe/nordic_oikos_2018_r) or [GitHub.io html](https://gbif-europe.github.io/nordic_oikos_2018_r/) pages.
 
-***
-
 ![](../demo_data/gbif-norway-full.png "GBIF banner")

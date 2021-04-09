@@ -24,11 +24,9 @@ This session presents programmatic access to GBIF data using R with focus on the
 
 Navigate to [workshop home (Github)](https://github.com/GBIF-Europe/nordic_oikos_2018_r) or the [GitHub.io](https://gbif-europe.github.io/nordic_oikos_2018_r/) pages.
 
-
 Session 3 [HTML version on GitHub.io here](https://gbif-europe.github.io/nordic_oikos_2018_r/s3_gbif_demo/) >> 
 [gbif_demo.html](https://gbif-europe.github.io/nordic_oikos_2018_r/s3_gbif_demo/gbif_demo.html) >>
 [asynchron download.html](https://gbif-europe.github.io/nordic_oikos_2018_r/s3_gbif_demo/3.x_async_download_gbif.html) >>
 [data_quality.html](https://gbif-europe.github.io/nordic_oikos_2018_r/s3_gbif_demo/data_quality.html)
-
 
 ![](../demo_data/gbif-norway-full.png "GBIF-Norway-Banner")

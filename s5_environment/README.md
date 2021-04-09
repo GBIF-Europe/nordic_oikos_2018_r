@@ -33,8 +33,6 @@ Access to and the linking of GBIF data to environmental raster and vector data i
 
 Navigate to [workshop home (Github)](https://github.com/GBIF-Europe/nordic_oikos_2018_r) or the [GitHub.io](https://gbif-europe.github.io/nordic_oikos_2018_r/) pages.
 
-
 [Session 5 HTML version on GitHub.io here](https://gbif-europe.github.io/nordic_oikos_2018_r/s5_environment/) >> [worldclim.html](https://gbif-europe.github.io/nordic_oikos_2018_r/s5_environment/worldclim.html)
-
 
 ![](../demo_data/gbif-norway-full.png "GBIF-Norway-Banner")
